@@ -1,24 +1,25 @@
-# Credentials Folder
+**Server URL:** ec2-3-135-197-68.us-east-2.compute.amazonaws.com
+**Server Username:** ubuntu
+**Server Key:** Found in key-pair.pem
 
-## The purpose of this folder is to store all credentials needed to log into your server and databases. This is important for many reasons. But the two most important reasons is
-    1. Grading , servers and databases will be logged into to check code and functionality of application. Not changes will be unless directed and coordinated with the team.
-    2. Help. If a class TA or class CTO needs to help a team with an issue, this folder will help facilitate this giving the TA or CTO all needed info AND instructions for logging into your team's server. 
+**MySQL Hostname:** ip-172-31-11-201
+**MySQL Port:** 3306
+**MySQL Username:** db_user  
+**MySQL Password:** team4
+**MySQL Database Name:** CSC648Project
 
 
-# Below is a list of items required. Missing items will causes points to be deducted from multiple milestone submissions.
+###Instructions:
 
-1. Server URL or IP
-2. SSH username
-3. SSH password or key.
-    <br> If a ssh key is used please upload the key to the credentials folder.
-4. Database URL or IP and port used.
-    <br><strong> NOTE THIS DOES NOT MEAN YOUR DATABASE NEEDS A PUBLIC FACING PORT.</strong> But knowing the IP and port number will help with SSH tunneling into the database. The default port is more than sufficient for this class.
-5. Database username
-6. Database password
-7. Database name (basically the name that contains all your tables)
-8. Instructions on how to use the above information.
+**SSH Into Server**
+----------------
+1. Download MobaXterm
+2. Click session on the top left, select 'SSH' as session type
+3. Enter the above Server URL into 'Remote Host'
+4. Check 'specify username' and enter the above username
+5. Check 'Use private key' and select key-pair.pem
 
-# Most important things to Remember
-## These values need to kept update to date throughout the semester. <br>
-## <strong>Failure to do so will result it points be deducted from milestone submissions.</strong><br>
-## You may store the most of the above in this README.md file. DO NOT Store the SSH key or any keys in this README.md file.
+**Connect to DB**
+-------------
+1. Enter the following command: 'sudo mysql -u db_user -p'
+2. Enter the above password
