@@ -10,4 +10,5 @@ async def root():
     return RedirectResponse(url='/html/about-landing-page.html')
 
 
-app.mount("/", StaticFiles(directory="/"), name="static")
+app.mount("/", StaticFiles(directory=".."), name="static")
+
