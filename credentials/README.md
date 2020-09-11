@@ -1,15 +1,15 @@
-**Server URL:** ec2-3-135-197-68.us-east-2.compute.amazonaws.com
-**Server Username:** ubuntu
-**Server Key:** Found in key-pair.pem
+**Server URL:** ec2-3-135-197-68.us-east-2.compute.amazonaws.com  
+**Server Username:** ubuntu  
+**Server Key:** Found in key-pair.pem  
 
-**MySQL Hostname:** ip-172-31-11-201
-**MySQL Port:** 3306
+**MySQL Hostname:** ip-172-31-11-201  
+**MySQL Port:** 3306  
 **MySQL Username:** db_user  
-**MySQL Password:** team4
-**MySQL Database Name:** CSC648Project
+**MySQL Password:** team4  
+**MySQL Database Name:** CSC648Project  
 
 
-###Instructions:
+# Instructions:
 
 **SSH Into Server**
 ----------------
