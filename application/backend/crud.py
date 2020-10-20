@@ -25,4 +25,4 @@ def get_posts_for_search(db: Session, searchQuery: str):
         return db.query(models.Post).all()
     else:
         # Note: use like() for case sensitivity, ilike() for case insensitivity
-        return db.query(models.Post).filter(models.Post.title.ilike('%' + searchQuery + '%')).all()
+        return db.query(models.Post).filter(models.Post.title.ilike('%' + searchQuery + '%')).all() 

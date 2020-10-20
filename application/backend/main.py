@@ -40,4 +40,3 @@ async def root():
 
 
 app.mount("/", StaticFiles(directory=".."), name="static")
-
