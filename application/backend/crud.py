@@ -13,3 +13,16 @@ def create_item(db: Session, item: schemas.ItemCreate):
     db.commit()
     db.refresh(db_item)
     return db_item
+
+
+def get_posts_for_search(db: Session, searchQuery: str):
+    """
+    This assumes that the model for our posts is called Post
+    Likewise, it compares the search query to Post's title column
+    """
+    # TODO: This method has not been tested
+    if len(searchQuery) == 0:
+        return db.query(models.Post).all()
+    else:
+        # Note: use like() for case sensitivity, ilike() for case insensitivity
+        return db.query(models.Post).filter(models.Post.title.ilike('%' + searchQuery + '%')).all()
