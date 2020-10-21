@@ -4,7 +4,8 @@ from sqlalchemy.orm import Session
 from starlette.responses import RedirectResponse
 from starlette.staticfiles import StaticFiles
 
-from . import crud, models
+from application.backend import crud, models, schemas
+from application.backend import routers
 from .database import SessionLocal, engine
 
 models.Base.metadata.create_all(bind=engine)
@@ -37,6 +38,15 @@ def read_items(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
 @app.get("/")
 async def root():
     return RedirectResponse(url='/html/index.html')
+
+
+# ===== Routers =====
+
+
+app.include_router(routers.router)
+
+
+# ===== end routers =====
 
 
 app.mount("/", StaticFiles(directory=".."), name="static")
