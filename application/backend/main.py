@@ -8,6 +8,7 @@ import crud, models, schemas
 
 from database import SessionLocal, engine
 
+
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
@@ -41,7 +42,6 @@ async def root():
 
 
 # ===== Routers =====
-
 import routers
 app.include_router(routers.router)
 
@@ -51,3 +51,8 @@ app.include_router(routers.router)
 
 app.mount("/", StaticFiles(directory=".."), name="static")
 
+
+# ===== end routers =====
+
+
+app.mount("/", StaticFiles(directory=".."), name="static")

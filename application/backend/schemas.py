@@ -9,7 +9,7 @@ from pydantic import BaseModel
 class ListingBase(BaseModel):  # Shared attributes for creating and reading data
     name: str
     description: str
-    price: int 
+    price: int
     category: str
 
 
@@ -58,6 +58,7 @@ class Listing(ListingBase):  # Reading to return from API
 #        orm_mode = True
 #
 #
+
 # =====Message=====
 class MessageBase(BaseModel):
     messageContents: str
