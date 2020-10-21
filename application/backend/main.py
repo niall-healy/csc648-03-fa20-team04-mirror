@@ -4,9 +4,10 @@ from sqlalchemy.orm import Session
 from starlette.responses import RedirectResponse
 from starlette.staticfiles import StaticFiles
 
-from application.backend import crud, models, schemas
-from application.backend import routers
-from .database import SessionLocal, engine
+import crud, models, schemas
+
+from database import SessionLocal, engine
+
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -41,9 +42,14 @@ async def root():
 
 
 # ===== Routers =====
-
-
+import routers
 app.include_router(routers.router)
+
+
+# ===== end routers =====
+
+
+app.mount("/", StaticFiles(directory=".."), name="static")
 
 
 # ===== end routers =====
