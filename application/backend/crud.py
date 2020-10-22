@@ -15,7 +15,7 @@ from . import models
 #     return db_item
 
 
-def get_listings_for_search(db: Session, searchQuery: str):
+def get_listings_for_search(db: Session, searchQuery: str, category: str):
     """
     This assumes that the model for our listings is called Listing
     Likewise, it compares the search query to Listing's title column
@@ -25,4 +25,5 @@ def get_listings_for_search(db: Session, searchQuery: str):
         return db.query(models.Listing).all()
     else:
         # Note: use like() for case sensitivity, ilike() for case insensitivity
-        return db.query(models.Listing).filter(models.Listing.name.ilike('%' + searchQuery + '%')).all()
+        return db.query(models.Listing).filter(models.Listing.name.ilike('%' + searchQuery + '%'),
+                                               models.Listing.category == category).all()
