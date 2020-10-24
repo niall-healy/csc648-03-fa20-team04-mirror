@@ -19,10 +19,11 @@ class ListingCreate(ListingBase):  # Create everything in the base
 
 class Listing(ListingBase):  # Reading to return from API
     listingId: int
-    sellerId: int
-    timestamp: datetime
-    isApproved: bool
-    isActive: bool
+    sellerId: int = None
+    timestamp: datetime = None
+    isApproved: bool = None
+    isActive: bool = None
+
 
     class Config:
         orm_mode = True  # Read as ORM model
