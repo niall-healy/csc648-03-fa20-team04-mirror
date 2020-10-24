@@ -1,6 +1,6 @@
 # csc648 Team 04 Respository
 
-## URL: http://3.135.197.68
+## URL: http://ec2-3-21-104-38.us-east-2.compute.amazonaws.com
 
 
 | Student Name | Student Email | GitHub Username |
