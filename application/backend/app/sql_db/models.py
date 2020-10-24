@@ -1,11 +1,11 @@
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime, Numeric, ARRAY
 from sqlalchemy.orm import relationship
 
-from database import Base
+from app.sql_db.database import Base
 
 
 # =====Main Tables=====
-#class User(Base):
+# class User(Base):
 #    __tablename__ = 'user'
 #
 #    userId = Column(Integer, primary_key=True, index=True)  # primary_key is used to identify distinct rows
@@ -19,11 +19,12 @@ from database import Base
 #    listings = relationship('Listing', backref='user')  # A user can have many listings
 #
 
+
 class Listing(Base):
     __tablename__ = 'listing'
 
     listingId = Column(Integer, primary_key=True, index=True)
-#    sellerId = Column(Integer, ForeignKey('user.userId'))  # ForeignKey constrains data to match userId
+    #    sellerId = Column(Integer, ForeignKey('user.userId'))  # ForeignKey constrains data to match userId
     name = Column(String(32), index=True)
     timestamp = Column(DateTime)
     description = Column(String(32), index=True)
@@ -43,7 +44,7 @@ class Listing(Base):
 #    }
 
 
-#class MessageThread(Base):
+# class MessageThread(Base):
 #    __tablename__ = 'message_thread'
 #
 #    threadId = Column(Integer, primary_key=True, index=True)
@@ -53,7 +54,7 @@ class Listing(Base):
 #    messages = relationship('Message', backref='messageThread')
 #
 #
-#class Message(Base):
+# class Message(Base):
 #    __tablename__ = 'message'
 #
 #    messageId = Column(Integer, primary_key=True, index=True)
@@ -63,7 +64,7 @@ class Listing(Base):
 #    timestamp = Column(DateTime)
 #
 
-#class Category(Base):
+# class Category(Base):
 #    __tablename__ = 'category'
 #
 #    books = Column(ARRAY(Integer), primary_key=True)  # Required to make at least one field primary key even if not used
@@ -78,7 +79,7 @@ class Listing(Base):
 #
 #
 # =====Sub Tables=====
-#class Books(Listing):
+# class Books(Listing):
 #    __tablename__ = 'book'
 #
 #    listingId = Column(Integer, ForeignKey('listing.listingId'), primary_key=True)
@@ -89,7 +90,7 @@ class Listing(Base):
 #    }
 #
 #
-#class Housing(Listing):
+# class Housing(Listing):
 #    __tablename__ = 'housing'
 #
 #    listingId = Column(Integer, ForeignKey('listing.listingId'), primary_key=True)
@@ -100,7 +101,7 @@ class Listing(Base):
 #    }
 #
 #
-#class Automotive(Listing):
+# class Automotive(Listing):
 #    __tablename__ = 'automotive'
 #
 #    listingId = Column(Integer, ForeignKey('listing.listingId'), primary_key=True)

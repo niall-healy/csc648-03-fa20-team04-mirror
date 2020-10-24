@@ -1,26 +1,16 @@
-from fastapi import Depends, FastAPI, HTTPException
-from sqlalchemy.orm import Session
+from fastapi import FastAPI
 
 from starlette.responses import RedirectResponse
 from starlette.staticfiles import StaticFiles
 
-import crud, models, schemas
+from app.routers import routers
+from app.sql_db import models
 
-from database import SessionLocal, engine
-
+from app.sql_db.database import SessionLocal, engine
 
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
-
-
-# Dependency
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
 
 
 # @app.post("/items/", response_model=schemas.Item)
@@ -42,17 +32,9 @@ async def root():
 
 
 # ===== Routers =====
-import routers
 app.include_router(routers.router)
 
+app.mount("/", StaticFiles(directory=".."), name="static")
 
 # ===== end routers =====
 
-
-app.mount("/", StaticFiles(directory=".."), name="static")
-
-
-# ===== end routers =====
-
-
-app.mount("/", StaticFiles(directory=".."), name="static")
