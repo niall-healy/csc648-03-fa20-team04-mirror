@@ -21,6 +21,7 @@ class Listing(ListingBase):  # Reading to return from API
     listingId: int
     sellerId: int = None
     timestamp: datetime = None
+    photo: str
     isApproved: bool = None
     isActive: bool = None
 

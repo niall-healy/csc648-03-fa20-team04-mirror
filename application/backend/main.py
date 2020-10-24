@@ -37,4 +37,3 @@ app.include_router(routers.router)
 app.mount("/", StaticFiles(directory=".."), name="static")
 
 # ===== end routers =====
-
