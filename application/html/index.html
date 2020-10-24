@@ -3,31 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CSC 664, Fall 2020, Team 6</title>
+    <title>CSC 664, Fall 2020, Team 4</title>
+    
+    <script src="../javascript/index.js"></script>
 </head>
 <body style="background-color:grey">
     <h1>CSC 648, Fall 2020, Team 4</h1>
     
     <div>
-        <form>
-            <h2>Search By Text</h2>
-            <input type="text" id="text">
-            <button id="textButton">Search</button>
-        </form>    
-    </div>
-    
-    <div>   
-        <form>
-            <h2>Search By Selection</h2>
-            <select name="dropdown" id="dropdown">
+        <form action="javascript:void(0)">
+            <input type="text" id="search-bar">
+
+            <select name="dropdown" id="category">
                 <option value="Textbooks">Textbooks</option>
                 <option value="Housing">Housing</option>
-                <option value="Vehicles">Vehicles</option>
+                <option value="Automotive">Automotive</option>
             </select>
-            <button id="dropButton">Search</button>
+            <button id="search-button">Search</button>
         </form>
     </div>
 
-    <script src="../javascript/index.js"></script>
 </body>
 </html>
