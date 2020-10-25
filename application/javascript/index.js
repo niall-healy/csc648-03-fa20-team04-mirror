@@ -1,18 +1,47 @@
-// This to just demonstrate how the HTML element values can be retrieved
-// This code should eventually be removed
+window.onload = function() {
+   function search(){
+      let text = document.getElementById("search-bar").value;
+      text = text.replace(" ", "%20");
 
-button1 = document.getElementById("textButton");
-button1.addEventListener("click", textSearch);
+      let category = document.getElementById("category").value;
 
-button2 = document.getElementById("dropButton");
-button2.addEventListener("click", dropSearch);
+      var fetchOptions = {
+		method: "GET",
+      };
 
-function textSearch(){
-    text = document.getElementById("text").value;
-    alert(text);
-}
+      let fetchURL = '/search/?category=' + category  + "&keywords=" + text;
+      fetch(fetchURL, fetchOptions)
+      .then((data) => {
+        return data.json() 
+      })
+      .then((jsonData) => {
+         localStorage.setItem('results', JSON.stringify(jsonData));
+         window.location.href= "http://ec2-18-144-21-168.us-west-1.compute.amazonaws.com/html/results.html";
+      })
+      .catch((err) => {
+       	 console.log(err);
+      })
+   }
 
-function dropSearch(){
-    dropdown = document.getElementById("dropdown");
-    alert(dropdown.options[dropdown.selectedIndex].value);
+   var searchButton = document.getElementById("search-button");
+   var resultField = document.getElementById("result");
+
+   if(searchButton) {
+      searchButton.addEventListener('click', search);
+   }
+   else if(resultField) {
+      console.log("HEY");
+      var results = JSON.parse(localStorage.getItem('results')); 
+      var html = "";
+   
+      results.forEach((result) => {
+         html += "<img src='" + result['photo'] + "'/>";
+         html += "<p><b>Item Name: </b> " + result['name'] + "</p>\n";
+         html += "<p><b>Description: </b> " + result['description'] + "</p>\n";
+         html += "<p><b>Price: </b> " + result['price'] + "</p>\n";
+         html += "<br>\n";
+      });
+
+      resultField.innerHTML = html;
+   }
 }
