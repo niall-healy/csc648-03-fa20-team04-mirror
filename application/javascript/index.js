@@ -23,14 +23,10 @@ window.onload = function() {
       })
    }
 
-   var searchButton = document.getElementById("search-button");
+   document.getElementById("search-button").addEventListener('click', search);
    var resultField = document.getElementById("result");
-
-   if(searchButton) {
-      searchButton.addEventListener('click', search);
-   }
-   else if(resultField) {
-      console.log("HEY");
+   
+   if(resultField) {
       var results = JSON.parse(localStorage.getItem('results')); 
       var html = "";
    
