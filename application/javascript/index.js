@@ -30,10 +30,12 @@ window.onload = function() {
       searchButton.addEventListener('click', search);
    }
    else if(resultField) {
+      console.log("HEY");
       var results = JSON.parse(localStorage.getItem('results')); 
       var html = "";
    
       results.forEach((result) => {
+         html += "<img src='" + result['photo'] + "'/>";
          html += "<p><b>Item Name: </b> " + result['name'] + "</p>\n";
          html += "<p><b>Description: </b> " + result['description'] + "</p>\n";
          html += "<p><b>Price: </b> " + result['price'] + "</p>\n";
