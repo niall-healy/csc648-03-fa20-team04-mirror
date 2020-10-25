@@ -16,7 +16,7 @@ window.onload = function() {
       })
       .then((jsonData) => {
          localStorage.setItem('results', JSON.stringify(jsonData));
-         window.location.href= "http://ec2-18-144-21-168.us-west-1.compute.amazonaws.com/html/results.html";
+         window.location.href= "http://ec2-3-21-104-38.us-east-2.compute.amazonaws.com/html/results.html";
       })
       .catch((err) => {
        	 console.log(err);
