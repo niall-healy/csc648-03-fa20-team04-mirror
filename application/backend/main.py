@@ -8,32 +8,27 @@ from app.sql_db import models
 
 from app.sql_db.database import SessionLocal, engine
 
+
+"""
+This is the main file that runs the app, it builds the tables in the database, instantiates the fastAPI app, 
+redirects the root of the site to the homepage, includes the router in the app, and mounts static files 
+"""
+
+# builds tables in the database
 models.Base.metadata.create_all(bind=engine)
 
+# creates an instance of the fastAPI app
 app = FastAPI()
 
 
-# @app.post("/items/", response_model=schemas.Item)
-# def create_item(
-#     item: schemas.ItemCreate, db: Session = Depends(get_db)
-# ):
-#     return crud.create_item(db=db, item=item)
-#
-#
-# @app.get("/items/", response_model=List[schemas.Item])
-# def read_items(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-#     items = crud.get_items(db, skip=skip, limit=limit)
-#     return items
-
-
+# redirects root of the site to our homepage
 @app.get("/")
 async def root():
     return RedirectResponse(url='/html/index.html')
 
-
-# ===== Routers =====
+# includes the router created in routers.py
 app.include_router(routers.router)
 
+# mounts static files
 app.mount("/", StaticFiles(directory=".."), name="static")
 
-# ===== end routers =====
