@@ -42,6 +42,6 @@ async def read_listings_url(keywords:str, category: str, db: Session = Depends(g
     html = ""
     html += page[:index]
     html += results
-    html += page[index+len(results):]
+    html += page[index:]
 
     return html
