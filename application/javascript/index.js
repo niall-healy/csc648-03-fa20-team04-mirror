@@ -24,7 +24,7 @@ window.onload = function() {
    }
 
    document.getElementById("search-button").addEventListener('click', search);
-   var resultField = document.getElementById("result");
+   var resultField = document.getElementById("results");
    
    if(resultField) {
       var results = JSON.parse(localStorage.getItem('results')); 
