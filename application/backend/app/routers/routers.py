@@ -6,8 +6,6 @@ from fastapi.responses import HTMLResponse
 
 from sqlalchemy.orm import Session
 
-from starlette.responses import RedirectResponse
-
 from typing import List
 
 """
