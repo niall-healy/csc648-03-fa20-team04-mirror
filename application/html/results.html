@@ -20,16 +20,16 @@
         <h1 class="team-info">CSC 648, Fall 2020, Team 4</h1>
         <nav class="navbar navbar-expand-md navbar-dark bg-dark static-top">
             <a class="navbar-brand flex-grow-1" href="#">GatorTrader</a>
-                <form action="javascript:void(0)" class="nav-searchbar form-inline mx-md-auto">            
+                <form action="/s/" method="GET" class="nav-searchbar form-inline mx-md-auto">
                     <select class="nav-search-dropdown" data-nav-selected="0" id="category" name="category">
-                        <option value="Any" selected>Any</option>
+                        <option value="Any">Any</option>
                         <option value="Textbooks">Textbooks</option>
                         <option value="Housing">Housing</option>
                         <option value="Automotive">Automotive</option>
                     </select>
                     
                     <div class="flex-grow-1 d-flex"></div>
-                    <input type="text" id="search-bar" placeholder="Search...">
+                    <input type="text" id="search-bar" name="keywords">
                     <input type="submit" id="search-button" class="btn btn-light btn-sm navbar-btn" value="Search">
                 </form>
 
@@ -53,9 +53,9 @@
         </nav>
 
     <h1>Results Page</h1>
-        <div id="result">
+        <div id="results">
             
-        </div>
+	</div>
 
         <script src="../javascript/index.js"></script>
     </body>
