@@ -11,11 +11,24 @@ It will have much more in the future as we add users, etc.
 
 # =====Main Tables=====
 
+class User(Base):
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True, index=True)
+    email = Column(String, unique=True, index=True)
+    password_hash = Column(String)
+    # messageThreads = relationship("MessageThread", back_populates="sellerId", passive_deletes=True)
+    listings = relationship("Listing", backref="seller", cascade="all, delete-orphan", passive_deletes=True)
+
+    def __repr__(self):
+        return "%s(%r)" % (self.__class__, self.__dict__)
+
+
 class Listing(Base):
     __tablename__ = 'listing'
 
-    listingId = Column(Integer, primary_key=True, index=True)
-    #    sellerId = Column(Integer, ForeignKey('user.userId'))  # ForeignKey constrains data to match userId
+    id = Column(Integer, primary_key=True, index=True)
+    seller_id = Column(Integer, ForeignKey('user.userId'))  # ForeignKey constrains data to match userId
     name = Column(String(32), index=True)
     timestamp = Column(DateTime)
     description = Column(String(32), index=True)
@@ -29,9 +42,9 @@ class Listing(Base):
 class MessageThread(Base):
     __tablename__ = 'message_thread'
 
-    threadId = Column(Integer, primary_key=True, index=True)
-    sellerId = Column(Integer, ForeignKey('user.userId'))
-    buyerId = Column(Integer, ForeignKey('user.userId'))
+    id = Column(Integer, primary_key=True, index=True)
+    seller_id = Column(Integer, ForeignKey('user.userId'))
+    buyer_id = Column(Integer, ForeignKey('user.userId'))
 
     messages = relationship('Message', backref='messageThread')
 
@@ -39,22 +52,8 @@ class MessageThread(Base):
 class Message(Base):
     __tablename__ = 'message'
 
-    messageId = Column(Integer, primary_key=True, index=True)
-    threadId = Column(Integer, ForeignKey('message_thread.threadId'))
-    senderId = Column(Integer, ForeignKey('user.userId'))
+    id = Column(Integer, primary_key=True, index=True)
+    thread_id = Column(Integer, ForeignKey('message_thread.threadId'))
+    sender_id = Column(Integer, ForeignKey('user.userId'))
     messageContents = Column(String)
     timestamp = Column(DateTime)
-
-
-class Category(Base):
-    __tablename__ = 'category'
-
-    books = Column(ARRAY(Integer), primary_key=True)  # Required to make at least one field primary key even if not used
-    housing = Column(ARRAY(Integer))
-    services = Column(ARRAY(Integer))
-    household = Column(ARRAY(Integer))
-    electronics = Column(ARRAY(Integer))
-    automotive = Column(ARRAY(Integer))
-    games = Column(ARRAY(Integer))
-    beauty = Column(ARRAY(Integer))
-    outdoors = Column(ARRAY(Integer))

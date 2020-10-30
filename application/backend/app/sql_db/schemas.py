@@ -4,10 +4,32 @@ from datetime import datetime
 
 from pydantic import BaseModel
 
+from app.sql_db.models import Listing, MessageThread
+
 """
 This file has the Pydantic models that are used to mirror the database tables as python objects.
 This allows fastAPI to do some cool things like send http responses of json objects that match these classes.
 """
+
+
+# =====User=====
+class UserBase(BaseModel):
+    email: str
+
+
+class UserCreate(UserBase):
+    password: str
+
+
+class User(UserBase):
+    userId: int
+    password_hash: str
+    messageThreads: List[MessageThread] = []
+    listings: List[Listing] = []
+    isAdmin: bool
+
+    class Config:
+        orm_mode = True
 
 
 # =====Listing=====
