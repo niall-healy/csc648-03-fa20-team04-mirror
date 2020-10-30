@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>CSC 648, Fall 2020, Team 4</title>
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+            integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+        <link rel="stylesheet" type="text/css" href="../stylesheets/login-style.css"/>
+        <script src="../javascript/index.js"></script>
+	</head>
+    <body>
+        <h3 class="team-info">CSC 648, Fall 2020, Team 4</h3>
+
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark static-top">
+            <a class="navbar-brand flex-grow-1" href="#">GatorTrader</a>
+                <form action="/s/" method="GET" class="nav-searchbar form-inline mx-md-auto">
+                    <select class="nav-search-dropdown" data-nav-selected="0" id="category" name="category">
+                        <option value="Any">Any</option>
+                        <option value="Textbooks">Textbooks</option>
+                        <option value="Housing">Housing</option>
+                        <option value="Automotive">Automotive</option>
+                    </select>
+
+                    <input type="text" id="search-bar" name="keywords">
+                    <input type="submit" id="search-button" class="btn btn-light btn-sm navbar-btn" value="Search">
+                </form>
+
+                <button class="navbar-toggler"  type="button" data-toggle="collapse" data-target="#navbar-userprofile">
+
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+            <div class="collapse navbar-collapse" id="navbar-userprofile">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">My Listings</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Account</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!--
+        Everything before this comment is copied from /index.html
+        besides changing CSS source to /login-style.css
+        -->
+
+        <br>
+        <main id="main-holder">
+            <h3 id="login-header"> Register </h3>
+
+            <form id="login-form">
+                Email <input type="text" name="username" id="username-field" class="login-form-field" placeholder="Email">
+                Password <input type="password" name="password" id="password-field" class="login-form-field" placeholder="Password">
+                First Name <input type="first-name" name="first-name" id="first-name-field" class="login-form-field" placeholder="First Name">
+                Last Name <input type="last-name" name="last-name" id="last-name-field" class="login-form-field" placeholder="Last Name"><br>
+                <input type="submit" value="Register" id="login-form-submit"><br>
+                <input type="button" value="Cancel" class="login-form-buttons">
+            </form>
+        </main>
+
+    </body>
+</html>
