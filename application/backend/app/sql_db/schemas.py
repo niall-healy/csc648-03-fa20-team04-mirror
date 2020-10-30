@@ -32,3 +32,87 @@ class Listing(ListingBase):  # Reading to return from API
 
     class Config:
         orm_mode = True  # Read as ORM model
+
+
+# =====Books=====
+class Books(Listing):
+    relevantClass: str
+
+    class Config:
+        orm_mode = True
+
+
+# =====Housing=====
+class Housing(Listing):
+    streetAddress: str
+
+    class Config:
+        orm_mode = True
+
+
+# =====Automotive=====
+class Automotive(Listing):
+    listingId: int
+    year: int
+    make: str
+    model: str
+    odometer: int
+    titleStatus: str
+    fuel: str
+
+    class Config:
+        orm_mode = True
+
+
+# =====Message=====
+class MessageBase(BaseModel):
+    messageContents: str
+
+
+class MessageCreate(MessageBase):
+    pass
+
+
+class Message(MessageBase):
+    messageId: int
+    threadId: int
+    senderId: int
+    timestamp: datetime
+
+    class Config:
+        orm_mode = True
+
+
+# =====Message Thread=====
+class MessageThreadBase(BaseModel):
+    messages: List[Message]
+
+
+class MessageThreadCreate(MessageThreadBase):
+    pass
+
+
+class MessageThread(MessageThreadBase):
+    threadId: int
+    sellerId: int
+    buyerId: int
+    timestamp: datetime
+
+    class Config:
+        orm_mode = True
+
+
+# =====Category=====
+class Category(BaseModel):
+    books: List[int]
+    housing: List[int]
+    services: List[int]
+    household: List[int]
+    electronics: List[int]
+    automotive: List[int]
+    games: List[int]
+    beauty: List[int]
+    outdoors: List[int]
+
+    class Config:
+        orm_mode = True
