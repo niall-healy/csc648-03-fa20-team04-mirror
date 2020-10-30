@@ -23,3 +23,8 @@ def get_listings_for_search(db: Session, searchQuery: str, category: str):
         retVal = db.query(models.Listing).filter(models.Listing.name.ilike('%' + searchQuery + '%')).all()
 
     return retVal
+
+def get_listing_by_id(db: Session, listingId: int):
+    retVal = db.query(models.Listing).filter(models.Listing.listingId == listingId).all()
+
+    return retVal
