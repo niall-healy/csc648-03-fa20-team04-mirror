@@ -11,6 +11,11 @@ This allows fastAPI to do some cool things like send http responses of json obje
 
 
 # =====Listing=====
+class PhotoPath(BaseModel):
+    id: int = None
+    photoPath: str
+
+
 class ListingBase(BaseModel):  # Shared attributes for creating and reading data
     name: str
     description: str
@@ -26,7 +31,7 @@ class Listing(ListingBase):  # Reading to return from API
     listingId: int
     sellerId: int = None
     timestamp: datetime = None
-    photo: str
+    photo: List[PhotoPath] = []
     isApproved: bool = None
     isActive: bool = None
 
