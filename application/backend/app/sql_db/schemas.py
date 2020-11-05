@@ -13,7 +13,12 @@ This allows fastAPI to do some cool things like send http responses of json obje
 # =====Listing=====
 class PhotoPath(BaseModel):
     id: int = None
-    photoPath: str
+    path: str = None
+    listing_id: int = None
+
+    class Config:
+        orm_mode = True
+
 
 
 class ListingBase(BaseModel):  # Shared attributes for creating and reading data
@@ -28,10 +33,11 @@ class ListingCreate(ListingBase):  # Create everything in the base
 
 
 class Listing(ListingBase):  # Reading to return from API
-    listingId: int
+    id: int
     sellerId: int = None
     timestamp: datetime = None
-    photo: List[PhotoPath] = []
+    photoPaths: List[PhotoPath] = []
+
     isApproved: bool = None
     isActive: bool = None
 

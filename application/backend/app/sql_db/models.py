@@ -19,7 +19,8 @@ class User(Base):
     password_hash = Column(String(50))
 
     sellerMessageThreads = relationship("MessageThread", back_populates="seller", passive_deletes=True)
-    buyerMessageThreads = relationship("MessageThread", back_populates="buyer", passive_deletes=True)
+    # buyerMessageThreads = relationship("MessageThread", back_populates="buyer", passive_deletes=True)
+
     listings = relationship("Listing", back_populates="seller", cascade="all, delete-orphan", passive_deletes=True)
 
     def __repr__(self):
@@ -50,11 +51,13 @@ class MessageThread(Base):
     id = Column(Integer, primary_key=True, index=True)
 
     seller_id = Column(Integer, ForeignKey('user.id'))
-    buyer_id = Column(Integer, ForeignKey('user.id'))
+    # buyer_id = Column(Integer, ForeignKey('user.id'))
 
     seller = relationship("User", back_populates="sellerMessageThreads")
-    buyer = relationship("User", back_populates="buyerMessageThreads")
-    messages = relationship('Message', back_populates='messageThread', cascade="all, delete-orphan", passive_deletes=True)
+    # buyer = relationship("User", back_populates="buyerMessageThreads")
+    messages = relationship('Message', back_populates='messageThread', cascade="all, delete-orphan",
+                            passive_deletes=True)
+
 
 
 class Message(Base):
