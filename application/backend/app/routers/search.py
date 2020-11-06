@@ -24,6 +24,9 @@ async def read_listings(keywords: str, category: str, db: Session = Depends(get_
     return crud.get_listings_for_search(db, keywords, category)
 
 
-@router.get("/results/")
-async def get_results_page(category: str, keywords: str):
-    return RedirectResponse(url="/html/results.html/?category=" + category + "&keywords=" + keywords)
+@router.get("/results/", response_class=HTMLResponse)
+async def get_results_page():
+    with open("/var/www/html/results.html") as f:
+        html = f.read()
+
+    return html
