@@ -1,3 +1,5 @@
+import datetime
+
 from sqlalchemy.orm import Session
 
 from app.sql_db import models, schemas
@@ -38,7 +40,17 @@ def get_listings_for_search(db: Session, searchQuery: str, category: str):
 
     return retVal
 
+
 def get_listing_by_id(db: Session, listingId: int):
     retVal = db.query(models.Listing).filter(models.Listing.listingId == listingId).all()
-
     return retVal
+
+
+def create_listing(db: Session, Listing: schemas.ListingCreate):
+    db_listing = models.Listing(**Listing.dict(), timestamp=datetime.datetime.now())
+    db.add(db_listing)
+    db.commit()
+    db.refresh(db_listing)
+    return db_listing
+
+
