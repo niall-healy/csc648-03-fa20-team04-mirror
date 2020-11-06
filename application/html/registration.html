@@ -63,10 +63,18 @@
             <h3 id="login-header"> Register </h3>
 
             <form id="login-form">
+                <div class="row">
+                    <div class="col-sm-6">
+                        First Name <input type="first-name" name="first-name" id="first-name-field" class="register-form-field" placeholder="First Name">
+                    </div>
+                    <div class="col-sm-6">
+                        Last Name <input type="last-name" name="last-name" id="last-name-field" class="register-form-field" placeholder="Last Name">
+                    </div>
+                </div>
                 Email <input type="text" name="username" id="username-field" class="register-form-field" placeholder="Email">
                 Password <input type="password" name="password" id="password-field" class="register-form-field" placeholder="Password">
-                First Name <input type="first-name" name="first-name" id="first-name-field" class="register-form-field" placeholder="First Name">
-                Last Name <input type="last-name" name="last-name" id="last-name-field" class="register-form-field" placeholder="Last Name">
+                Confirm Password <input type="password" name="password2" id="retype-password-field" class="register-form-field" placeholder="Confirm Password">
+
                 <input type="submit" value="Register" id="register-form-submit">
                 <input type="button" value="Cancel" onclick="window.location.href='../html/index.html'" class="register-form-buttons">
 
