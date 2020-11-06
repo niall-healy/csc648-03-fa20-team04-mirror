@@ -10,6 +10,8 @@ body {
     align-items: center;
 }
 
+/* From index.html */
+
 .purple-font {
     color: #7289da;
 }
@@ -47,7 +49,28 @@ html {
 
 .navbar {
     width: 100%;
+    margin-bottom: 10px;
 }
+
+/* End of CSS from index.html */
+
+#main-holder {
+    width: 30%;
+    height: 100%;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    background-color: #343a40;
+    border-radius: 7px;
+    box-shadow: 0px 0px 5px 2px black;
+}
+
+.mw-100 {
+    max-width: 100%;
+    min-width: 300px;
+}
+
+/* elements for login.html */
 
 #login-header {
     color: white;
@@ -57,17 +80,6 @@ html {
     padding: 10px;
 }
 
-#main-holder {
-    width: 30%;
-    height: 100%;
-    padding-bottom: 10px;
-    display: grid;
-    justify-items: center;
-    align-items: center;
-    background-color: #343a40;
-    border-radius: 7px;
-    box-shadow: 0px 0px 5px 2px black;
-}
 
 #login-error-msg-holder {
    width: 100%;
@@ -75,6 +87,7 @@ html {
    display: grid;
    justify-items: center;
    align-items: center;
+   display: none;
 }
 
 #login-error-msg {
@@ -96,9 +109,13 @@ html {
 
 #login-form {
     width: 100%;
+    padding-left: 20%;
+    padding-right: 20%;
+    padding-top: 20px;
+    padding-bottom: 10px;
     align-self: flex-start;
     display: grid;
-    justify-items: center;
+    /*justify-items: center;*/
     align-items: center;
 }
 
@@ -107,20 +124,22 @@ html {
 }
 
 .login-form-field {
-    width: 50%;
+    width: 100%;
     border: none;
     border-bottom: 1px solid #3a3a3a;
     margin-bottom: 10px;
     border-radius: 3px;
     outline: none;
-    padding: 0px 0px 5px 5px;
+    padding: 5px 5px 5px 0px;
 }
 
 #login-form-submit {
-    width: 30%;
+    width: 100%;
     padding: 7px;
     border: none;
     border-radius: 5px;
+    margin-top: 10px;
+    margin-bottom: 20px;
     color: white;
     font-weight: bold;
     background-color: #0275d8;
@@ -129,13 +148,61 @@ html {
 }
 
 .login-form-buttons {
-    width: 30%;
+    width: 100%;
     padding: 7px;
     border: none;
     border-radius: 5px;
+    margin-bottom: 20px;
     color: white;
     font-weight: bold;
     background-color: #23272a;
     cursor: pointer;
     outline: none;
+}
+
+/* elements for registration.html */
+
+.register-form-field::placeholder {
+    color: #3a3a3a;
+}
+
+.register-form-field {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #3a3a3a;
+    margin-bottom: 10px;
+    border-radius: 3px;
+    outline: none;
+    padding: 5px 5px 5px 0px;
+}
+
+#register-form-submit {
+    width: 100%;
+    padding: 7px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    color: white;
+    font-weight: bold;
+    background-color: #0275d8;
+    cursor: pointer;
+    outline: none;
+}
+
+.register-form-buttons {
+    width: 100%;
+    padding: 7px;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    color: white;
+    font-weight: bold;
+    background-color: #23272a;
+    cursor: pointer;
+    outline: none;
+}
+
+.log-in-container {
+    text-align: center;
 }

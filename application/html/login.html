@@ -16,6 +16,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
         <link rel="stylesheet" type="text/css" href="../stylesheets/login-style.css"/>
         <script src="../javascript/index.js"></script>
+        <script defer src="../javascript/login-register.js"></script>
 	</head>
     <body>
         <h3 class="team-info">CSC 648, Fall 2020, Team 4</h3>
@@ -42,7 +43,7 @@
             <div class="collapse navbar-collapse" id="navbar-userprofile">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Login</a>
+                        <a class="nav-link" href="../html/login.html">Login</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">My Listings</a>
@@ -59,19 +60,18 @@
         besides changing CSS source to /login-style.css
         -->
 
-        <br>
-        <main id="main-holder">
+        <main id="main-holder" class="mw-100">
             <h3 id="login-header"> Login </h3>
 
            <div id="login-error-msg-holder">
               <p id="login-error-msg"> Invalid username <span id="error-msg-second-line">and/or password</span></p>
            </div>
 
-            <form id="login-form">
+            <form id="login-form" class="mw-100">
                 Email <input type="text" name="username" id="username-field" class="login-form-field" placeholder="Email">
                 Password <input type="password" name="password" id="password-field" class="login-form-field" placeholder="Password">
-                <input type="submit" value="Login" id="login-form-submit"><br>
-                <input type="button" value="Register" class="login-form-buttons"><br>
+                <input type="submit" value="Login" id="login-form-submit">
+                <input type="button" value="Register" onclick="window.location.href='../html/registration.html'" class="login-form-buttons">
                 <input type="button" value="Forgot Password?" class="login-form-buttons">
             </form>
         </main>

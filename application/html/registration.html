@@ -42,7 +42,7 @@
             <div class="collapse navbar-collapse" id="navbar-userprofile">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Login</a>
+                        <a class="nav-link" href="../html/login.html">Login</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">My Listings</a>
@@ -59,17 +59,20 @@
         besides changing CSS source to /login-style.css
         -->
 
-        <br>
-        <main id="main-holder">
+        <main id="main-holder" class="mw-100">
             <h3 id="login-header"> Register </h3>
 
             <form id="login-form">
-                Email <input type="text" name="username" id="username-field" class="login-form-field" placeholder="Email">
-                Password <input type="password" name="password" id="password-field" class="login-form-field" placeholder="Password">
-                First Name <input type="first-name" name="first-name" id="first-name-field" class="login-form-field" placeholder="First Name">
-                Last Name <input type="last-name" name="last-name" id="last-name-field" class="login-form-field" placeholder="Last Name"><br>
-                <input type="submit" value="Register" id="login-form-submit"><br>
-                <input type="button" value="Cancel" class="login-form-buttons">
+                Email <input type="text" name="username" id="username-field" class="register-form-field" placeholder="Email">
+                Password <input type="password" name="password" id="password-field" class="register-form-field" placeholder="Password">
+                First Name <input type="first-name" name="first-name" id="first-name-field" class="register-form-field" placeholder="First Name">
+                Last Name <input type="last-name" name="last-name" id="last-name-field" class="register-form-field" placeholder="Last Name">
+                <input type="submit" value="Register" id="register-form-submit">
+                <input type="button" value="Cancel" onclick="window.location.href='../html/index.html'" class="register-form-buttons">
+
+                <div class="log-in-container">
+                    <p>Already have an account? <a href="../html/login.html">Log in</a></p>
+                </div>
             </form>
         </main>
 
