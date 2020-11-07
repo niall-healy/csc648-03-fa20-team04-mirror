@@ -34,8 +34,14 @@ async function handleLogin() {
 	var fetchUrl = '/login/';
 
 	fetch(fetchUrl, fetchOptions)
-	.then((data) => {
-		return data.json();
+	.then((response) => {
+		if(!response.ok) {
+			//TODO: make form display responsive text that the username or password is incorrect
+			throw new Error(response.status)
+		}
+		else{
+			return response.json();
+		}
 	})
 	.then((dataJson) => {
 		console.log(dataJson);
@@ -46,6 +52,10 @@ async function handleLogin() {
 		};
 
 		localStorage.setItem( 'loggedInUser', JSON.stringify(loggedInUser) );
+
+		//TODO: change login button to button that takes the user to their dashboard
+		// now that they're signed in
+
 	})
 	.catch((err) => {
       console.log(err);
@@ -71,8 +81,15 @@ async function handleRegister() {
 	var fetchUrl = '/register/';
 
 	fetch(fetchUrl, fetchOptions)
-	.then((data) => {
-		return data.json();
+	.then((response) => {
+		if(!response.ok) {
+			//TODO: make the form display responsive text that the username is already registered
+			throw new Error(response.status)
+		}
+		else{
+			return response.json();
+		}
+
 	})
 	.then((dataJson) => {
 		console.log(dataJson);
@@ -100,14 +117,20 @@ function validateRegisterInfo(email, passwd, repasswd){
 	let facultyEmailRegEx = new RegExp(/^[A-Za-z0-9._%+-]+@sfsu.edu$/);
 
 	if( !(studentEmailRegEx.test(email) || facultyEmailRegEx.test(email)) ){
+		//TODO: make this show up on the form
+
 		alert("Must use @sfsu.edu or @mail.sfsu.edu email");
 		return false;
 	}
 	if(passwd !== repasswd){
+		//TODO: make this show up on the form
+
 		alert("The passwords given do not match");
 		return false;
 	}
 	if(passwd.length < 6){
+		//TODO: make this show up on the form
+
 		alert("A password must be at least 6 characters");
 		return false;
 	}

@@ -51,7 +51,7 @@ def authenticate_user(db: Session, email: str, password: str):
     retVal = user
     if user is None:
         retVal = None
-    if not bcrypt.verify(password, user.password_hash):
+    elif not bcrypt.verify(password, user.password_hash):
         retVal = None
 
     return retVal

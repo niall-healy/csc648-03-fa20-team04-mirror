@@ -16,7 +16,7 @@ class User(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     email = Column(String(85), unique=True, index=True)
-    password_hash = Column(String(50))
+    password_hash = Column(String(100))
 
     sellerMessageThreads = relationship("MessageThread", back_populates="seller", passive_deletes=True)
     # buyerMessageThreads = relationship("MessageThread", back_populates="buyer", passive_deletes=True)

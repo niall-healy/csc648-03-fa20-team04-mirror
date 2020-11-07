@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from starlette.responses import RedirectResponse
 from starlette.staticfiles import StaticFiles
 
-from app.routers import search, register
+from app.routers import search, register, login, listing
 from app.sql_db import models
 
 from app.sql_db.database import SessionLocal, engine
@@ -33,6 +33,18 @@ app.include_router(
     register.router,
     prefix="/register",
     tags=["register"]
+)
+
+app.include_router(
+    login.router,
+    prefix="/login",
+    tags=["login"]
+)
+
+app.include_router(
+    listing.router,
+    prefix="/listing",
+    tags=["listing"]
 )
 
 # mounts static files
