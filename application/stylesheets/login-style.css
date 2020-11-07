@@ -72,7 +72,7 @@ html {
 
 /* elements for login.html */
 
-#login-header {
+.login-register-header {
     color: white;
     background-color: #23272a;
     width: 100%;
@@ -107,7 +107,7 @@ html {
     display: block;
 }
 
-#login-form {
+.login-register-form {
     width: 100%;
     padding-left: 20%;
     padding-right: 20%;
