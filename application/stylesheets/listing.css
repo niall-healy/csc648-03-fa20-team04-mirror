@@ -1,0 +1,19 @@
+html, body {
+   height: 100%;
+}
+.listing-text {
+   text-align: center;
+   margin-top: 10px;
+}
+
+.container-fluid {
+    min-height: 100%;
+    height:auto !important; /* cross-browser */
+    height: 100%; /* cross-browser */
+}
+#carousel-container {
+   align-content: center;
+}
+#contact-button {
+   margin-right: 20px;
+}

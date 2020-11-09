@@ -11,6 +11,16 @@ This allows fastAPI to do some cool things like send http responses of json obje
 
 
 # =====Listing=====
+class PhotoPath(BaseModel):
+    id: int = None
+    path: str = None
+    listing_id: int = None
+
+    class Config:
+        orm_mode = True
+
+
+
 class ListingBase(BaseModel):  # Shared attributes for creating and reading data
     name: str
     description: str
@@ -23,10 +33,11 @@ class ListingCreate(ListingBase):  # Create everything in the base
 
 
 class Listing(ListingBase):  # Reading to return from API
-    listingId: int
+    id: int
     sellerId: int = None
     timestamp: datetime = None
-    photo: str
+    photoPaths: List[PhotoPath] = []
+
     isApproved: bool = None
     isActive: bool = None
 
@@ -113,6 +124,26 @@ class Category(BaseModel):
     games: List[int]
     beauty: List[int]
     outdoors: List[int]
+
+    class Config:
+        orm_mode = True
+
+
+# =====User=====
+class UserBase(BaseModel):
+    email: str
+
+
+class UserCreate(UserBase):
+    password: str
+
+
+class User(UserBase):
+    userId: int
+    password_hash: str
+    messageThreads: List[MessageThread] = []
+    listings: List[Listing] = []
+    isAdmin: bool
 
     class Config:
         orm_mode = True

@@ -1,0 +1,75 @@
+body {
+    font-family: Georgia, serif;
+    background-color: #23272a;
+    color: #ffffff;
+}
+
+.team-info {
+    text-align: center;
+}
+
+main {
+    display: grid;
+    background-color: #343a40;
+    border-radius: 7px;
+    box-shadow: 0px 0px 5px 2px black;
+}
+
+#main-header {
+    color: white;
+    background-color: #23272a;
+    width: 100%;
+    text-align: center;
+    padding-top: 10px;
+}
+
+img {
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
+.thumbnail {
+    display: block;
+    overflow: hidden;
+    width: 140px;
+    height: 140px;
+    object-fit: cover;
+}
+
+.thumbnail img {
+    display: block;
+    min-width: 100%;
+    min-height: 100%;
+}
+
+.container-fluid {
+    overflow: hidden;
+}
+
+.list-group-item-1 {
+    background-color: #cbd1d6;
+}
+
+.list-group-item-2 {
+    background-color: #bfc5c9;
+}
+
+.no-overflow {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 100%;
+    display: block;
+}
+
+p {
+    white-space: nowrap;
+    margin-top: 5px;
+}
+
+.ellipsis-overflow {
+    text-overflow: ellipsis;
+}
