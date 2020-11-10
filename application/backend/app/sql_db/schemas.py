@@ -10,6 +10,21 @@ This allows fastAPI to do some cool things like send http responses of json obje
 """
 
 
+# =====Category=====
+class CategoryReturn(BaseModel):
+    category: str = None
+
+    class Config:
+        orm_mode = True
+
+
+class Category(CategoryReturn):
+    id: int = None
+
+    class Config:
+        orm_mode = True
+
+
 # =====Listing=====
 class PhotoPath(BaseModel):
     id: int = None
@@ -18,7 +33,6 @@ class PhotoPath(BaseModel):
 
     class Config:
         orm_mode = True
-
 
 
 class ListingBase(BaseModel):  # Shared attributes for creating and reading data
@@ -108,22 +122,6 @@ class MessageThread(MessageThreadBase):
     sellerId: int
     buyerId: int
     timestamp: datetime
-
-    class Config:
-        orm_mode = True
-
-
-# =====Category=====
-class Category(BaseModel):
-    books: List[int]
-    housing: List[int]
-    services: List[int]
-    household: List[int]
-    electronics: List[int]
-    automotive: List[int]
-    games: List[int]
-    beauty: List[int]
-    outdoors: List[int]
 
     class Config:
         orm_mode = True

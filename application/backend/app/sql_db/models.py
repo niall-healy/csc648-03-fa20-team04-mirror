@@ -59,7 +59,6 @@ class MessageThread(Base):
                             passive_deletes=True)
 
 
-
 class Message(Base):
     __tablename__ = 'message'
 
@@ -82,3 +81,10 @@ class PhotoPath(Base):
     listing_id = Column(Integer, ForeignKey("listing.id", ondelete="CASCADE"))
 
     listing = relationship("Listing", back_populates="photoPaths")
+
+
+class Category(Base):
+    __tablename__ = 'category'
+
+    id = Column(Integer, primary_key=True, index=True)
+    category = Column(String(32))

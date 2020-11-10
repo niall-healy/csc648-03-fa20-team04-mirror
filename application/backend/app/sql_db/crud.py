@@ -41,8 +41,9 @@ def get_listings_for_search(db: Session, searchQuery: str, category: str):
     return retVal
 
 
-def get_listing_by_id(db: Session, id: int):
-    retVal = db.query(models.Listing).filter(models.Listing.id == id).all()
+def get_listing_by_id(db: Session, listingId: int):
+    retVal = db.query(models.Listing).filter(models.Listing.id == listingId).all()
+
     return retVal
 
 
@@ -52,6 +53,10 @@ def create_listing(db: Session, Listing: schemas.ListingCreate):
     db.commit()
     db.refresh(db_listing)
     return db_listing
+
+
+def get_all_categories(db: Session):
+    return db.query(models.Category).all()
 
 
 
