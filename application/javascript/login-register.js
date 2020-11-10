@@ -31,9 +31,9 @@ async function handleLogin() {
 		body: new URLSearchParams(new FormData(form)).toString(),
 	}
 
-	var fetchUrl = '/login/';
+	var fetchURL = '/login/';
 
-	fetch(fetchUrl, fetchOptions)
+	fetch(fetchURL, fetchOptions)
 	.then((response) => {
 		if(!response.ok) {
 			//TODO: make form display responsive text that the username or password is incorrect
@@ -78,9 +78,9 @@ async function handleRegister() {
 		body: new URLSearchParams(new FormData(form)).toString(),
 	}
 
-	var fetchUrl = '/register/';
+	var fetchURL = '/register/';
 
-	fetch(fetchUrl, fetchOptions)
+	fetch(fetchURL, fetchOptions)
 	.then((response) => {
 		if(!response.ok) {
 			//TODO: make the form display responsive text that the username is already registered
