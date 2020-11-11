@@ -1,6 +1,9 @@
 function loadListing(listing){
-   document.getElementById('name-price').innerHTML =listing.name + " - $" + listing.price; 
-   document.getElementById('description').innerHTML = listing.description;
+   var elements = document.getElementsByClassName('listing-name');
+   Array.from(elements).forEach(element => element.innerHTML += listing.name);
+
+   document.getElementById('listing-description').innerHTML += listing.description;
+   document.getElementById('listing-price').innerHTML += '$' + listing.price;
 
    var carousel = document.getElementById('carousel-inner');
    var indicators = document.getElementById('carousel-indicators');
@@ -25,7 +28,7 @@ function loadListing(listing){
       }
       
       var img = document.createElement('img');
-      img.className = "d-block w-25 mx-auto round";
+      img.className = "img-thumbnail img-fluid";
       img.src = photos[i].path;
 
       document.getElementById('img-' + i).appendChild(img);
@@ -41,14 +44,14 @@ window.onload = function() {
       method: 'GET'
    }
 
-   fetchURL="/searchId/?id=" + id
+   fetchURL="/listing/getListing/?id=" + id
 
    fetch(fetchURL, fetchOptions)
    .then((data) => {
       return data.json();
    })
    .then((dataJson) => { 
-      loadListing(dataJson[0]); 
+      loadListing(dataJson); 
    })
    .catch((err) => {
       console.log(err);

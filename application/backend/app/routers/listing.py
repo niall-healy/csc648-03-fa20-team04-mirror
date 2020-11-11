@@ -14,9 +14,9 @@ router = APIRouter()
 
 # get listing
 
-@router.get("/", response_model=schemas.Listing)
-async def get_listing(listingId: int, db: Session = Depends(get_db)):
-    return crud.get_listing_by_id(db, listingId)
+@router.get("/getListing/", response_model=schemas.Listing)
+async def get_listing(id: int, db: Session = Depends(get_db)):
+    return crud.get_listing_by_id(db, id)
 
 
 # post listing
@@ -24,4 +24,12 @@ async def get_listing(listingId: int, db: Session = Depends(get_db)):
 @router.post("/", response_model=schemas.Listing)
 async def create_listing(db: Session = Depends(get_db)):
     return crud.create_listing(db, schemas.ListingCreate)
+
+# get listing page
+@router.get("/", response_class=HTMLResponse)
+async def get_listing_page():
+    with open("/var/www/html/listing.html") as f:
+        html = f.read()
+
+    return html
 
