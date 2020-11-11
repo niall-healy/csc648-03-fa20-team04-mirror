@@ -14,6 +14,16 @@ import uuid
 router = APIRouter()
 
 
+# get listing page
+@router.get("/", response_class=HTMLResponse)
+async def get_listing_page():
+    with open("/var/www/html/listing.html") as f:
+        html = f.read()
+
+    return html
+
+
+
 # get listing
 
 @router.get("/getListing/", response_model=schemas.Listing)

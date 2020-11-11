@@ -137,7 +137,7 @@ class UserCreate(UserBase):
 
 
 class User(UserBase):
-    userId: int
+    id: int
     password_hash: str
     messageThreads: List[MessageThread] = []
     listings: List[Listing] = []

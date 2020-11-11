@@ -53,17 +53,6 @@ app.include_router(
     tags=["search"]
 )
 
-    login.router,
-    prefix="/login",
-    tags=["login"]
-)
-
-app.include_router(
-    listing.router,
-    prefix="/listing",
-    tags=["listing"]
-)
-
 # mounts static files
 app.mount("/", StaticFiles(directory=".."), name="static")
 
