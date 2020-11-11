@@ -1,7 +1,5 @@
 function loadListing(listing){
-   var elements = document.getElementsByClassName('listing-name');
-   Array.from(elements).forEach(element => element.innerHTML += listing.name);
-
+   document.getElementById('listing-name').innerHTML += listing.name;
    document.getElementById('listing-description').innerHTML += listing.description;
    document.getElementById('listing-price').innerHTML += '$' + listing.price;
 
@@ -10,18 +8,19 @@ function loadListing(listing){
 
    photos = listing.photoPaths;
 
+   // Load each photo, and with each photo create a new indicator
    for(var i = 0; i < photos.length; i++){
       var div;
       div = document.createElement('div');
       div.id = 'img-' + i;
 
       if(i == 0){
-	 div.className = 'carousel-item active';
-	 carousel.appendChild(div);
+	      div.className = 'carousel-item active';
+	      carousel.appendChild(div);
 
          indicators.innerHTML += '<li data-target="#carousel" data-slide-to="' + i + '"" class="active"></li>';
       } else {
-	 div.className = 'carousel-item';
+	      div.className = 'carousel-item';
          carousel.appendChild(div);
 
          indicators.innerHTML += '<li data-target="#carousel" data-slide-to="' + i + '""></li>';
@@ -46,6 +45,7 @@ window.onload = function() {
 
    fetchURL="/listing/getListing/?id=" + id
 
+   // Listing information fetch call
    fetch(fetchURL, fetchOptions)
    .then((data) => {
       return data.json();
