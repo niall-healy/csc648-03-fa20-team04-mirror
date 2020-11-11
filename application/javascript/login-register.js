@@ -17,10 +17,10 @@ window.onload = function() {
 }
 
 // constants for error messages
-//const loginErrorMsgHolder = document.getElementById("login-error-msg-holder");
-//const loginErrorMsg = document.getElementById("login-error-msg");
-//const registerErrorMsgHolder = document.getElementById("register-error-msg-holder");
-//const registerErrorMsgRegistered = document.getElementById("register-error-msg");
+const loginErrorMsgHolder = document.getElementById("login-error-msg-holder");
+const loginErrorMsg = document.getElementById("login-error-msg");
+const registerErrorMsgHolder = document.getElementById("register-error-msg-holder");
+const registerErrorMsgRegistered = document.getElementById("register-error-msg-registered");
 
 async function handleLogin() {
 	var form = document.getElementById('login-form');
@@ -150,31 +150,3 @@ function validateRegisterInfo(email, passwd, repasswd){
 	}
 	return true;
 }
-
-const loginForm = document.getElementById("login-form");
-const loginButton = document.getElementById("login-form-submit");
-const loginErrorMsg = document.getElementById("login-error-msg");
-const loginErrorMsgHolder = document.getElementById("login-error-msg-holder");
-const registerForm = document.getElementById("register-form");
-const registerButton = document.getElementById("register-form-submit");
-const registerErrorMsgHolder = document.getElementById("register-error-msg-holder");
-const registerErrorMsgRegistered = document.getElementById("register-error-msg");
-
-// When the login button is clicked, the following code is executed
-loginButton.addEventListener("click", (e) => {
-    // Prevent the default submission of the form
-    e.preventDefault();
-    // Get the values input by the user in the form fields
-    const username = loginForm.username.value;
-    const password = loginForm.password.value;
-
-    if (username === "user" && password === "web_dev") {
-        // If the credentials are valid, show an alert box and reload the page
-        alert("You have successfully logged in.");
-        location.reload();
-    } else {
-        // Otherwise, make the login error message show (change its opacity)
-        registerErrorMsgRegistered.style.opacity = 1;
-        registerErrorMsgHolder.style.display = "contents";
-    }
-})
