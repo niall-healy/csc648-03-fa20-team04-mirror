@@ -47,8 +47,11 @@ def get_listing_by_id(db: Session, listingId: int):
     return retVal
 
 
-def create_listing(db: Session, Listing: schemas.ListingCreate):
-    db_listing = models.Listing(**Listing.dict(), timestamp=datetime.datetime.now())
+def create_listing(db: Session, Listing: schemas.Listing):
+
+    db_listing = models.Listing(**Listing.dict(),
+                                timestamp=datetime.datetime.now()
+                                )
     db.add(db_listing)
     db.commit()
     db.refresh(db_listing)

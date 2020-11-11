@@ -48,7 +48,7 @@ class ListingCreate(ListingBase):  # Create everything in the base
 
 class Listing(ListingBase):  # Reading to return from API
     id: int
-    sellerId: int = None
+    seller_id: int = None
     timestamp: datetime = None
     photoPaths: List[PhotoPath] = []
 

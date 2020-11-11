@@ -46,7 +46,7 @@ main {
     height: 35px;
 }
 
-#post-listing-form input, #post-listing-form .dropdown, #post-listing-form .form-field  {
+#post-listing-form input, #post-listing-form .dropdown, #post-listing-form .form-field, #post-listing-form #image-preview  {
     display: block;
     margin-bottom: 20px;
 }
@@ -63,4 +63,16 @@ main {
 #post-listing-form #submit-button {
     margin-top: 20px;
     width: 30%;
+}
+
+#image-preview * {
+    display: inline-block;
+}
+
+.thumbnail {
+    display: block;
+    overflow: hidden;
+    width: 140px;
+    height: 140px;
+    object-fit: cover;
 }

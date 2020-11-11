@@ -30,12 +30,29 @@ async def root():
 app.include_router(search.router)
 
 app.include_router(
+    listing.router,
+    prefix="/listing",
+    tags=["listing"]
+)
+
+app.include_router(
+    login.router,
+    prefix="/login",
+    tags=["login"]
+)
+
+app.include_router(
     register.router,
     prefix="/register",
     tags=["register"]
 )
 
 app.include_router(
+    search.router,
+    prefix="/search",
+    tags=["search"]
+)
+
     login.router,
     prefix="/login",
     tags=["login"]
