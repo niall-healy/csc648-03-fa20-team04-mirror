@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Listing Page</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+            integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+        <script src="../../javascript/index.js"></script>
+        <script src="../../javascript/listing.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" 
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" 
+            crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+        <link rel="stylesheet" type="text/css" href="../stylesheets/style.css"/>
+        <link rel="stylesheet" type="text/css" href="../stylesheets/listing.css"/>
+    </head>
+    <body>
+        <h1 class="team-info">CSC 648, Fall 2020, Team 4</h1>
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark static-top">
+            <a class="navbar-brand flex-grow-1" href="#">GatorTrader</a>
+            <form action="/results/" method="GET" class="nav-searchbar form-inline mx-md-auto">
+                <select class="nav-search-dropdown" data-nav-selected="0" id="category" name="category">
+                    <option value="Any">Any</option>
+                    <option value="Textbooks">Textbooks</option>
+                    <option value="Housing">Housing</option>
+                    <option value="Automotive">Automotive</option>
+                </select>
+                <div class="flex-grow-1 d-flex"></div>
+                <input type="text" id="search-bar" name="keywords">
+                <input type="submit" id="search-button" class="btn btn-light btn-sm navbar-btn" value="Search">
+            </form>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-userprofile">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbar-userprofile">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">My Listings</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Account</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="container-fluid d-flex h-100">
+            <div class="row justify-content-center align-self-center w-100">
+                <div id="carousel-container" class="col-lg-4 col-md-5 col-sm-3 offset-1 text-center">
+                    <div id="carousel" class="carousel slide" data-ride="carousel">
+                        <ol id="carousel-indicators" class="carousel-indicators">
+                        </ol>
+                        <div id="carousel-inner" class="carousel-inner">
+                        </div>
+                        <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                </div>
+                <div id="item-info" class="col-lg-4 col-md-5 col-sm-3 offset-1 text-center">
+                    <ul class="list-group text-dark">
+                        <li class="list-group-item p-2 list-group-item-1">
+                            <h5 id="listing-name">
+                            <b>Name: </b>
+                            <h5>
+                        </li>
+                        <li class="list-group-item p-2 list-group-item-2">
+                            <h5 id="listing-description">
+                            <b>Description: </b>
+                            <h5>
+                        </li>
+                        <li class="list-group-item p-2 list-group-item-1">
+                            <h5 id="listing-price">
+                            <b>Price: </b>
+                            <h5>
+                        </li>
+                    </ul>
+                    <button type="button" id="contact-button" class="btn btn-primary btn-block no-overflow">Contact Seller</button>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
