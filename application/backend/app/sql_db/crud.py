@@ -42,7 +42,7 @@ def get_listings_for_search(db: Session, searchQuery: str, category: str):
 
 
 def get_listing_by_id(db: Session, listingId: int):
-    retVal = db.query(models.Listing).filter(models.Listing.id == listingId).all()
+    retVal = db.query(models.Listing).filter(models.Listing.id == listingId).first()
 
     return retVal
 
