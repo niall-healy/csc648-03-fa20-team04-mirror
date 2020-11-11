@@ -30,3 +30,8 @@ async def get_results_page():
         html = f.read()
 
     return html
+
+
+@router.get("/categories/", response_model=List[schemas.CategoryReturn])
+async def get_categories(db: Session = Depends(get_db)):
+    return crud.get_all_categories(db)

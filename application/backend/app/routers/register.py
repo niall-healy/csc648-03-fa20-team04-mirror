@@ -8,8 +8,8 @@ router = APIRouter()
 
 
 @router.post("/")
-async def create_user(email: str = Form(...), password: str = Form(...), db: Session = Depends(get_db)):
-    user = schemas.UserCreate(email=email, password=password)
+async def create_user(username: str = Form(...), password: str = Form(...), db: Session = Depends(get_db)):
+    user = schemas.UserCreate(email=username, password=password)
     db_user = crud.get_user_by_email(db, user.email)
     if db_user:
         raise HTTPException(status_code=400, detail="Email already registered")
