@@ -27,8 +27,11 @@ const registerErrorMsgRegistered = document.getElementById("register-error-msg-r
 
 /* Register error message: Must use SFSU emails */
 const registerErrorSfsuEmailHolder = document.getElementById("register-error-sfsu-email-holder");
-const registerErrorMsgSfsuEmail = document.getElementById("register-error-msg-sfsu-email");
+//const registerErrorMsgSfsuEmail = document.getElementById("register-error-msg-sfsu-email");
 
+/* Register error message: Passwords do no match */
+const registerErrorPasswordMismatchHolder = document.getElementById("register-error-password-mismatch-holder");
+const registerErrorMsgPasswordMismatch = document.getElementById("register-error-msg-password-mismatch");
 
 async function handleLogin() {
 	var form = document.getElementById('login-form');
@@ -147,6 +150,8 @@ function validateRegisterInfo(email, passwd, repasswd){
 	}
 	if(passwd !== repasswd){
 		//TODO: make this show up on the form
+		registerErrorMsgPasswordMismatch.style.opacity = 1;
+        registerErrorPasswordMismatchHolder.style.display = "contents";
 
 		alert("The passwords given do not match");
 		return false;
@@ -159,3 +164,27 @@ function validateRegisterInfo(email, passwd, repasswd){
 	}
 	return true;
 }
+
+// checks if both password fields are equal
+function checkPasswordMatch() {
+    const pwCheck = document.getElementById("div-check-pw-match");
+
+    var password = $("#register-password-field").val();
+    var confirmPassword = $("#retype-password-field").val();
+
+    if (password != confirmPassword && confirmPassword != "") {
+        pwCheck.style.opacity = 1;
+        pwCheck.style.display = "block";
+        $("#div-check-pw-match").html("Passwords do not match!");
+    }
+    else {
+        pwCheck.style.opacity = 0;
+        pwCheck.style.display = "none";
+        $("#div-check-pw-match").html("");
+    }
+}
+
+$(document).ready(function () {
+   $("#register-password-field, #retype-password-field").keyup(checkPasswordMatch);
+});
+
