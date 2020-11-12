@@ -11,7 +11,6 @@ from typing import List
 
 import os.path
 import uuid
-import sys
 
 # instantiates an APIRouter
 router = APIRouter()
