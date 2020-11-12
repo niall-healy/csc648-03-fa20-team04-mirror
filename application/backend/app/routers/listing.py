@@ -35,25 +35,37 @@ async def get_listing(id: int, db: Session = Depends(get_db)):
 @router.post("/", response_model=schemas.Listing)
 async def create_listing(db: Session = Depends(get_db),
                          user: schemas.User = Depends(get_current_user),
-                         Name: str = Form(...),
-                         price: str = Form(...),
+                         name: str = Form(...),
+                         price: int = Form(...),
                          category: str = Form(...),
                          description: str = Form(...),
                          images: List[UploadFile] = File(...)):
-    photo_paths = []
-    # store file in directory
+    # create new listing object
+    listing = schemas.Listing(name=name, description=description, price=price, category=category,
+                              seller_id=user.id)
+    photoPaths = []
+
     for file in images:
         # create random file name
         file.filename = str(uuid.uuid4())
 
-        # append this filename to the end of the file_names
+        # construct file path
         path = "/images/" + file.filename
-        photo_paths.append(schemas.PhotoPath(path=path))
+        fileType = file.content_type.split('/', 1)[1]
+        fileType = '.' + fileType
+
+        photoPaths.append(path + fileType)
 
         # put the file in the /images/directory
-        os.path.join("/images/", file)  # not sure if this is going to work
+        newFile = open('/var/www/images/' + file.filename + fileType, 'w+b')
 
-    listing = schemas.Listing(name=Name, description=description, price=price, category=category,
-                              photoPaths=photo_paths, seller_id=user.id)
+        # Read image data to new file
+        while True:
+            byte = await file.read(1)
+            if not byte:
+                break
+            newFile.write(byte)
 
-    return crud.create_listing(db, listing)
+        newFile.close()
+
+    return crud.create_listing(db, listing, photoPaths)

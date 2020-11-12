@@ -35,22 +35,15 @@ class PhotoPath(BaseModel):
         orm_mode = True
 
 
-class ListingBase(BaseModel):  # Shared attributes for creating and reading data
+class Listing(BaseModel):  # Reading to return from API
+    id: int = None
+    seller_id: int = None
+    timestamp: datetime = datetime.now()
+    photoPaths: List[PhotoPath] = []
     name: str
     description: str
     price: int
     category: str
-
-
-class ListingCreate(ListingBase):  # Create everything in the base
-    pass
-
-
-class Listing(ListingBase):  # Reading to return from API
-    id: int
-    seller_id: int = None
-    timestamp: datetime = None
-    photoPaths: List[PhotoPath] = []
 
     isApproved: bool = None
     isActive: bool = None
