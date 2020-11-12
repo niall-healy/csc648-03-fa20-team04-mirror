@@ -22,10 +22,10 @@ async function submitListing() {
 		var fetchOptions = {
 			method: "POST",
 			headers: {
-	      		'Content-Type': 'application/x-www-form-urlencoded',
+	      		'Content-Type': 'multipart/form-data',
 				'Authorization': 'Bearer ' + user.authToken,
 	    	},
-			body: new URLSearchParams(new FormData(form)).toString(),
+			body: new FormData(form),
 		}
 
 		var fetchURL = '/listing/';

@@ -1,5 +1,6 @@
 import datetime
 
+from sqlalchemy import desc
 from sqlalchemy.orm import Session
 
 from app.sql_db import models, schemas
@@ -47,14 +48,27 @@ def get_listing_by_id(db: Session, listingId: int):
     return retVal
 
 
-def create_listing(db: Session, Listing: schemas.Listing):
-
-    db_listing = models.Listing(**Listing.dict(),
-                                timestamp=datetime.datetime.now()
-                                )
+def create_listing(db: Session, listing: schemas.Listing, photoPaths):
+    # Create listing object
+    db_listing = models.Listing(**listing.dict())
     db.add(db_listing)
     db.commit()
     db.refresh(db_listing)
+
+    # Grab newly created listing from db
+    db_listing = db.query(models.Listing).order_by(models.Listing.id.desc()).first()
+
+    # Create PhotoPath objects for each photo path and add to the listing object
+    for path in photoPaths:
+        pathObj = models.PhotoPath()
+        pathObj.path = path
+        pathObj.listing_id = db_listing.id
+        db_listing.photoPaths.append(pathObj)
+
+    db.add(db_listing)
+    db.commit()
+    db.refresh(db_listing)
+
     return db_listing
 
 

@@ -76,7 +76,7 @@ class PhotoPath(Base):
     __tablename__ = 'photo_path'
 
     id = Column(Integer, primary_key=True, index=True)
-    path = Column(String(48))
+    path = Column(String(49))
 
     listing_id = Column(Integer, ForeignKey("listing.id", ondelete="CASCADE"))
 

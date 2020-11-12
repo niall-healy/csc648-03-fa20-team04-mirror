@@ -2,6 +2,7 @@ from datetime import timedelta, datetime
 from os import environ
 
 import jwt
+from jwt import PyJWTError
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from passlib.hash import bcrypt
@@ -80,7 +81,7 @@ async def get_current_user(db: Session = Depends(get_db), token: str = Depends(o
         email: str = payload.get("sub")
         if email is None:
             raise credentials_exception
-    except jwt.PyJWTError as e:
+    except PyJWTError as e:
         print(e)
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
