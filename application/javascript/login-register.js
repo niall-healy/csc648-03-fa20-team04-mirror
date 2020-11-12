@@ -17,10 +17,18 @@ window.onload = function() {
 }
 
 // constants for error messages
+/* Login error message: invalid email/password */
 const loginErrorMsgHolder = document.getElementById("login-error-msg-holder");
 const loginErrorMsg = document.getElementById("login-error-msg");
-const registerErrorMsgHolder = document.getElementById("register-error-msg-holder");
+
+/* Register error message: Email already registered */
+const registerErrorRegisteredHolder = document.getElementById("register-error-registered-holder");
 const registerErrorMsgRegistered = document.getElementById("register-error-msg-registered");
+
+/* Register error message: Must use SFSU emails */
+const registerErrorSfsuEmailHolder = document.getElementById("register-error-sfsu-email-holder");
+const registerErrorMsgSfsuEmail = document.getElementById("register-error-msg-sfsu-email");
+
 
 async function handleLogin() {
 	var form = document.getElementById('login-form');
@@ -95,12 +103,12 @@ async function handleRegister() {
 		if(!response.ok) {
 			//TODO: make the form display responsive text that the username is already registered
 			registerErrorMsgRegistered.style.opacity = 1;
-            registerErrorMsgHolder.style.display = "contents";
+            registerErrorRegisteredHolder.style.display = "contents";
 			throw new Error(response.status)
 		}
 		else{
 		    registerErrorMsgRegistered.style.opacity = 0;
-		    registerErrorMsgHolder.style.display = "none";
+		    registerErrorRegisteredHolder.style.display = "none";
 			return response.json();
 		}
 
@@ -132,7 +140,8 @@ function validateRegisterInfo(email, passwd, repasswd){
 
 	if( !(studentEmailRegEx.test(email) || facultyEmailRegEx.test(email)) ){
 		//TODO: make this show up on the form
-
+		registerErrorMsgSfsuEmail.style.opacity = 1;
+        registerErrorSfsuEmailHolder.style.display = "contents";
 		alert("Must use @sfsu.edu or @mail.sfsu.edu email");
 		return false;
 	}
