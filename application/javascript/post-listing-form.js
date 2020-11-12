@@ -3,6 +3,52 @@
 // prepare images to be sent to backend
 // add additional fields depending on category (i.e. Category: books | will ask for ISBN:   ,Class:   , etc..)
 
+window.onload = function() {
+	let postListingButton = document.getElementById('submit-button');
+
+	postListingButton.addEventListener('click', (e) => {
+		e.preventDefault();
+		submitListing();
+	});
+}
+
+async function submitListing() {
+	let form = document.getElementById('post-listing-form');
+	let userJSON = localStorage.getItem('loggedInUser');
+
+	if(userJSON != null) {
+		let user = JSON.parse(userJSON);
+
+		var fetchOptions = {
+			method: "POST",
+			headers: {
+	      		'Content-Type': 'application/x-www-form-urlencoded',
+				'Authorization': 'Bearer ' + user.authToken,
+	    	},
+			body: new URLSearchParams(new FormData(form)).toString(),
+		}
+
+		var fetchURL = '/listing/';
+
+		fetch(fetchURL, fetchOptions)
+		.then((response) => {
+			if(!response.ok) {
+				throw new Error(response.status)
+			}
+			else{
+				return response.json();
+			}
+		})
+		.then((dataJson) => {
+			console.log(dataJson);
+			//window.location.replace('listing.html');
+		})
+		.catch((err) => {
+	    	console.log(err);
+	   	})
+	}
+}
+
 // update image preview
 $('#file-upload').on('change', function(e) {
     var fileCount = $(this)[0].files.length;
