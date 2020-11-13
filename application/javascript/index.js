@@ -1,3 +1,25 @@
+$(".category-item").on("click", function() {
+    $("input[name=category]").val($(this).attr("data-value"));
+    $("#dropdown-button").html($(this).text());
+});
+
+if (localStorage.getItem('loggedInUser')) {
+    let accountLogin = document.getElementById('account-login');
+    let _html = `<a class="dropdown-toggle nav-link" id="dropdown-hide" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</a> \
+                <ul class="dropdown-menu dropdown-menu-right" id="login-dropdown"> \
+                    <li><a class="nav-link" href="#">Profile</a></li> \
+                    <li><a class="nav-link" href="#">Listings</a></li> \
+                    <li><a class="nav-link" href="#">Messages</a></li> \
+                    <li><a class="nav-link" id="logout-button" href="/">Logout</a></li> \
+                </ul>`;
+    accountLogin.innerHTML = _html;
+    // document.getElementById('logout-button').onclick = logoutUser;
+} else {
+    let accountLogin = document.getElementById('account-login');
+    let _html = `<a class="nav-link" href="/login/">Login/Signup</a>`
+    accountLogin.innerHTML = _html;
+}
+
 window.onload = function() {
 	var localStorageCategories = localStorage.getItem('categories');
 	if (localStorageCategories == null) {
@@ -61,3 +83,4 @@ function renderCategoryDropdown(categories) {
 	}
 	dropdown.innerHTML = _html;
 }
+
