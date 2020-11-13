@@ -30,3 +30,67 @@ body {
 .team-info {
     text-align: center;
 }
+
+#dropdown-button {
+    border: 1px solid rgb(21, 20, 22);
+    background-color: #343a40;
+    cursor: pointer;
+    border-color: white;
+}
+
+#dropdown-button:hover {
+    background-color: #44484c;
+}
+
+#search-button:hover {
+    background-color: #44484c;
+}
+
+#search-bar {
+    display: inline-block;
+    background-color: rgb(21, 20, 22);
+    color: rgb(210, 210, 210);
+    max-width: 700px;
+}
+
+.navbar {
+    margin-bottom: 5px;
+}
+
+#dropdown-category {
+    background-color: rgb(21, 20, 22);
+}
+
+#login-dropdown {
+    background-color: #343a40;
+}
+
+.category-item {
+    text-decoration: none;
+    cursor: pointer;
+    color: white;
+    padding-left: 5px;
+}
+
+.category-item:focus,
+.category-item:hover {
+    background-color: #44484c;
+}
+
+@media only screen and (max-width: 768px) {
+    #dropdown-hide {
+      display: none;
+    }
+
+    #login-dropdown {
+        display:block;
+        position: static;
+        float: none;
+        width: auto;
+        margin-top: 0;
+        background-color: transparent;
+        border: 0;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+    }
+}

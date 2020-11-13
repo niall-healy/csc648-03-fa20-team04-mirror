@@ -11,40 +11,94 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
         <link rel="stylesheet" type="text/css" href="/stylesheets/style.css"/>
         <!-- deferred javascript -->
-        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous" defer></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous" defer></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous" defer></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js" defer></script>
-		<script src="/javascript/index.js" defer></script>
+        <script src="/javascript/index.js" defer></script>
     </head>
     <body>
-        <h3 class="team-info">CSC 648, Fall 2020, Team 4</h3>
+        <h5 class="team-info">CSC 648, Fall 2020, Team 4</h5>
         <!-- navbar -->
         <nav class="navbar navbar-expand-md navbar-dark bg-dark static-top">
-            <a class="navbar-brand flex-grow-1" href="#">GatorTrader</a>
-            <form action="/results/" method="GET" class="nav-searchbar form-inline mx-md-auto">
-                <select class="nav-search-dropdown" data-nav-selected="0" id="category" name="category">
-                </select>
-                <input type="text" id="search-bar" name="keywords">
-                <input type="submit" id="search-button" class="btn btn-light btn-sm navbar-btn" value="Search">
-            </form>
-            <button class="navbar-toggler"  type="button" data-toggle="collapse" data-target="#navbar-userprofile">
-            <span class="navbar-toggler-icon"></span>
+            <div class="d-flex flex-grow-1">
+                <a class="navbar-brand" href="/">GatorTrader</a>
+                <form class="mr-2 my-auto w-100 d-inline-block order-1">
+                    <div class="input-group justify-content-center">
+                        <div class="input-group-prepend btn-group">
+                            <button class="btn btn-secondary dropdown-toggle" id="dropdown-button" type="button" data-toggle="dropdown" 
+                                aria-haspopup="true" aria-expanded="false">Any</button>
+                            <input name="category" value="Any" type="hidden">
+                            <ul class="dropdown-menu" id="dropdown-category">
+                                <li class="category-item" data-value="Any">Any</li>
+                                <li class="category-item" data-value="Textbooks">Textbooks</li>
+                                <li class="category-item" data-value="Housing">Housing</li>
+                                <li class="category-item" data-value="Automotive">Automotive</li>
+                            </ul>
+                        </div>
+                        <input type="text" class="form-control border border-right-0" id="search-bar" name="keywords" placeholder="Search...">
+                        <span class="input-group-append">
+                            <button class="btn btn-outline-light border border-left-0" id="search-button" type="submit">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </span>
+                    </div>
+                </form>
+            </div>
+            <button class="navbar-toggler order-0" type="button" data-toggle="collapse" data-target="#collapse-menu">
+                <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbar-userprofile">
+            <div class="navbar-collapse collapse flex-shrink-1 flex-grow-0 order-last" id="collapse-menu">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Login</a>
+                        <a class="nav-link" href="#">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">My Listings</a>
+                        <a class="nav-link" href="#">Post</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Account</a>
+                    <li class="dropdown" id="account-login">
                     </li>
                 </ul>
             </div>
         </nav>
+        <!-- end navbar -->
+    
         <!-- content -->
+        <div class="container">
+            <div class="box-border text-center">
+                <h1>GatorTrader</h1>
+                <h4>Buying, Selling, & Services for SFSU Students</h4>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="card-deck">
+                <div class="card mb-2 text-center box-border">
+                    <img class="card-img-top img-fluid" src="//placehold.it/500x280" alt="Card image cap">
+                    <div class="card-body">
+                        <h4 class="card-title">Title</h4>
+                        <p class="card-text">Price - Description</p>
+                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                    </div>
+                </div>
+                <div class="card mb-2 text-center box-border">
+                    <img class="card-img-top img-fluid" src="//placehold.it/500x280" alt="Card image cap">
+                    <div class="card-body">
+                        <h4 class="card-title">Title</h4>
+                        <p class="card-text">Price - Description</p>
+                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                    </div>
+                </div>
+                <div class="w-100 d-none d-sm-block d-md-none"><!-- wrap every 2 on sm--></div>
+                <div class="card mb-2 text-center box-border">
+                    <img class="card-img-top img-fluid" src="//placehold.it/500x280" alt="Card image cap">
+                    <div class="card-body">
+                        <h4 class="card-title">Title</h4>
+                        <p class="card-text">Price - Description</p>
+                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                    </div>
+                </div>
+            </div>
+        </div>        
     </body>
 </html>
