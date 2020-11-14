@@ -8,7 +8,7 @@ window.onload = function() {
 				<div class="input-group-prepend btn-group"> \
 					<button class="btn btn-secondary dropdown-toggle" id="dropdown-button" type="button" data-toggle="dropdown" \
 						aria-haspopup="true" aria-expanded="false">Any</button> \
-					<input name="category" value="Any" type="hidden"> \
+					<input name="category" id="category" value="Any" type="hidden"> \
 					<ul class="dropdown-menu" id="dropdown-category"> \
 					</ul> \
 				</div> \
@@ -70,12 +70,12 @@ function searchPersistence() {
 }
 
 function loadCategories() {
-	let localStorageCategories = localStorage.getItem('categories');
-	if (localStorageCategories == null) {
+	let localStorageCategories = JSON.parse(localStorage.getItem('categories'));
+	if (localStorageCategories == null || localStorageCategories.length == 0) {
 		getCategoriesFromServer();
 	}
 	else {
-		renderCategoryDropdown(JSON.parse(localStorageCategories));
+		renderCategoryDropdown(localStorageCategories);
 	}
 
 	$(".category-item").on("click", function() {
