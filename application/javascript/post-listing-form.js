@@ -5,6 +5,7 @@
 
 window.onload = function() {
 	let postListingButton = document.getElementById('submit-button');
+	let localStorageCategories = localStorage.getItem('categories');
 
 	postListingButton.addEventListener('click', (e) => {
 		e.preventDefault();
