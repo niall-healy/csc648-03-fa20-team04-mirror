@@ -1,32 +1,4 @@
 window.onload = function() {
-	let localStorageCategories = localStorage.getItem('categories');
-	if (localStorageCategories == null) {
-		getCategoriesFromServer();
-	}
-	else {
-		renderCategoryDropdown(JSON.parse(localStorageCategories));
-	}
-
-	$(".category-item").on("click", function() {
-	    $("input[name=category]").val($(this).attr("data-value"));
-	    $("#dropdown-button").html($(this).text());
-	});
-
-	if (localStorage.getItem('loggedInUser')) {
-	    let accountLogin = document.getElementById('account-login');
-	    let _html = `<a class="dropdown-toggle nav-link" id="dropdown-hide" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</a> \
-	                <ul class="dropdown-menu dropdown-menu-right" id="login-dropdown"> \
-	                    <li><a class="nav-link" href="#">Profile</a></li> \
-	                    <li><a class="nav-link" id="logout-button" onclick="handleLogout();">Logout</a></li> \
-	                </ul>`;
-	    accountLogin.innerHTML = _html;
-	    // document.getElementById('logout-button').onclick = logoutUser;
-	} else {
-	    let accountLogin = document.getElementById('account-login');
-	    let _html = `<a class="nav-link" href="/html/registration.html">Login/Register</a>`
-	    accountLogin.innerHTML = _html;
-	}
-
 	let navbar = document.getElementById("navId");
 
 	navbar.innerHTML = '<div class="d-flex flex-grow-1"> \
@@ -64,6 +36,64 @@ window.onload = function() {
 			</li> \
 		</ul> \
 	</div>';
+
+	loadCategories();
+
+	renderNavForUser();
+
+	searchPersistence();
+}
+
+function searchPersistence() {
+	let search = new URLSearchParams(window.location.search);
+	let category = search.get('category');
+	let keywords = search.get('keywords');
+
+	if(category){
+	  document.getElementById('category').value = category;
+	}
+	else {
+	  document.getElementById('category').value = 'Any';
+	}
+
+	if(keywords){
+	  document.getElementById('search-bar').value = keywords;
+	}
+	else {
+	  document.getElementById('search-bar').placeholder = "Search..."
+	}
+}
+
+function loadCategories() {
+	let localStorageCategories = localStorage.getItem('categories');
+	if (localStorageCategories == null) {
+		getCategoriesFromServer();
+	}
+	else {
+		renderCategoryDropdown(JSON.parse(localStorageCategories));
+	}
+
+	$(".category-item").on("click", function() {
+	    $("input[name=category]").val($(this).attr("data-value"));
+	    $("#dropdown-button").html($(this).text());
+	});
+}
+
+function renderNavForUser() {
+	if (localStorage.getItem('loggedInUser')) {
+	    let accountLogin = document.getElementById('account-login');
+	    let _html = `<a class="dropdown-toggle nav-link" id="dropdown-hide" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</a> \
+	                <ul class="dropdown-menu dropdown-menu-right" id="login-dropdown"> \
+	                    <li><a class="nav-link" href="#">Profile</a></li> \
+	                    <li><a class="nav-link" id="logout-button" onclick="handleLogout();">Logout</a></li> \
+	                </ul>`;
+	    accountLogin.innerHTML = _html;
+	    // document.getElementById('logout-button').onclick = logoutUser;
+	} else {
+	    let accountLogin = document.getElementById('account-login');
+	    let _html = `<a class="nav-link" href="/html/registration.html">Login/Register</a>`
+	    accountLogin.innerHTML = _html;
+	}
 }
 
 function getCategoriesFromServer() {
