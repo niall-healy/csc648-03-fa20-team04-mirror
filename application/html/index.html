@@ -4,7 +4,7 @@
         <!-- metadata -->
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Search Results</title>
+        <title>GatorTrader</title>
         <!-- stylesheets -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
@@ -15,54 +15,14 @@
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous" defer></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous" defer></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js" defer></script>
-        <script src="/javascript/index.js" defer></script>
+        <script src="/javascript/nav.js" defer></script>
     </head>
     <body>
         <h5 class="team-info">CSC 648, Fall 2020, Team 4</h5>
         <!-- navbar -->
-        <nav class="navbar navbar-expand-md navbar-dark bg-dark static-top">
-            <div class="d-flex flex-grow-1">
-                <a class="navbar-brand" href="/">GatorTrader</a>
-                <form class="mr-2 my-auto w-100 d-inline-block order-1">
-                    <div class="input-group justify-content-center">
-                        <div class="input-group-prepend btn-group">
-                            <button class="btn btn-secondary dropdown-toggle" id="dropdown-button" type="button" data-toggle="dropdown" 
-                                aria-haspopup="true" aria-expanded="false">Any</button>
-                            <input name="category" value="Any" type="hidden">
-                            <ul class="dropdown-menu" id="dropdown-category">
-                                <li class="category-item" data-value="Any">Any</li>
-                                <li class="category-item" data-value="Textbooks">Textbooks</li>
-                                <li class="category-item" data-value="Housing">Housing</li>
-                                <li class="category-item" data-value="Automotive">Automotive</li>
-                            </ul>
-                        </div>
-                        <input type="text" class="form-control border border-right-0" id="search-bar" name="keywords" placeholder="Search...">
-                        <span class="input-group-append">
-                            <button class="btn btn-outline-light border border-left-0" id="search-button" type="submit">
-                                <i class="fa fa-search"></i>
-                            </button>
-                        </span>
-                    </div>
-                </form>
-            </div>
-            <button class="navbar-toggler order-0" type="button" data-toggle="collapse" data-target="#collapse-menu">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-collapse collapse flex-shrink-1 flex-grow-0 order-last" id="collapse-menu">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Post</a>
-                    </li>
-                    <li class="dropdown" id="account-login">
-                    </li>
-                </ul>
-            </div>
-        </nav>
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark static-top" id="navId"></nav>
         <!-- end navbar -->
-    
+
         <!-- content -->
         <div class="container">
             <div class="box-border text-center">
@@ -70,7 +30,7 @@
                 <h4>Buying, Selling, & Services for SFSU Students</h4>
             </div>
         </div>
-        
+
         <div class="container">
             <div class="card-deck">
                 <div class="card mb-2 text-center box-border">
@@ -99,6 +59,6 @@
                     </div>
                 </div>
             </div>
-        </div>        
+        </div>
     </body>
 </html>
