@@ -94,3 +94,8 @@ body {
         box-shadow: none;
     }
 }
+
+/* add padding to nav bar to center -Vern */
+.input-group-prepend {
+    padding-left: 8%;
+}
