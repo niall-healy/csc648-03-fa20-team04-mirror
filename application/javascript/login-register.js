@@ -1,21 +1,3 @@
-window.onload = function() {
-	var loginButton = document.getElementById('login-form-submit');
-	var registerButton = document.getElementById('register-form-submit');
-
-	if (loginButton != null) {
-		loginButton.addEventListener('click', (e) => {
-			e.preventDefault();
-			handleLogin();
-		});
-	}
-	if (registerButton != null) {
-		registerButton.addEventListener('click', (e) => {
-			e.preventDefault();
-			handleRegister();
-		});
-	}
-}
-
 // constants for error messages
 /* Login error message: invalid email/password */
 const loginErrorMsgHolder = document.getElementById("login-error-msg-holder");
@@ -32,6 +14,15 @@ const registerErrorSfsuEmailHolder = document.getElementById("register-error-sfs
 /* Register error message: Passwords do no match */
 const registerErrorPasswordMismatchHolder = document.getElementById("register-error-password-mismatch-holder");
 const registerErrorMsgPasswordMismatch = document.getElementById("register-error-msg-password-mismatch");
+
+function loginOnClick(e) {
+	e.preventDefault();
+	handleLogin();
+}
+function registerOnClick(e) {
+	e.preventDefault();
+	handleRegister();
+}
 
 async function handleLogin() {
 	var form = document.getElementById('login-form');
@@ -191,12 +182,12 @@ function checkValidEmail(inputId) {
 
     if(inputId == 'register-username-field') {
         var email = document.getElementById('register-username-field').value;
-        var errorBox = document.getElementById('div-check-valid-email-register'); 
+        var errorBox = document.getElementById('div-check-valid-email-register');
 
     }
     else if(inputId == 'login-username-field') {
         var email = document.getElementById('login-username-field').value;
-        var errorBox = document.getElementById('div-check-valid-email-login'); 
+        var errorBox = document.getElementById('div-check-valid-email-login');
     }
 
     var studentFound = email.match(studentEmailRegEx);
@@ -219,4 +210,3 @@ function checkValidEmail(inputId) {
 $(document).ready(function () {
    $("#register-password-field, #retype-password-field").keyup(checkPasswordMatch);
 });
-

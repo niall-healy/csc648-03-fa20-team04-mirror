@@ -44,7 +44,7 @@
                 <div class="registration-form-alert" id="div-check-valid-email-login"></div>
 
                 Password <input type="password" name="password" id="login-password-field" class="login-form-field" placeholder="Password">
-                <input type="submit" value="Login" id="login-form-submit">
+                <input type="submit" value="Login" id="login-form-submit" onclick="loginOnClick(event);">
                 <input type="button" value="Forgot Password?" class="login-form-buttons">
             </form>
         </main> <br>
@@ -72,7 +72,7 @@
                 Confirm Password <input type="password" name="password2" id="retype-password-field" class="register-form-field" placeholder="Confirm Password" onChange="checkPasswordMatch();">
                 <!-- Equivalent PW Check -->
                 <div class="registration-form-alert" id="div-check-pw-match"></div>
-                <input type="submit" value="Register" id="register-form-submit">
+                <input type="submit" value="Register" id="register-form-submit" onclick="registerOnClick(event);">
                 <input type="button" value="Cancel" onclick="window.location.href='/html/index.html'" class="register-form-buttons">
             </form>
 

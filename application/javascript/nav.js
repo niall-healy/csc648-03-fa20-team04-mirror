@@ -44,6 +44,11 @@ window.onload = function() {
 	searchPersistence();
 }
 
+function handleLogout() {
+	localStorage.removeItem('loggedInUser');
+	window.location.href='/';
+}
+
 function searchPersistence() {
 	let search = new URLSearchParams(window.location.search);
 	let category = search.get('category');
@@ -91,7 +96,7 @@ function renderNavForUser() {
 	    // document.getElementById('logout-button').onclick = logoutUser;
 	} else {
 	    let accountLogin = document.getElementById('account-login');
-	    let _html = `<a class="nav-link" href="/html/registration.html">Login/Register</a>`
+	    let _html = `<a class="nav-link" href="/html/login-register.html">Login/Register</a>`
 	    accountLogin.innerHTML = _html;
 	}
 }
