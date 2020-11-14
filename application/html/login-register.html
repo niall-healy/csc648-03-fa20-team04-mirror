@@ -39,7 +39,7 @@
             </div>
 
             <form id="login-form" class="mw-100 login-register-form">
-                Email <input type="text" name="username" id="login-username-field" class="login-form-field" placeholder="Email" onkeyup="checkValidEmail(this.id);">
+                 Email <input type="text" name="username" id="login-username-field" class="login-form-field" placeholder="Email" onkeyup="checkValidEmail(this.id);">
 		        <!-- Valid email check -->
                 <div class="registration-form-alert" id="div-check-valid-email-login"></div>
 
@@ -68,10 +68,14 @@
 		        <!-- Valid email check -->
                 <div class="registration-form-alert" id="div-check-valid-email-register"></div>
 
-                Password <input type="password" name="password" id="register-password-field" class="register-form-field" placeholder="Password">
-                Confirm Password <input type="password" name="password2" id="retype-password-field" class="register-form-field" placeholder="Confirm Password" onChange="checkPasswordMatch();">
+                Password <input type="password" name="password" id="register-password-field" class="register-form-field" placeholder="Password" onChange="checkPassword();">
+                <!-- Minimum character PW check -->
+                <div class="registration-form-alert" id="div-check-pw-min-characters"></div>
+
+                Confirm Password <input type="password" name="password2" id="retype-password-field" class="register-form-field" placeholder="Confirm Password" onChange="checkPassword();">
                 <!-- Equivalent PW Check -->
                 <div class="registration-form-alert" id="div-check-pw-match"></div>
+
                 <input type="submit" value="Register" id="register-form-submit">
                 <div id="div-checkboxTOS">
                     <input type="checkbox" id="checkboxTOS"> I agree to the <a href="#">Terms of Service</a>.

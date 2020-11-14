@@ -158,19 +158,32 @@ function validateRegisterInfo(email, passwd, repasswd){
 	}
 	if(passwd.length < 6){
 		//TODO: make this show up on the form
-
+		// done in function checkPassword()
 		alert("A password must be at least 6 characters");
 		return false;
 	}
 	return true;
 }
 
+// added password length check
 // checks if both password fields are equal
-function checkPasswordMatch() {
+function checkPassword() {
     const pwCheck = document.getElementById("div-check-pw-match");
+    const pwMinCheck = document.getElementById("div-check-pw-min-characters")
 
     var password = $("#register-password-field").val();
     var confirmPassword = $("#retype-password-field").val();
+
+    if (password.length < 6) {
+        pwMinCheck.style.opacity = 1;
+        pwMinCheck.style.display = "block";
+        $("#div-check-pw-min-characters").html("Password must be at least 6 characters");
+    }
+    else {
+        pwMinCheck.style.opacity = 0;
+        pwMinCheck.style.display = "none";
+        $("#div-check-pw-match").html("");
+    }
 
     if (password != confirmPassword && confirmPassword != "") {
         pwCheck.style.opacity = 1;
@@ -183,6 +196,7 @@ function checkPasswordMatch() {
         $("#div-check-pw-match").html("");
     }
 }
+
 
 // check for valid email
 function checkValidEmail(inputId) {
@@ -217,6 +231,6 @@ function checkValidEmail(inputId) {
 }
 
 $(document).ready(function () {
-   $("#register-password-field, #retype-password-field").keyup(checkPasswordMatch);
+   $("#register-password-field, #retype-password-field").keyup(checkPassword);
 });
 
