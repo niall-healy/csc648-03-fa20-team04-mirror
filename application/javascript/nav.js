@@ -1,4 +1,4 @@
-window.onload = function() {
+$(document).ready(function() {
 	let navbar = document.getElementById("navId");
 
 	navbar.innerHTML = '<div class="d-flex flex-grow-1"> \
@@ -42,7 +42,13 @@ window.onload = function() {
 	renderNavForUser();
 
 	searchPersistence();
-}
+});
+
+$(".category-item").on("click", function() {
+	console.log("You clicked a different category");
+	$("input[name=category]").val($(this).attr("data-value"));
+	$("#dropdown-button").html($(this).text());
+});
 
 $(".category-item").on("click", function() {
 	console.log("You clicked a different category");
