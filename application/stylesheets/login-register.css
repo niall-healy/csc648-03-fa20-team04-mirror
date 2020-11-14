@@ -132,7 +132,7 @@ html {
     margin-bottom: 10px;
     border-radius: 3px;
     outline: none;
-    padding: 5px 5px 5px 0px;
+    padding: 5px 5px 5px 4px;
 }
 
 #login-form-submit {
@@ -255,7 +255,7 @@ html {
     margin-bottom: 10px;
     border-radius: 3px;
     outline: none;
-    padding: 5px 5px 5px 0px;
+    padding: 5px 5px 5px 4px;
 }
 
 #register-form-submit {
