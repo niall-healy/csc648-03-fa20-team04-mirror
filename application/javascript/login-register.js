@@ -44,7 +44,6 @@ async function handleLogin() {
 	fetch(fetchURL, fetchOptions)
 	.then((response) => {
 		if(!response.ok) {
-			//TODO: make form display responsive text that the username or password is incorrect
 			loginErrorMsg.style.opacity = 1;
             loginErrorMsgHolder.style.display = "contents";
 			throw new Error(response.status)
@@ -65,8 +64,7 @@ async function handleLogin() {
 
 		localStorage.setItem( 'loggedInUser', JSON.stringify(loggedInUser) );
 
-		//TODO: change login button to button that takes the user to their dashboard
-		// now that they're signed in
+		window.location.href='/';
 
 	})
 	.catch((err) => {
@@ -95,7 +93,6 @@ async function handleRegister() {
 	fetch(fetchURL, fetchOptions)
 	.then((response) => {
 		if(!response.ok) {
-			//TODO: make the form display responsive text that the username is already registered
 			registerErrorMsgRegistered.style.opacity = 1;
             registerErrorRegisteredHolder.style.display = "contents";
 			throw new Error(response.status)
@@ -109,7 +106,7 @@ async function handleRegister() {
 	})
 	.then((dataJson) => {
 		console.log(dataJson);
-		window.location.replace('login.html');
+		alert("Successfully registered. You may Login now!");
 	})
 	.catch((err) => {
       console.log(err);
@@ -118,14 +115,12 @@ async function handleRegister() {
 
 function getRegisterInfo() {
 	let form = document.getElementById('register-form');
-	var signupInfo = {
+	var registerInfo = {
 		email: form.querySelector('input[name="username"]').value,
 		password: form.querySelector('input[name="password"]').value,
 		password2: form.querySelector('input[name="password2"]').value,
-		firstName: form.querySelector('input[name="first-name"]').value,
-		lastName: form.querySelector('input[name="last-name"]').value
 	};
-	return signupInfo;
+	return registerInfo;
 }
 
 function validateRegisterInfo(email, passwd, repasswd){
@@ -193,8 +188,8 @@ function checkValidEmail(inputId) {
     var studentFound = email.match(studentEmailRegEx);
     var facultyFound = email.match(facultyEmailRegEx);
 
-    console.log(email);
-    console.log(studentFound);
+    //console.log(email);
+    //console.log(studentFound);
     if(!studentFound && !facultyFound) {
         errorBox.style.opacity = 1;
 	errorBox.style.display = "block";

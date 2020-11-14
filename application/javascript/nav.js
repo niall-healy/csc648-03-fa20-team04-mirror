@@ -44,6 +44,12 @@ window.onload = function() {
 	searchPersistence();
 }
 
+$(".category-item").on("click", function() {
+	console.log("You clicked a different category");
+	$("input[name=category]").val($(this).attr("data-value"));
+	$("#dropdown-button").html($(this).text());
+});
+
 function handleLogout() {
 	localStorage.removeItem('loggedInUser');
 	window.location.href='/';
@@ -77,11 +83,6 @@ function loadCategories() {
 	else {
 		renderCategoryDropdown(localStorageCategories);
 	}
-
-	$(".category-item").on("click", function() {
-	    $("input[name=category]").val($(this).attr("data-value"));
-	    $("#dropdown-button").html($(this).text());
-	});
 }
 
 function renderNavForUser() {
@@ -132,7 +133,7 @@ function renderCategoryDropdown(categories) {
 	var dropdown = document.getElementById('dropdown-category');
 	var _html = '';
 	for (i = 0; i < categories.length; i++) {
-		_html += '<li class="category-item" data-value="' + categories[i].category + '">' + categories[i].category + '</li>';
+		_html += '<li class="category-item" data-value="' + categories[i] + '">' + categories[i] + '</li>';
 	}
 	dropdown.innerHTML = _html;
 }
