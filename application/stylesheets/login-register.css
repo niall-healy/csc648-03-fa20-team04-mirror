@@ -285,7 +285,7 @@ html {
     outline: none;
 }
 
-#div-check-pw-match {
+.registration-form-alert {
     width: 100%;
     text-align: center;
     margin: 0;

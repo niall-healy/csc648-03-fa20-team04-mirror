@@ -184,6 +184,38 @@ function checkPasswordMatch() {
     }
 }
 
+// check for valid email
+function checkValidEmail(inputId) {
+    let studentEmailRegEx = new RegExp(/^[A-Za-z0-9._%+-]+@mail.sfsu.edu$/, 'i');
+    let facultyEmailRegEx = new RegExp(/^[A-Za-z0-9._%+-]+@sfsu.edu$/, 'i');
+
+    if(inputId == 'register-username-field') {
+        var email = document.getElementById('register-username-field').value;
+        var errorBox = document.getElementById('div-check-valid-email-register'); 
+
+    }
+    else if(inputId == 'login-username-field') {
+        var email = document.getElementById('login-username-field').value;
+        var errorBox = document.getElementById('div-check-valid-email-login'); 
+    }
+
+    var studentFound = email.match(studentEmailRegEx);
+    var facultyFound = email.match(facultyEmailRegEx);
+
+    console.log(email);
+    console.log(studentFound);
+    if(!studentFound && !facultyFound) {
+        errorBox.style.opacity = 1;
+	errorBox.style.display = "block";
+	errorBox.innerHTML = "Domain must be '@mail.sfsu.edu' or '@sfsu.edu'";
+    }
+    else {
+        errorBox.style.opacity = 0;
+	errorBox.style.display = "none";
+        errorBox.innerHTML = "";
+    }
+}
+
 $(document).ready(function () {
    $("#register-password-field, #retype-password-field").keyup(checkPasswordMatch);
 });
