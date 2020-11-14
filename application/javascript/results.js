@@ -40,7 +40,7 @@ function loadListings(dataJson) {
     document.getElementById("results").innerHTML = _html;
 }
 
-window.onload = function () {
+$(document).ready(function () {
     var search = new URLSearchParams(window.location.search);
     var category = search.get("category");
     var keywords = search.get("keywords");
@@ -74,4 +74,4 @@ window.onload = function () {
     } else {
         document.getElementById("search-bar").placeholder = "Search...";
     }
-};
+});
