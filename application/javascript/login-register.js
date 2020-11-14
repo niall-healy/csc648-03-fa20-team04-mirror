@@ -130,8 +130,8 @@ function getRegisterInfo() {
 		password: form.querySelector('input[name="password"]').value,
 		password2: form.querySelector('input[name="password2"]').value,
 		firstName: form.querySelector('input[name="first-name"]').value,
-		lastName: form.querySelector('input[name="last-name"]').value
-		// checkbox: form.querySelector('input[name="checkboxTOS"]').value // add to registration validation; breaks code locally (?)
+		lastName: form.querySelector('input[name="last-name"]').value,
+		checkbox: form.querySelector('input[name="checkboxTOS"]').value // add to registration validation
 	};
 	return signupInfo;
 }
