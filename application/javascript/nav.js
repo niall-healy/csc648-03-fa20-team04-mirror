@@ -50,12 +50,6 @@ $(".category-item").on("click", function() {
 	$("#dropdown-button").html($(this).text());
 });
 
-$(".category-item").on("click", function() {
-	console.log("You clicked a different category");
-	$("input[name=category]").val($(this).attr("data-value"));
-	$("#dropdown-button").html($(this).text());
-});
-
 function handleLogout() {
 	localStorage.removeItem('loggedInUser');
 	window.location.href='/';

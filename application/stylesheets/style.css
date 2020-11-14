@@ -96,6 +96,6 @@ body {
 }
 
 /* add padding to nav bar to center -Vern */
-.input-group-prepend {
+.input-group-prepend .category-item {
     padding-left: 8%;
 }
