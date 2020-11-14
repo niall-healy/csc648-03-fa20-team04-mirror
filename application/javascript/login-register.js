@@ -53,7 +53,6 @@ async function handleLogin() {
 	fetch(fetchURL, fetchOptions)
 	.then((response) => {
 		if(!response.ok) {
-			//TODO: make form display responsive text that the username or password is incorrect
 			loginErrorMsg.style.opacity = 1;
             loginErrorMsgHolder.style.display = "contents";
 			throw new Error(response.status)
@@ -85,7 +84,7 @@ async function handleLogin() {
 
 async function handleRegister() {
 	let info = getRegisterInfo();
-	if(!validateRegisterInfo(info.email, info.password, info.password2)){
+	if(!validateRegisterInfo(info.email, info.password, info.password2, info.checkbox)){
 		return;
 	}
 
@@ -104,7 +103,6 @@ async function handleRegister() {
 	fetch(fetchURL, fetchOptions)
 	.then((response) => {
 		if(!response.ok) {
-			//TODO: make the form display responsive text that the username is already registered
 			registerErrorMsgRegistered.style.opacity = 1;
             registerErrorRegisteredHolder.style.display = "contents";
 			throw new Error(response.status)
@@ -133,35 +131,37 @@ function getRegisterInfo() {
 		password2: form.querySelector('input[name="password2"]').value,
 		firstName: form.querySelector('input[name="first-name"]').value,
 		lastName: form.querySelector('input[name="last-name"]').value
+		// checkbox: form.querySelector('input[name="checkboxTOS"]').value // add to registration validation; breaks code locally (?)
 	};
 	return signupInfo;
 }
 
-function validateRegisterInfo(email, passwd, repasswd){
+function validateRegisterInfo(email, passwd, repasswd, checkbox){
 	let studentEmailRegEx = new RegExp(/^[A-Za-z0-9._%+-]+@mail.sfsu.edu$/);
 	let facultyEmailRegEx = new RegExp(/^[A-Za-z0-9._%+-]+@sfsu.edu$/);
 
 	if( !(studentEmailRegEx.test(email) || facultyEmailRegEx.test(email)) ){
-		//TODO: make this show up on the form
 		registerErrorMsgSfsuEmail.style.opacity = 1;
         registerErrorSfsuEmailHolder.style.display = "contents";
 		alert("Must use @sfsu.edu or @mail.sfsu.edu email");
 		return false;
 	}
 	if(passwd !== repasswd){
-		//TODO: make this show up on the form
-		registerErrorMsgPasswordMismatch.style.opacity = 1;
-        registerErrorPasswordMismatchHolder.style.display = "contents";
-
+        // done in function checkPassword()
 		alert("The passwords given do not match");
 		return false;
 	}
 	if(passwd.length < 6){
-		//TODO: make this show up on the form
 		// done in function checkPassword()
 		alert("A password must be at least 6 characters");
 		return false;
 	}
+	// add checkbox to validation
+	if(checkbox != true) {
+	    alert("Please agree to the terms of service");
+	    return false;
+	}
+
 	return true;
 }
 
@@ -170,7 +170,6 @@ function validateRegisterInfo(email, passwd, repasswd){
 function checkPassword() {
     const pwCheck = document.getElementById("div-check-pw-match");
     const pwMinCheck = document.getElementById("div-check-pw-min-characters")
-
     var password = $("#register-password-field").val();
     var confirmPassword = $("#retype-password-field").val();
 
@@ -185,15 +184,27 @@ function checkPassword() {
         $("#div-check-pw-match").html("");
     }
 
-    if (password != confirmPassword && confirmPassword != "") {
-        pwCheck.style.opacity = 1;
-        pwCheck.style.display = "block";
-        $("#div-check-pw-match").html("Passwords do not match!");
-    }
-    else {
+    if (confirmPassword == "") {
         pwCheck.style.opacity = 0;
         pwCheck.style.display = "none";
         $("#div-check-pw-match").html("");
+    }
+    else if (password != confirmPassword) {
+        pwCheck.style.opacity = 1;
+        pwCheck.style.display = "block";
+        pwCheck.style.background = "#e58f8f";
+        pwCheck.style.color = "#8a0000";
+        pwCheck.style.border = "1px solid #8a0000";
+        $("#div-check-pw-match").html("Passwords do not match!");
+    }
+    else {
+        pwCheck.style.opacity = 1;
+        pwCheck.style.display = "block";
+        pwCheck.style.background = "#19cf1c";
+        pwCheck.style.color = "#072e08";
+        pwCheck.style.border = "1px solid #072e08";
+        $("#div-check-pw-match").html("Passwords match");
+
     }
 }
 
