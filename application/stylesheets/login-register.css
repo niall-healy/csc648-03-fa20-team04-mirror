@@ -285,3 +285,8 @@ html {
     opacity: 0;
     display: none;
 }
+
+#div-checkboxTOS {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
