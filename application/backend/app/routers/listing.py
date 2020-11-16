@@ -72,11 +72,4 @@ async def create_listing(db: Session = Depends(get_db),
         thmb.save('/var/www' + thmbPath, thmb.format)
         thmb.close()
 
-        # Read image data to new file
-#        with open(file.file, 'w+b') as f:
-#            img = Image.open(f)
-#            img.save(imgPath, img.format)
-#            f.close()
-#
-
     return crud.create_listing(db, listing, photoPaths)
