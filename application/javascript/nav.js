@@ -64,6 +64,7 @@ function searchPersistence() {
 
 	if(category){
 	  document.getElementById('category').value = category;
+	  document.getElementById('dropdown-button').html(category);
 	}
 	else {
 	  document.getElementById('category').value = 'Any';
