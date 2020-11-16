@@ -1,6 +1,6 @@
 import datetime
 
-from sqlalchemy import desc
+from sqlalchemy import desc, or_
 from sqlalchemy.orm import Session
 
 from app.sql_db import models, schemas
@@ -34,10 +34,12 @@ def get_listings_for_search(db: Session, searchQuery: str, category: str):
             retVal = db.query(models.Listing).filter(models.Listing.category == category).all()
     elif category != 'Any':
         # Note: use like() for case sensitivity, ilike() for case insensitivity
-        retVal = db.query(models.Listing).filter(models.Listing.name.ilike('%' + searchQuery + '%'),
-                                                 models.Listing.category == category).all()
+        retVal = db.query(models.Listing).filter(models.Listing.category == category,
+                                                 or_(models.Listing.name.ilike('%' + searchQuery + '%'),
+                                                     models.Listing.description.ilike('%' + searchQuery + '%'))).all()
     else:
-        retVal = db.query(models.Listing).filter(models.Listing.name.ilike('%' + searchQuery + '%')).all()
+        retVal = db.query(models.Listing).filter(or_(models.Listing.name.ilike('%' + searchQuery + '%'),
+                                                     models.Listing.description.ilike('%' + searchQuery + '%'))).all()
 
     return retVal
 
