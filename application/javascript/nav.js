@@ -1,7 +1,7 @@
 $(document).ready(function() {
-	let navbar = document.getElementById("navId");
+    let navbar = document.getElementById("navId");
 
-	navbar.innerHTML = '<div class="d-flex flex-grow-1"> \
+    navbar.innerHTML = '<div class="d-flex flex-grow-1"> \
 		<a class="navbar-brand" href="/">GatorTrader</a> \
 		<form action="/results/" method="GET" class="mr-2 my-auto w-100 d-inline-block order-1"> \
 			<div class="input-group justify-content-center"> \
@@ -30,115 +30,119 @@ $(document).ready(function() {
 				<a class="nav-link" href="/html/about-landing-page.html">About</a> \
 			</li> \
 			<li class="nav-item"> \
-				<a class="nav-link" href="#">Post</a> \
+				<a class="nav-link" onclick="postOnClick();">Post</a> \
 			</li> \
 			<li class="dropdown" id="account-login"> \
 			</li> \
 		</ul> \
 	</div>';
 
-	loadCategories();
+    loadCategories();
 
-	renderNavForUser();
+    renderNavForUser();
 
-	searchPersistence();
+    searchPersistence();
 
-	$(".category-item").on("click", function() {
-		console.log("You clicked a different category");
-		$("input[name=category]").val($(this).attr("data-value"));
-		$("#dropdown-button").html($(this).text());
-	});
+    $(".category-item").on("click", function() {
+        //console.log("You clicked a different category");
+        $("input[name=category]").val($(this).attr("data-value"));
+        $("#dropdown-button").html($(this).text());
+    });
 });
 
-
+function postOnClick() {
+    if (localStorage.getItem('loggedInUser')) {
+        window.location.href='/html/post-listing-form.html';
+    }
+    else {
+        window.location.href='/html/login-register.html';
+    }
+}
 
 function handleLogout() {
-	localStorage.removeItem('loggedInUser');
-	window.location.href='/';
+    localStorage.removeItem('loggedInUser');
+    window.location.href = '/';
 }
 
 function searchPersistence() {
-	let search = new URLSearchParams(window.location.search);
-	let category = search.get('category');
-	let keywords = search.get('keywords');
+    let search = new URLSearchParams(window.location.search);
+    let category = search.get('category');
+    let keywords = search.get('keywords');
 
-	console.log(category);
-	
-	if(category){
-		$("input[name=category]").val(category);
-		$("#dropdown-button").html(category);
-	}
-	else {
-	  document.getElementById('category').value = 'Any';
-	}
+    console.log(category);
 
-	if(keywords){
-	  document.getElementById('search-bar').value = keywords;
-	}
-	else {
-	  document.getElementById('search-bar').placeholder = "Search..."
-	}
+    if (category) {
+        $("input[name=category]").val(category);
+        $("#dropdown-button").html(category);
+    } else {
+        document.getElementById('category').value = 'Any';
+    }
+
+    if (keywords) {
+        document.getElementById('search-bar').value = keywords;
+    } else {
+        document.getElementById('search-bar').placeholder = "Search..."
+    }
 }
 
 function loadCategories() {
-	let localStorageCategories = JSON.parse(localStorage.getItem('categories'));
-	if (localStorageCategories == null || localStorageCategories.length == 0) {
-		getCategoriesFromServer();
-	}
-	else {
-		renderCategoryDropdown(localStorageCategories);
-	}
+    let localStorageCategories = JSON.parse(localStorage.getItem('categories'));
+    if (localStorageCategories == null || localStorageCategories.length == 0) {
+        getCategoriesFromServer();
+    } else {
+        renderCategoryDropdown(localStorageCategories);
+    }
 }
 
 function renderNavForUser() {
-	if (localStorage.getItem('loggedInUser')) {
-	    let accountLogin = document.getElementById('account-login');
-	    let _html = `<a class="dropdown-toggle nav-link" id="dropdown-hide" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</a> \
+    if (localStorage.getItem('loggedInUser')) {
+        let accountLogin = document.getElementById('account-login');
+        let _html = `<a class="dropdown-toggle nav-link" id="dropdown-hide" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</a> \
 	                <ul class="dropdown-menu dropdown-menu-right" id="login-dropdown"> \
 	                    <li><a class="nav-link" href="#">Profile</a></li> \
 	                    <li><a class="nav-link" id="logout-button" onclick="handleLogout();">Logout</a></li> \
 	                </ul>`;
-	    accountLogin.innerHTML = _html;
-	    // document.getElementById('logout-button').onclick = logoutUser;
-	} else {
-	    let accountLogin = document.getElementById('account-login');
-	    let _html = `<a class="nav-link" href="/html/login-register.html">Login/Register</a>`
-	    accountLogin.innerHTML = _html;
-	}
+        accountLogin.innerHTML = _html;
+        // document.getElementById('logout-button').onclick = logoutUser;
+    } else {
+        let accountLogin = document.getElementById('account-login');
+        let _html = `<a class="nav-link" href="/html/login-register.html">Login/Register</a>`
+        accountLogin.innerHTML = _html;
+    }
 }
 
 function getCategoriesFromServer() {
-	fetch('/categories/')
-		.then((data) => {
-			return data.json();
-		})
-		.then((dataJson) => {
-			console.log(dataJson);
-			storeAndRenderCategories(dataJson);
-		})
-		.catch((err) => {
-			console.log(err);
-		});
+    fetch('/categories/')
+        .then((data) => {
+            return data.json();
+        })
+        .then((dataJson) => {
+            console.log(dataJson);
+            storeAndRenderCategories(dataJson);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
 }
 
 function storeAndRenderCategories(categories) {
-	var dropdown = document.getElementById('dropdown-category');
+    var dropdown = document.getElementById('dropdown-category');
     var categoriesToStore = [];
-	var _html = '';
+    var _html = '';
     for (i = 0; i < categories.length; i++) {
         categoriesToStore.push(categories[i].category);
-		_html += '<li class="category-item" data-value="' + categories[i].category + '">' + categories[i].category + '</li>';
+        _html += '<li class="category-item" data-value="' + categories[i].category + '">' + categories[i].category + '</li>';
     }
 
     localStorage.setItem('categories', JSON.stringify(categoriesToStore));
-	dropdown.innerHTML = _html;
+    dropdown.innerHTML = _html;
 }
 
 function renderCategoryDropdown(categories) {
-	var dropdown = document.getElementById('dropdown-category');
-	var _html = '';
-	for (i = 0; i < categories.length; i++) {
-		_html += '<li class="category-item" data-value="' + categories[i] + '">' + categories[i] + '</li>';
-	}
-	dropdown.innerHTML = _html;
+    var dropdown = document.getElementById('dropdown-category');
+    var _html = '';
+    for (i = 0; i < categories.length; i++) {
+        _html += '<li class="category-item" data-value="' + categories[i] + '">' + categories[i] + '</li>';
+    }
+    dropdown.innerHTML = _html;
 }
