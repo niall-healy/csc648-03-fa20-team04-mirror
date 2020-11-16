@@ -5,7 +5,6 @@ from app.sql_db.database import get_db
 from fastapi import APIRouter, Depends, Form, UploadFile, File
 from fastapi.responses import HTMLResponse
 
-import PIL
 from PIL import Image
 from resizeimage import resizeimage
 
