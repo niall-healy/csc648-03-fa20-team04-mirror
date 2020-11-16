@@ -48,17 +48,21 @@ async def create_listing(db: Session = Depends(get_db),
     for file in images:
         # create random file name
         file.filename = str(uuid.uuid4())
+        thumbnailName = str(uuid.uuid4())
 
         # construct file path
         path = "/images/" + file.filename
+        thumbnailPath = "/images/" + thumbnailName
         fileType = file.content_type.split('/', 1)[1]
         fileType = '.' + fileType
 
-        photoPaths.append(path + fileType)
+        photoPaths.append((path + fileType, thumbnailPath + fileType))
 
         # put the file in the /images/directory
         newFile = open('/var/www/images/' + file.filename + fileType, 'w+b')
+        newThumbnailFile = open('/var/www/images/' + thumbnailName + fileType, 'w+b')
 
+        # TODO: Resize image to thumbnail size and store it in newThumbnailFile
         # Read image data to new file
         while True:
             byte = await file.read(1)

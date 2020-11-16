@@ -51,17 +51,12 @@ def get_listing_by_id(db: Session, listingId: int):
 def create_listing(db: Session, listing: schemas.Listing, photoPaths):
     # Create listing object
     db_listing = models.Listing(**listing.dict())
-    db.add(db_listing)
-    db.commit()
-    db.refresh(db_listing)
-
-    # Grab newly created listing from db
-    db_listing = db.query(models.Listing).order_by(models.Listing.id.desc()).first()
 
     # Create PhotoPath objects for each photo path and add to the listing object
-    for path in photoPaths:
+    for path, thumbnailPath in photoPaths:
         pathObj = models.PhotoPath()
         pathObj.path = path
+        pathObj.thumbnailPath = thumbnailPath
         pathObj.listing_id = db_listing.id
         db_listing.photoPaths.append(pathObj)
 

@@ -77,6 +77,7 @@ class PhotoPath(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     path = Column(String(49))
+    thumbnailPath = Column(String(49))
 
     listing_id = Column(Integer, ForeignKey("listing.id", ondelete="CASCADE"))
 

@@ -29,6 +29,7 @@ class Category(CategoryReturn):
 class PhotoPath(BaseModel):
     id: int = None
     path: str = None
+    thumbnailPath: str = None
     listing_id: int = None
 
     class Config:
