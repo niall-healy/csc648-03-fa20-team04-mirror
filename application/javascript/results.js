@@ -2,33 +2,35 @@ function loadListings(dataJson) {
     var _html = '';
     var listOdd = true;
     for (listing in dataJson) {
-        _html += '<a href="/listing/?id=' + dataJson[listing].id + '">';
         _html +=
-            '<li class="list-group-item list-group-item-action p-2 ' +
+            '<li onclick="location.href=\'/listing/?id=' +
+            dataJson[listing].id +
+            '\'" class="list-group-item list-group-item-action p-2 ' +
             (listOdd ? 'list-group-item-1' : 'list-group-item-2') +
-            '">';
-        _html += '<div class="row no-gutters">';
+            '">' +
+            '<div class="row no-gutters">';
         _html +=
+            '<div class="col-lg-7 d-flex">' +
             '<img class="thumbnail rounded" src="' +
             dataJson[listing].photoPaths[0].path +
             '">';
         _html +=
-            '<div class="col-lg-5 col-md-4 col-sm-12 p-2"><h5><b>' +
+            '<div class="p-2">' +
+            '<h5><b>' +
             dataJson[listing].name +
             '</b></h5>';
         _html +=
             '<p class="text-secondary no-overflow">' +
             dataJson[listing].description +
-            '</p></div>';
+            '</p></div></div>';
         _html +=
-            '<div class="col-lg-3 col-md-5 col-sm-12 p-2"><p><b>Price: </b>$' +
+            '<div class="col p-2"><p><b>Price: </b>$' +
             dataJson[listing].price +
-            '</p><p><b>Meeting Location: </b></p><p><b>Meeting Time: </b></p></div>';
+            '</div>';
         _html +=
-            '<div class="col-md col-xs-12 p-2"><button type="button" class="btn btn-primary btn-block pull-right no-overflow">Contact Seller</button></div>';
-        _html += '</div>';
-        _html += '</li>';
-        _html += '</a>';
+            '<div class="col-sm-12 col-md p-2">' +
+            '<button type="button" class="btn btn-primary btn-block pull-right no-overflow" onclick="event.stopPropagation()">Contact Seller</button>';
+        _html += '</div></div></li>';
 
         if (listOdd) {
             listOdd = false;
@@ -37,19 +39,19 @@ function loadListings(dataJson) {
         }
     }
 
-    document.getElementById("results").innerHTML = _html;
+    document.getElementById('results').innerHTML = _html;
 }
 
 $(document).ready(function () {
     var search = new URLSearchParams(window.location.search);
-    var category = search.get("category");
-    var keywords = search.get("keywords");
+    var category = search.get('category');
+    var keywords = search.get('keywords');
 
     var fetchOptions = {
-        method: "GET",
+        method: 'GET',
     };
 
-    fetchURL = "/search/?category=" + category + "&keywords=" + keywords;
+    fetchURL = '/search/?category=' + category + '&keywords=' + keywords;
 
     fetch(fetchURL, fetchOptions)
         .then((data) => {
@@ -64,14 +66,14 @@ $(document).ready(function () {
         });
 
     if (category) {
-        document.getElementById("category").value = category;
+        document.getElementById('category').value = category;
     } else {
-        document.getElementById("category").value = "Any";
+        document.getElementById('category').value = 'Any';
     }
 
     if (keywords) {
-        document.getElementById("search-bar").value = keywords;
+        document.getElementById('search-bar').value = keywords;
     } else {
-        document.getElementById("search-bar").placeholder = "Search...";
+        document.getElementById('search-bar').placeholder = 'Search...';
     }
 });
