@@ -43,7 +43,6 @@
 		        <!-- Valid email check -->
                 <div class="registration-form-alert" id="div-check-valid-email-login"></div>
 
-
                 <div class="p-1">Password</div> <input type="password" name="password" id="login-password-field" class="login-form-field" placeholder="Password">
                 <input type="submit" value="Login" id="login-form-submit" onclick="loginOnClick(event);">
 
@@ -77,11 +76,12 @@
                 <div class="p-1">Confirm Password</div> <input type="password" name="password2" id="retype-password-field" class="register-form-field" placeholder="Confirm Password" onChange="checkPassword();">
                 <!-- Equivalent PW Check -->
                 <div class="registration-form-alert" id="div-check-pw-match"></div>
+
                 <div id="div-checkboxTOS">
-                    <input type="checkbox" name="checkboxTOS" id="checkboxTOS"> I agree to the <a href="#">Terms of Service</a>.
+                    <input type="checkbox" name="checkboxTOS" id="checkboxTOS" value="1"> I agree to the <a href="#">Terms of Service</a>.
                 </div>
+
                 <input type="submit" value="Register" id="register-form-submit" onclick="registerOnClick(event);">
-                <input type="button" value="Cancel" onclick="window.location.href='/html/index.html'" class="register-form-buttons">
             </form>
 
         </main>
