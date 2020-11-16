@@ -1,21 +1,3 @@
-window.onload = function() {
-	var loginButton = document.getElementById('login-form-submit');
-	var registerButton = document.getElementById('register-form-submit');
-
-	if (loginButton != null) {
-		loginButton.addEventListener('click', (e) => {
-			e.preventDefault();
-			handleLogin();
-		});
-	}
-	if (registerButton != null) {
-		registerButton.addEventListener('click', (e) => {
-			e.preventDefault();
-			handleRegister();
-		});
-	}
-}
-
 // constants for error messages
 /* Login error message: invalid email/password */
 const loginErrorMsgHolder = document.getElementById("login-error-msg-holder");
@@ -32,6 +14,15 @@ const registerErrorMsgRegistered = document.getElementById("register-error-msg-r
 /* Register error message: Passwords do no match */
 const registerErrorPasswordMismatchHolder = document.getElementById("register-error-password-mismatch-holder");
 const registerErrorMsgPasswordMismatch = document.getElementById("register-error-msg-password-mismatch");
+
+function loginOnClick(e) {
+	e.preventDefault();
+	handleLogin();
+}
+function registerOnClick(e) {
+	e.preventDefault();
+	handleRegister();
+}
 
 async function handleLogin() {
 	var form = document.getElementById('login-form');
@@ -73,8 +64,7 @@ async function handleLogin() {
 
 		localStorage.setItem( 'loggedInUser', JSON.stringify(loggedInUser) );
 
-		//TODO: change login button to button that takes the user to their dashboard
-		// now that they're signed in
+		window.location.href='/';
 
 	})
 	.catch((err) => {
@@ -116,7 +106,7 @@ async function handleRegister() {
 	})
 	.then((dataJson) => {
 		console.log(dataJson);
-		window.location.replace('login.html');
+		alert("Successfully registered. You may Login now!");
 	})
 	.catch((err) => {
       console.log(err);
@@ -125,7 +115,7 @@ async function handleRegister() {
 
 function getRegisterInfo() {
 	let form = document.getElementById('register-form');
-	var signupInfo = {
+	var registerInfo = {
 		email: form.querySelector('input[name="username"]').value,
 		password: form.querySelector('input[name="password"]').value,
 		password2: form.querySelector('input[name="password2"]').value,
@@ -133,7 +123,7 @@ function getRegisterInfo() {
 		lastName: form.querySelector('input[name="last-name"]').value,
 		checkbox: form.querySelector('input[name="checkboxTOS"]').value // add to registration validation
 	};
-	return signupInfo;
+	return registerInfo;
 }
 
 function validateRegisterInfo(email, passwd, repasswd, checkbox){
@@ -218,19 +208,19 @@ function checkValidEmail(inputId) {
 
     if(inputId == 'register-username-field') {
         var email = document.getElementById('register-username-field').value;
-        var errorBox = document.getElementById('div-check-valid-email-register'); 
+        var errorBox = document.getElementById('div-check-valid-email-register');
 
     }
     else if(inputId == 'login-username-field') {
         var email = document.getElementById('login-username-field').value;
-        var errorBox = document.getElementById('div-check-valid-email-login'); 
+        var errorBox = document.getElementById('div-check-valid-email-login');
     }
 
     var studentFound = email.match(studentEmailRegEx);
     var facultyFound = email.match(facultyEmailRegEx);
 
-    console.log(email);
-    console.log(studentFound);
+    //console.log(email);
+    //console.log(studentFound);
     if(!studentFound && !facultyFound) {
         errorBox.style.opacity = 1;
 	errorBox.style.display = "block";
@@ -246,4 +236,3 @@ function checkValidEmail(inputId) {
 $(document).ready(function () {
    $("#register-password-field, #retype-password-field").keyup(checkPassword);
 });
-

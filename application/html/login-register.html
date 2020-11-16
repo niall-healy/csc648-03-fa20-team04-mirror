@@ -10,8 +10,8 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+        <link rel="stylesheet" type="text/css" href="/stylesheets/style.css"/>
         <link rel="stylesheet" type="text/css" href="/stylesheets/login-register.css"/>
-
         <!-- deferred javascript -->
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous" defer></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous" defer></script>
@@ -42,9 +42,9 @@
                 <div class="p-1">Email</div> <input type="text" name="username" id="login-username-field" class="login-form-field" placeholder="Email" onkeyup="checkValidEmail(this.id);">
 		        <!-- Valid email check -->
                 <div class="registration-form-alert" id="div-check-valid-email-login"></div>
-
                 <div class="p-1">Password</div> <input type="password" name="password" id="login-password-field" class="login-form-field" placeholder="Password">
-                <input type="submit" value="Login" id="login-form-submit">
+                <input type="submit" value="Login" id="login-form-submit" onclick="loginOnClick(event);">
+
                 <input type="button" value="Forgot Password?" class="login-form-buttons">
             </form>
         </main> <br>
@@ -80,7 +80,7 @@
                     <input type="checkbox" name="checkboxTOS" id="checkboxTOS" value="1"> I agree to the <a href="#">Terms of Service</a>.
                 </div>
 
-                <input type="submit" value="Register" id="register-form-submit">
+                <input type="submit" value="Register" id="register-form-submit" onclick="registerOnClick(event);">
             </form>
 
         </main>

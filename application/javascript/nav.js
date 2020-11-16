@@ -1,4 +1,4 @@
-window.onload = function() {
+$(document).ready(function() {
 	let navbar = document.getElementById("navId");
 
 	navbar.innerHTML = '<div class="d-flex flex-grow-1"> \
@@ -8,7 +8,7 @@ window.onload = function() {
 				<div class="input-group-prepend btn-group"> \
 					<button class="btn btn-secondary dropdown-toggle" id="dropdown-button" type="button" data-toggle="dropdown" \
 						aria-haspopup="true" aria-expanded="false">Any</button> \
-					<input name="category" value="Any" type="hidden"> \
+					<input name="category" id="category" value="Any" type="hidden"> \
 					<ul class="dropdown-menu" id="dropdown-category"> \
 					</ul> \
 				</div> \
@@ -42,6 +42,19 @@ window.onload = function() {
 	renderNavForUser();
 
 	searchPersistence();
+
+	$(".category-item").on("click", function() {
+		console.log("You clicked a different category");
+		$("input[name=category]").val($(this).attr("data-value"));
+		$("#dropdown-button").html($(this).text());
+	});
+});
+
+
+
+function handleLogout() {
+	localStorage.removeItem('loggedInUser');
+	window.location.href='/';
 }
 
 function searchPersistence() {
@@ -51,6 +64,7 @@ function searchPersistence() {
 
 	if(category){
 	  document.getElementById('category').value = category;
+	  document.getElementById('dropdown-button').html(category);
 	}
 	else {
 	  document.getElementById('category').value = 'Any';
@@ -65,18 +79,13 @@ function searchPersistence() {
 }
 
 function loadCategories() {
-	let localStorageCategories = localStorage.getItem('categories');
-	if (localStorageCategories == null) {
+	let localStorageCategories = JSON.parse(localStorage.getItem('categories'));
+	if (localStorageCategories == null || localStorageCategories.length == 0) {
 		getCategoriesFromServer();
 	}
 	else {
-		renderCategoryDropdown(JSON.parse(localStorageCategories));
+		renderCategoryDropdown(localStorageCategories);
 	}
-
-	$(".category-item").on("click", function() {
-	    $("input[name=category]").val($(this).attr("data-value"));
-	    $("#dropdown-button").html($(this).text());
-	});
 }
 
 function renderNavForUser() {
@@ -91,7 +100,7 @@ function renderNavForUser() {
 	    // document.getElementById('logout-button').onclick = logoutUser;
 	} else {
 	    let accountLogin = document.getElementById('account-login');
-	    let _html = `<a class="nav-link" href="/html/registration.html">Login/Register</a>`
+	    let _html = `<a class="nav-link" href="/html/login-register.html">Login/Register</a>`
 	    accountLogin.innerHTML = _html;
 	}
 }
@@ -127,7 +136,7 @@ function renderCategoryDropdown(categories) {
 	var dropdown = document.getElementById('dropdown-category');
 	var _html = '';
 	for (i = 0; i < categories.length; i++) {
-		_html += '<li class="category-item" data-value="' + categories[i].category + '">' + categories[i].category + '</li>';
+		_html += '<li class="category-item" data-value="' + categories[i] + '">' + categories[i] + '</li>';
 	}
 	dropdown.innerHTML = _html;
 }

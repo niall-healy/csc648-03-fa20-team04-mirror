@@ -25,7 +25,7 @@ function loadListing(listing){
 
          indicators.innerHTML += '<li data-target="#carousel" data-slide-to="' + i + '""></li>';
       }
-      
+
       var img = document.createElement('img');
       img.className = "img-thumbnail img-fluid";
       img.src = photos[i].path;
@@ -35,7 +35,7 @@ function loadListing(listing){
    $('#carousel').carousel();
 }
 
-window.onload = function() {
+$(document).ready(function() {
    var search = new URLSearchParams(window.location.search);
    var id = search.get('id');
 
@@ -50,10 +50,10 @@ window.onload = function() {
    .then((data) => {
       return data.json();
    })
-   .then((dataJson) => { 
-      loadListing(dataJson); 
+   .then((dataJson) => {
+      loadListing(dataJson);
    })
    .catch((err) => {
       console.log(err);
    })
-}
+});
