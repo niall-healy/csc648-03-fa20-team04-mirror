@@ -26,8 +26,8 @@ const registerErrorRegisteredHolder = document.getElementById("register-error-re
 const registerErrorMsgRegistered = document.getElementById("register-error-msg-registered");
 
 /* Register error message: Must use SFSU emails */
-const registerErrorSfsuEmailHolder = document.getElementById("register-error-sfsu-email-holder");
-//const registerErrorMsgSfsuEmail = document.getElementById("register-error-msg-sfsu-email");
+// const registerErrorSfsuEmailHolder = document.getElementById("register-error-sfsu-email-holder");
+// const registerErrorMsgSfsuEmail = document.getElementById("register-error-msg-sfsu-email");
 
 /* Register error message: Passwords do no match */
 const registerErrorPasswordMismatchHolder = document.getElementById("register-error-password-mismatch-holder");
@@ -140,6 +140,8 @@ function validateRegisterInfo(email, passwd, repasswd, checkbox){
 	let studentEmailRegEx = new RegExp(/^[A-Za-z0-9._%+-]+@mail.sfsu.edu$/);
 	let facultyEmailRegEx = new RegExp(/^[A-Za-z0-9._%+-]+@sfsu.edu$/);
 
+	var checkboxValue = document.getElementById("checkboxTOS")
+
 	if( !(studentEmailRegEx.test(email) || facultyEmailRegEx.test(email)) ){
 		registerErrorMsgSfsuEmail.style.opacity = 1;
         registerErrorSfsuEmailHolder.style.display = "contents";
@@ -157,7 +159,7 @@ function validateRegisterInfo(email, passwd, repasswd, checkbox){
 		return false;
 	}
 	// add checkbox to validation
-	if(checkbox != true) {
+	if(checkbox != 1) {
 	    alert("Please agree to the terms of service");
 	    return false;
 	}
