@@ -1,11 +1,9 @@
-body {
-    font-family: Georgia, serif;
-    background-color: #23272a;
-    color: #ffffff;
-}
-
-.team-info {
-    text-align: center;
+.no-overflow {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 100%;
+    display: block;
 }
 
 main {
@@ -13,6 +11,8 @@ main {
     background-color: #343a40;
     border-radius: 7px;
     box-shadow: 0px 0px 5px 2px black;
+    margin-top: 30px;
+    margin-bottom: 30px;
 }
 
 #main-header {
@@ -23,7 +23,7 @@ main {
     padding-top: 10px;
 }
 
-img {
+#main-body img {
     user-select: none;
     -moz-user-select: none;
     -webkit-user-drag: none;
@@ -31,45 +31,27 @@ img {
     -ms-user-select: none;
 }
 
-.thumbnail {
+#main-body .thumbnail {
     display: block;
     overflow: hidden;
-    width: 140px;
-    height: 140px;
+    width: 150px;
+    height: 150px;
     object-fit: cover;
 }
 
-.thumbnail img {
-    display: block;
-    min-width: 100%;
-    min-height: 100%;
-}
-
-.container-fluid {
-    overflow: hidden;
-}
-
-.list-group-item-1 {
+#main-body .list-group-item-1 {
     background-color: #cbd1d6;
 }
 
-.list-group-item-2 {
+#main-body .list-group-item-2 {
     background-color: #bfc5c9;
 }
 
-.no-overflow {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    width: 100%;
-    display: block;
-}
-
-p {
+#main-body p {
     white-space: nowrap;
     margin-top: 5px;
 }
 
-.ellipsis-overflow {
-    text-overflow: ellipsis;
+#main-body li {
+    cursor: pointer;
 }
