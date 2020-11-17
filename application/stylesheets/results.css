@@ -15,6 +15,11 @@ main {
     margin-bottom: 30px;
 }
 
+.modal-content {
+    background-color: #343a40;
+    color: #FFFFFF;
+}
+
 #main-header {
     color: white;
     background-color: #23272a;
@@ -57,4 +62,8 @@ main {
 
 #main-body li {
     cursor: pointer;
+}
+
+#modal-title {
+    margin-left: 35%;
 }

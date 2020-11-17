@@ -28,7 +28,7 @@ function loadListing(listing) {
         }
 
         var img = document.createElement('img');
-        img.className = "img-thumbnail img-fluid";
+        img.className = "img-fluid";
         img.src = photos[i].path;
 
         document.getElementById('img-' + i).appendChild(img);
@@ -36,8 +36,20 @@ function loadListing(listing) {
     $('#carousel').carousel();
 }
 
+function setModalInfo(listing) {
+    modal = document.getElementById('contact-text');
+    user = JSON.parse(localStorage.getItem('loggedInUser'));
+
+    modal.value = "";
+    modal.value += 'From: ' + user.email + '\n';
+    modal.value += 'Subject: ' + listing.name + '\n';
+    modal.value += '----------------------------------------------------------------------------';
+
+    // TODO: Set cursor position of textarea and make From and Subject lines read-only
+}
+
 // Send get request for listing on page load
-$(document).ready(function() {
+$(document).ready(function () {
     var search = new URLSearchParams(window.location.search);
     var id = search.get('id');
 
@@ -54,6 +66,7 @@ $(document).ready(function() {
         })
         .then((dataJson) => {
             loadListing(dataJson);
+            setModalInfo(dataJson);
         })
         .catch((err) => {
             console.log(err);

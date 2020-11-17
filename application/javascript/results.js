@@ -30,7 +30,8 @@ function loadListings(dataJson) {
             '</div>';
         _html +=
             '<div class="col-sm-12 col-md p-2">' +
-            '<button type="button" class="btn btn-primary btn-block pull-right no-overflow" onclick="event.stopPropagation()">Contact Seller</button>';
+            '<button id="' + dataJson[listing].id + '" type="button" class="btn btn-primary btn-block pull-right no-overflow" data-toggle="modal" data-target="#modal"' +
+            'onclick="event.stopPropagation(); openModal(this)">Contact Seller</button>';
         _html += '</div></div></li>';
 
         if (listOdd) {
@@ -43,8 +44,30 @@ function loadListings(dataJson) {
     document.getElementById('results').innerHTML = _html;
 }
 
-// Send get request with the search parameters
-$(document).ready(function() {
+var items;
+
+function openModal(buttonObj) {
+    $('#modal').modal();
+
+    // Find relevant listing
+    var listing;
+    for (var i = 0; i < items.length; i++) {
+        if (items[i].id == buttonObj.id) {
+            listing = items[i];
+        }
+    }
+    modal = document.getElementById('contact-text');
+    user = JSON.parse(localStorage.getItem('loggedInUser'));
+
+    modal.value = "";
+    modal.value += 'From: ' + user.email + '\n';
+    modal.value += 'Subject: ' + listing.name + '\n';
+    modal.value += '----------------------------------------------------------------------------';
+
+    // TODO: Set cursor position of textarea and make From and Subject lines read-only
+}
+
+$(document).ready(function () {
     var search = new URLSearchParams(window.location.search);
     var category = search.get('category');
     var keywords = search.get('keywords');
@@ -60,7 +83,7 @@ $(document).ready(function() {
             return data.json();
         })
         .then((dataJson) => {
-            console.log(dataJson);
+            items = dataJson;
             loadListings(dataJson);
         })
         .catch((err) => {
