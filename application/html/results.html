@@ -54,21 +54,47 @@
             </div>
         </div>
     </div>
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <main>
-                    <div id="main-header">
-                        <h4>Showing Results...</h4>
+    <div class="custom-box">
+        <div class="container-flex">
+            <div class="row">
+                <div class="col-xl-3 col-lg-12">
+                    <div id="filters">
+                        <div id="filters-header" class="d-flex justify-content-between" data-toggle="collapse" data-target="#collapsable" aria-expanded="true" aria-controls="collapsable">
+                            <h5>Filters</h5>
+                            <div>
+                                <i class="fa fa-chevron-down rotate"></i>
+                            </div>
+                        </div>
+                        <div id="collapsable" class="collapse show">
+                            <div id="filters-body">
+                                <div id="price-filter">
+                                    <label for="price-min">Price Min:</label>
+                                    <input id="price-min" class="slider" type="range" min="0" max="199" value="0">
+                                    <input id="price-min-field" type="number" min="0" max="1990" step="10" placeholder="0">
+                                    <label for="price-max">Price Max:</label>
+                                    <input id="price-max" class="slider" type="range" min="1" max="200" value="200">
+                                    <input id="price-max-field" type="number" min="10" max="2000" step="10" placeholder="2000+">
+                                </div>
+                                <button id="apply-button" type="button" class="btn btn-primary pull-right">Apply</button>
+                            </div>
+                        </div>
                     </div>
-                    <div id="main-body">
-                        <ul class="list-group text-dark">
-                            <div id="results"></div>
-                        </ul>
-                    </div>
-                </main>
+                </div>
+                <div class="col-xl col-lg-12">
+                    <main>
+                        <div id="main-header">
+                            <div class="num-results"></div>
+                        </div>
+                        <div id="main-body">
+                            <ul class="list-group text-dark">
+                                <div id="results"></div>
+                            </ul>
+                        </div>
+                    </main>
+                </div>
             </div>
         </div>
+    </div>
     </div>
 </body>
 
