@@ -1,3 +1,9 @@
+/*
+This file generates the nav bar. This removes the need to copy paste the html
+in every single html file. We also get the categories from the server and handle
+search persistence here.
+*/
+
 $(document).ready(function() {
     let navbar = document.getElementById("navId");
 
@@ -12,7 +18,8 @@ $(document).ready(function() {
 					<ul class="dropdown-menu" id="dropdown-category"> \
 					</ul> \
 				</div> \
-				<input type="text" class="form-control border border-right-0" id="search-bar" name="keywords" placeholder="Search..." maxlength="40" pattern="^[a-zA-Z0-9/s]+$"> \
+				<input type="text" class="form-control border border-right-0" id="search-bar" name="keywords" placeholder="Search..." maxlength="40" pattern="^[a-zA-Z0-9/s\-]+$" \
+		                   oninput="this.setCustomValidity(\'\')" oninvalid="this.setCustomValidity(\'Please only enter alpanumeric characters.\')"> \
 				<span class="input-group-append"> \
 					<button class="btn btn-outline-light border border-left-0" id="search-button" type="submit"> \
 						<i class="fa fa-search"></i> \

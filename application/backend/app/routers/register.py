@@ -7,6 +7,7 @@ from app.sql_db.database import get_db
 router = APIRouter()
 
 
+# Check if user is already registered. If not, create user
 @router.post("/")
 async def create_user(username: str = Form(...), password: str = Form(...), db: Session = Depends(get_db)):
     user = schemas.UserCreate(email=username, password=password)

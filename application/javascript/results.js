@@ -1,12 +1,13 @@
+// Load the search results from the server into the html
 function loadListings(dataJson) {
-    var _html = '';
-    var listOdd = true;
+    let _html = '';
+    let isOdd = true;
     for (listing in dataJson) {
         _html +=
             '<li onclick="location.href=\'/listing/?id=' +
             dataJson[listing].id +
             '\'" class="list-group-item list-group-item-action p-2 ' +
-            (listOdd ? 'list-group-item-1' : 'list-group-item-2') +
+            (isOdd ? 'list-group-item-1' : 'list-group-item-2') +
             '">' +
             '<div class="row no-gutters">';
         _html +=
@@ -24,22 +25,90 @@ function loadListings(dataJson) {
             dataJson[listing].description +
             '</p></div></div>';
         _html +=
-            '<div class="col p-2"><p><b>Price: </b>$' +
+            '<div class="col d-flex p-2"><b>Price: </b>$' +
+            '<div class="price">' +
             dataJson[listing].price +
-            '</div>';
+            '</div></div>';
         _html +=
             '<div class="col-sm-12 col-md p-2">' +
-            '<button type="button" class="btn btn-primary btn-block pull-right no-overflow" onclick="event.stopPropagation()">Contact Seller</button>';
+            '<button id="' + dataJson[listing].id + '" type="button" class="btn btn-primary btn-block pull-right no-overflow" data-toggle="modal" data-target="#modal"' +
+            'onclick="event.stopPropagation(); openModal(this)">Contact Seller</button>';
         _html += '</div></div></li>';
 
-        if (listOdd) {
-            listOdd = false;
-        } else {
-            listOdd = true;
-        }
+        isOdd = !isOdd;
     }
 
-    document.getElementById('results').innerHTML = _html;
+    $('#results').html(_html);
+    displayResults();
+}
+
+// Apply alternating colors
+function reapplyAlternatingColors() {
+    let isOdd = true;
+    $('#main-body li').each(function () {
+        if ($(this).css('display') != 'none') {
+            $(this).removeClass();
+            $(this).attr('class', 'list-group-item list-group-item-action p-2');
+            (isOdd ? $(this).addClass('list-group-item-1') : $(this).addClass('list-group-item-2'));
+            isOdd = !isOdd;
+        }
+    });
+}
+
+// Applys price filter
+function filterPrice() {
+    let min = $('#price-min-field').prop('value');
+    let max = $('#price-max-field').prop('value');
+    if (max == '' || max == 2000) {
+        max = Number.MAX_SAFE_INTEGER;
+        $('#price-max-field').prop('value', '');
+    }
+
+    $('#main-body li').each(function () {
+        let price = $(this).find('.price');
+        if (parseInt(price.html()) < min || parseInt(price.html()) > max) {
+            $(this).css('display', 'none');
+        } else {
+            $(this).css('display', 'grid');
+        }
+    });
+
+    displayResults();
+    reapplyAlternatingColors();
+}
+
+// Displays number of results
+function displayResults() {
+    let counter = 0;
+    $('#main-body li').each(function () {
+        if ($(this).css('display') != 'none') {
+            counter++;
+        }
+    });
+    $('.num-results').html('<h5>Showing ' + counter + ' results...</h5>');
+}
+
+var items;
+
+function openModal(buttonObj) {
+    $('#modal').modal();
+
+    // Find relevant listing
+    var listing;
+    for (var i = 0; i < items.length; i++) {
+        if (items[i].id == buttonObj.id) {
+            listing = items[i];
+        }
+    }
+    modal = document.getElementById('contact-text');
+    user = JSON.parse(localStorage.getItem('loggedInUser'));
+
+    modal.value = "";
+    modal.value += 'From: ' + user.email + '\n';
+    modal.value += 'Subject: ' + listing.name + '\n';
+    modal.value += '----------------------------------------------------------------------------';
+
+    // TODO: Set cursor position of textarea and make From and Subject lines read-only
 }
 
 $(document).ready(function () {
@@ -58,7 +127,7 @@ $(document).ready(function () {
             return data.json();
         })
         .then((dataJson) => {
-            console.log(dataJson);
+            items = dataJson;
             loadListings(dataJson);
         })
         .catch((err) => {
@@ -76,4 +145,37 @@ $(document).ready(function () {
     } else {
         document.getElementById('search-bar').placeholder = 'Search...';
     }
+
+    // sync price sliders
+    $('#price-min').on('input', function () {
+        $('#price-min-field').prop('value', $(this).prop('value') * 10);
+    });
+
+    $('#price-max').on('input', function () {
+        $('#price-max-field').prop('value', $(this).prop('value') * 10);
+    });
+
+    $('#price-min-field').on('input', function () {
+        $('#price-min').prop('value', $(this).prop('value') / 10);
+    });
+
+    $('#price-max-field').on('input', function () {
+        $('#price-max').prop('value', $(this).prop('value') / 10);
+    });
+
+    // apply filters
+    $('#apply-button').on('click', function () {
+        filterPrice();
+        $(this).prop('aria-pressed', 'false');
+        $(this).blur();
+    });
+
+    // flip filter arrow on collapse
+    $('#collapsable').on('show.bs.collapse', function () {
+        $('.rotate').toggleClass('fa-rotate-180');
+    });
+
+    $('#collapsable').on('hide.bs.collapse', function () {
+        $('.rotate').toggleClass('fa-rotate-180');
+    });
 });

@@ -8,8 +8,6 @@ from passlib.hash import bcrypt
 
 """
 This file is used for the 4 big interactions with the database: create, read, update, & delete.
-For now all it does is the search logic for the vertical prototype. 
-There will be much more here in the future
 """
 
 
@@ -73,4 +71,10 @@ def get_all_categories(db: Session):
     return db.query(models.Category).all()
 
 
-
+def create_message(db: Session, message: str, listing_id: int):
+    listing = get_listing_by_id(db, listing_id)
+    db_message = models.Message(seller_id=listing.seller_id,
+                                message=message)
+    db.add(db_message)
+    db.commit()
+    db.refresh(db_message)
