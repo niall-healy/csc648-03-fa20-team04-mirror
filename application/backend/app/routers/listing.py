@@ -53,7 +53,7 @@ async def create_listing(db: Session = Depends(get_db),
         imgName = str(uuid.uuid4())
         thmbName = str(uuid.uuid4())
 
-        fileType = '.' + file.content_type.split('/', 1)[1]
+        fileType = '.png' 
 
         # construct file paths
         imgPath = "/images/" + imgName + fileType 
@@ -67,8 +67,7 @@ async def create_listing(db: Session = Depends(get_db),
         img.close()
 
         thmb = Image.open(file.file)
-        thmb = resizeimage.resize_contain(thmb, [256, 256])
-        thmb = thmb.convert('RGB')
+        thmb = resizeimage.resize_contain(thmb, [256, 256], bg_color=(0, 0, 0, 0))
         thmb.save('/var/www' + thmbPath, thmb.format)
         thmb.close()
 
