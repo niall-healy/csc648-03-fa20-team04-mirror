@@ -18,9 +18,6 @@ class User(Base):
     email = Column(String(85), unique=True, index=True)
     password_hash = Column(String(100))
 
-    sellerMessageThreads = relationship("MessageThread", back_populates="seller", passive_deletes=True)
-    # buyerMessageThreads = relationship("MessageThread", back_populates="buyer", passive_deletes=True)
-
     listings = relationship("Listing", back_populates="seller", cascade="all, delete-orphan", passive_deletes=True)
 
     def __repr__(self):
@@ -45,31 +42,13 @@ class Listing(Base):
     photoPaths = relationship("PhotoPath", back_populates="listing", cascade="all, delete-orphan", passive_deletes=True)
 
 
-class MessageThread(Base):
-    __tablename__ = 'message_thread'
-
-    id = Column(Integer, primary_key=True, index=True)
-
-    seller_id = Column(Integer, ForeignKey('user.id'))
-    # buyer_id = Column(Integer, ForeignKey('user.id'))
-
-    seller = relationship("User", back_populates="sellerMessageThreads")
-    # buyer = relationship("User", back_populates="buyerMessageThreads")
-    messages = relationship('Message', back_populates='messageThread', cascade="all, delete-orphan",
-                            passive_deletes=True)
-
-
 class Message(Base):
     __tablename__ = 'message'
 
     id = Column(Integer, primary_key=True, index=True)
-    messageContents = Column(String(32))
+    seller_id = Column(Integer, ForeignKey('user.id'))  # listing owner
     timestamp = Column(DateTime)
-
-    thread_id = Column(Integer, ForeignKey('message_thread.id'))
-    sender_id = Column(Integer, ForeignKey('user.id'))
-
-    messageThread = relationship("MessageThread", back_populates="messages")
+    message = Column(String(256), index=True)  # 256 character message
 
 
 class PhotoPath(Base):

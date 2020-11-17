@@ -83,38 +83,11 @@ class Automotive(Listing):
 
 
 # =====Message=====
-class MessageBase(BaseModel):
-    messageContents: str
-
-
-class MessageCreate(MessageBase):
-    pass
-
-
-class Message(MessageBase):
-    messageId: int
-    threadId: int
-    senderId: int
-    timestamp: datetime
-
-    class Config:
-        orm_mode = True
-
-
-# =====Message Thread=====
-class MessageThreadBase(BaseModel):
-    messages: List[Message]
-
-
-class MessageThreadCreate(MessageThreadBase):
-    pass
-
-
-class MessageThread(MessageThreadBase):
-    threadId: int
-    sellerId: int
-    buyerId: int
-    timestamp: datetime
+class Message(BaseModel):
+    id: int
+    seller_id: int
+    timestamp: datetime = datetime.now()
+    message: str
 
     class Config:
         orm_mode = True

@@ -8,6 +8,7 @@ from app.sql_db import models
 
 from app.sql_db.database import SessionLocal, engine
 
+from application.backend.app.routers import message
 
 """
 This is the main file that runs the app, it builds the tables in the database, instantiates the fastAPI app, 
@@ -51,6 +52,12 @@ app.include_router(
     search.router,
     prefix="/search",
     tags=["search"]
+)
+
+app.include_router(
+    message.router,
+    prefix="/message",
+    tags=["message"]
 )
 
 # mounts static files
