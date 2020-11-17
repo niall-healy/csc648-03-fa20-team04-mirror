@@ -106,7 +106,6 @@ class UserCreate(UserBase):
 class User(UserBase):
     id: int
     password_hash: str
-    messageThreads: List[MessageThread] = []
     listings: List[Listing] = []
     isAdmin: bool
 

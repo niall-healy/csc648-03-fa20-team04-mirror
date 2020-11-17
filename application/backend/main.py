@@ -3,12 +3,10 @@ from fastapi import FastAPI
 from starlette.responses import RedirectResponse
 from starlette.staticfiles import StaticFiles
 
-from app.routers import search, register, login, listing
+from app.routers import search, register, login, listing, message
 from app.sql_db import models
 
 from app.sql_db.database import SessionLocal, engine
-
-from application.backend.app.routers import message
 
 """
 This is the main file that runs the app, it builds the tables in the database, instantiates the fastAPI app,

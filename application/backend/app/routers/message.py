@@ -1,9 +1,8 @@
 from fastapi import APIRouter, Depends, Form
 from sqlalchemy.orm import Session
 
-from application.backend.app.routers.login import get_current_user
-from application.backend.app.sql_db import schemas, crud
-from application.backend.app.sql_db.database import get_db
+from app.sql_db import schemas, crud
+from app.sql_db.database import get_db
 
 router = APIRouter()
 
