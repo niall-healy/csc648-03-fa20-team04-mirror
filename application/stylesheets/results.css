@@ -36,6 +36,9 @@ main {
     overflow: hidden;
     width: 150px;
     height: 150px;
+    background-color: transparent;
+    border: 1px;
+    border-color: black;
     object-fit: cover;
 }
 
