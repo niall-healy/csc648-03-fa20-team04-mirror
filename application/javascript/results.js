@@ -12,7 +12,7 @@ function loadListings(dataJson) {
         _html +=
             '<div class="col-lg-7 d-flex">' +
             '<img class="thumbnail rounded" src="' +
-            dataJson[listing].photoPaths[0].path +
+            dataJson[listing].photoPaths[0].thumbnailPath +
             '">';
         _html +=
             '<div class="p-2">' +
