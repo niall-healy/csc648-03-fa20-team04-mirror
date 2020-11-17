@@ -53,14 +53,13 @@ async def create_listing(db: Session = Depends(get_db),
         imgName = str(uuid.uuid4())
         thmbName = str(uuid.uuid4())
 
-        fileType = '.png' 
+        fileType = '.png'
 
         # construct file paths
-        imgPath = "/images/" + imgName + fileType 
+        imgPath = "/images/" + imgName + fileType
         thmbPath = "/images/" + thmbName + fileType
 
         photoPaths.append((imgPath, thmbPath))
-
 
         img = Image.open(file.file)
         img.save('/var/www' + imgPath, img.format)

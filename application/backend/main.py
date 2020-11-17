@@ -11,23 +11,23 @@ from app.sql_db.database import SessionLocal, engine
 from application.backend.app.routers import message
 
 """
-This is the main file that runs the app, it builds the tables in the database, instantiates the fastAPI app, 
-redirects the root of the site to the homepage, includes the router in the app, and mounts static files 
+This is the main file that runs the app, it builds the tables in the database, instantiates the fastAPI app,
+redirects the root of the site to the homepage, includes the router in the app, and mounts static files
 """
 
-# builds tables in the database
+# build tables in the database
 models.Base.metadata.create_all(bind=engine)
 
-# creates an instance of the fastAPI app
+# create an instance of the fastAPI app
 app = FastAPI()
 
 
-# redirects root of the site to our homepage
+# redirect root of the site to our homepage
 @app.get("/")
 async def root():
     return RedirectResponse(url='/html/index.html')
 
-# includes the routers
+# include the routers
 app.include_router(search.router)
 
 app.include_router(
@@ -60,6 +60,5 @@ app.include_router(
     tags=["message"]
 )
 
-# mounts static files
+# mount static files
 app.mount("/", StaticFiles(directory=".."), name="static")
-

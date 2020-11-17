@@ -24,6 +24,7 @@ async def read_listings(keywords: str, category: str, db: Session = Depends(get_
     return crud.get_listings_for_search(db, keywords, category)
 
 
+# returns results html page
 @router.get("/results/", response_class=HTMLResponse)
 async def get_results_page():
     with open("/var/www/html/results.html") as f:
@@ -32,6 +33,7 @@ async def get_results_page():
     return html
 
 
+# returns list of categories
 @router.get("/categories/", response_model=List[schemas.CategoryReturn])
 async def get_categories(db: Session = Depends(get_db)):
     return crud.get_all_categories(db)

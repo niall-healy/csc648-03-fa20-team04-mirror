@@ -8,8 +8,6 @@ from passlib.hash import bcrypt
 
 """
 This file is used for the 4 big interactions with the database: create, read, update, & delete.
-For now all it does is the search logic for the vertical prototype. 
-There will be much more here in the future
 """
 
 

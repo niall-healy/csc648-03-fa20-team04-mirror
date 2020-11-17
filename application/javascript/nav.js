@@ -1,3 +1,9 @@
+/*
+This file generates the nav bar. This removes the need to copy paste the html
+in every single html file. We also get the categories from the server and handle
+search persistence here.
+*/
+
 $(document).ready(function() {
     let navbar = document.getElementById("navId");
 

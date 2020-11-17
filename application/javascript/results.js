@@ -1,3 +1,4 @@
+// Load the search results from the server into the html
 function loadListings(dataJson) {
     var _html = '';
     var listOdd = true;
@@ -42,7 +43,8 @@ function loadListings(dataJson) {
     document.getElementById('results').innerHTML = _html;
 }
 
-$(document).ready(function () {
+// Send get request with the search parameters
+$(document).ready(function() {
     var search = new URLSearchParams(window.location.search);
     var category = search.get('category');
     var keywords = search.get('keywords');
