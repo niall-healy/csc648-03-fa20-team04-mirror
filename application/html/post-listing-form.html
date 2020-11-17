@@ -36,19 +36,19 @@
                     <div id="form-body" class="bg-dark d-flex justify-content-center">
                         <form id="post-listing-form">
                             <label for="listing-name-field">Listing Name</label>
-                            <input id="listing-name-field" class="form-field" type="text" name="name" placeholder="Listing Name">
+                            <input id="listing-name-field" class="form-field" type="text" name="name" placeholder="Listing Name" required />
                             <label for="price-field">Price</label>
-                            <input id="price-field" class="form-field" type="text" name="price" placeholder="Price">
+                            <input id="price-field" class="form-field" pattern="^[0-9]+$" oninput="this.setCustomValidity('')" oninvalid="this.setCustomValidity('Please only enter numeric characters.')" type="text" name="price" placeholder="Price" required />
                             <label for="form-category">Category</label>
-                            <select id="form-category" class="selectpicker form-selector" data-width="40%" name="category" title="Category Type">
+                            <select id="form-category" class="selectpicker form-selector" data-width="40%" name="category" title="Category Type" required>
                                 <option value="Textbooks">Textbooks</option>
                                 <option value="Housing">Housing</option>
                                 <option value="Automotive">Automotive</option>
                             </select>
                             <label for="description-field">Description</label>
-                            <textarea id="description-field" class="form-field" rows="5" name="description" placeholder="Description" maxlength="144"></textarea>
+                            <textarea id="description-field" class="form-field" rows="5" name="description" placeholder="Description" maxlength="144" required></textarea>
                             <label for="file-upload">Upload Images</label>
-                            <input id="file-upload" type="file" name="images" accept="image/*" multiple>
+                            <input id="file-upload" type="file" name="images" accept="image/*" multiple required>
                             <div id="image-preview"></div>
                             <input id="submit-button" class="btn btn-primary pull-right" type="submit" value="Submit">
                         </form>
