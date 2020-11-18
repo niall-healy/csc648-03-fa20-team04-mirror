@@ -14,25 +14,22 @@ from app.sql_db import crud
 from app.sql_db.database import get_db
 
 router = APIRouter()
+
+# Variables used for password encryption
 SECRET_KEY = environ.get('CSC648WEBSITE_SECRET_KEY')
 ALGORITHM = 'HS256'
 ACCESS_TOKEN_EXPIRE_MINUTES = 60
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/login")
 
 
+# Used as the response model for the login post router
 class Token(BaseModel):
     access_token: str
     token_type: str
 
 
-class TokenId(BaseModel):
-    email: str
-
-
 @router.post("/", response_model=Token)
 async def login_for_access_token(db: Session = Depends(get_db), form_data: OAuth2PasswordRequestForm = Depends()):
-    # for debugging purposes only
-    # print(form_data)
     user = authenticate_user(db, form_data.username, form_data.password)
     if user is None:
         raise HTTPException(
@@ -47,6 +44,7 @@ async def login_for_access_token(db: Session = Depends(get_db), form_data: OAuth
     return {"access_token": access_token, "token_type": "bearer"}
 
 
+# Checks if the email and password correspond to a valid user in the db
 def authenticate_user(db: Session, email: str, password: str):
     user = crud.get_user_by_email(db, email)
     retVal = user
@@ -58,6 +56,7 @@ def authenticate_user(db: Session, email: str, password: str):
     return retVal
 
 
+# Build authentication token to pass to front end
 def create_access_token(*, data: dict, expires_delta: timedelta = None):
     to_encode = data.copy()
     if expires_delta:
@@ -69,6 +68,8 @@ def create_access_token(*, data: dict, expires_delta: timedelta = None):
     return encoded_jwt
 
 
+# Used to get the user associated with an auth token. Called by other routers when an auth token is sent by the frontend
+# for example posting a listing
 async def get_current_user(db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
