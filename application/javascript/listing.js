@@ -50,6 +50,7 @@ function setModalInfo(listing) {
 
 //function to store last 10 recent listings visited
 function storeRecentListingId(id) {
+
     var recentlyVisited = null
     if (localStorage.hasOwnProperty('recentlyVisited')) {
         recentlyVisited = JSON.parse(localStorage.getItem('recentlyVisited'));

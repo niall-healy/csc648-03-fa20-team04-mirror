@@ -4,7 +4,7 @@
 // add additional fields depending on category (i.e. Category: books | will ask for ISBN:   ,Class:   , etc..)
 
 // Add event listener for submit listing button
-window.onload = function() {
+window.onload = function () {
     let postListingButton = document.getElementById('submit-button');
 
     postListingButton.addEventListener('click', (e) => {
@@ -18,7 +18,7 @@ async function submitListing() {
     let form = document.getElementById('post-listing-form');
     let userJSON = localStorage.getItem('loggedInUser');
 
-    if (userJSON != null) {
+    if (userJSON != null && form.reportValidity()) {
         let user = JSON.parse(userJSON);
 
         var fetchOptions = {
@@ -40,8 +40,6 @@ async function submitListing() {
                 }
             })
             .then((dataJson) => {
-                console.log(dataJson);
-
                 window.location.href = '/listing/?id=' + dataJson.id;
             })
             .catch((err) => {
@@ -51,7 +49,7 @@ async function submitListing() {
 }
 
 // Update image preview
-$('#file-upload').on('change', function(e) {
+$('#file-upload').on('change', function (e) {
     var fileCount = $(this)[0].files.length;
     var imagePreview = $('#image-preview');
 
@@ -59,7 +57,7 @@ $('#file-upload').on('change', function(e) {
 
     for (var i = 0; i < fileCount; i++) {
         var reader = new FileReader();
-        reader.onload = function(e) {
+        reader.onload = function (e) {
             $('<img>', {
                 'src': e.target.result,
                 'class': 'thumbnail'

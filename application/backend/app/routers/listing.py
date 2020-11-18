@@ -61,13 +61,13 @@ async def create_listing(db: Session = Depends(get_db),
 
         photoPaths.append((imgPath, thmbPath))
 
+        # save as full-sized image
         img = Image.open(file.file)
         img.save('/var/www' + imgPath, img.format)
-        img.close()
 
-        thmb = Image.open(file.file)
-        thmb = resizeimage.resize_contain(thmb, [256, 256], bg_color=(0, 0, 0, 0))
-        thmb.save('/var/www' + thmbPath, thmb.format)
-        thmb.close()
+        # save as thumbnail
+        img = resizeimage.resize_contain(img, [256, 256], bg_color=(0, 0, 0, 0))
+        img.save('/var/www' + thmbPath, img.format)
+        img.close()
 
     return crud.create_listing(db, listing, photoPaths)

@@ -32,7 +32,7 @@ function generateCards(items, numberOfItems, title) {
             break;
     }
     _html += `</div></div>`;
-
+  
     return _html;
 }
 
@@ -73,6 +73,7 @@ $(document).ready(function () {
                 if (dataJson.length > 0) {
                     loadRecent(dataJson, numRecent);
                 }
+
             })
             .catch((err) => {
                 console.log(err);
@@ -96,4 +97,5 @@ $(document).ready(function () {
         .catch((err) => {
             console.log(err);
         });
+
 });
