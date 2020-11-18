@@ -106,7 +106,7 @@ function renderNavForUser() {
         let accountLogin = document.getElementById('account-login');
         let _html = `<a class="dropdown-toggle nav-link" id="dropdown-hide" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</a> \
 	                <ul class="dropdown-menu dropdown-menu-right" id="login-dropdown"> \
-	                    <li><a class="nav-link" href="#">Profile</a></li> \
+	                    <li><a class="nav-link" href="/html/profile.html">Profile</a></li> \
 	                    <li><a class="nav-link" id="logout-button" onclick="handleLogout();">Logout</a></li> \
 	                </ul>`;
         accountLogin.innerHTML = _html;
