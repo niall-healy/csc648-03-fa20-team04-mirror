@@ -128,7 +128,7 @@ function validateRegisterInfo(email, passwd, repasswd, checkbox){
 	let studentEmailRegEx = new RegExp(/^[A-Za-z0-9._%+-]+@mail.sfsu.edu$/);
 	let facultyEmailRegEx = new RegExp(/^[A-Za-z0-9._%+-]+@sfsu.edu$/);
 
-	var checkboxValue = document.getElementById("checkboxTOS").checked;
+	var checked = document.getElementById("checkboxTOS").checked;
 
 	if( !(studentEmailRegEx.test(email) || facultyEmailRegEx.test(email)) ){
 		registerErrorMsgSfsuEmail.style.opacity = 1;
@@ -147,7 +147,7 @@ function validateRegisterInfo(email, passwd, repasswd, checkbox){
 		return false;
 	}
 	// add checkbox to validation
-	if(checkbox != "true") {
+	if(checked) {
 	    alert("Please agree to the terms of service");
 	    return false;
 	}
