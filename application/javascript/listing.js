@@ -49,7 +49,8 @@ function setModalInfo(listing) {
 }
 
 //function to store last 10 recent listings visited
-function storeRecentListing(id) {
+function storeRecentListingId(id) {
+
     var recentlyVisited = null
     if (localStorage.hasOwnProperty('recentlyVisited')) {
         recentlyVisited = JSON.parse(localStorage.getItem('recentlyVisited'));
@@ -71,7 +72,7 @@ function storeRecentListing(id) {
 // Send get request for listing on page load
 $(document).ready(function () {
     var search = new URLSearchParams(window.location.search);
-    var id = search.get('id');
+    var id = parseInt(search.get('id'));
 
     var fetchOptions = {
         method: 'GET'
