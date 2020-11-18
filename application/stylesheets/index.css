@@ -1,0 +1,35 @@
+.card {
+    max-width: 220px;
+    text-decoration: none !important;
+    color: white !important;
+}
+
+.site-box {
+    padding: 10px;
+    max-width: 1140px;
+}
+
+.card-title {
+    text-align: center;
+    font-size: 16px;
+    margin-bottom: 1px;
+}
+
+.card-text {
+    font-size: 14px;
+    margin-top: 1px;
+    margin-bottom: 1px;
+}
+
+.text-muted,
+.card-text {
+    margin-top: 1px;
+    margin-bottom: 1px;
+
+}
+
+.card-body {
+    padding: 0.75rem;
+
+}
+
