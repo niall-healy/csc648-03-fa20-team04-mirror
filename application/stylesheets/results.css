@@ -140,7 +140,6 @@ main {
 
 #main-body .thumbnail {
     display: block;
-    overflow: hidden;
     width: 150px;
     height: 150px;
     background-color: transparent;

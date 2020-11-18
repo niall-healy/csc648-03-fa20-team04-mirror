@@ -153,6 +153,9 @@ $(document).ready(function () {
 
     $('#price-max').on('input', function () {
         $('#price-max-field').prop('value', $(this).prop('value') * 10);
+        if ($('#price-max').prop('value') == 200) {
+            $('#price-max-field').prop('value', "");
+        }
     });
 
     $('#price-min-field').on('input', function () {
