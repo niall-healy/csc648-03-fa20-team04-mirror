@@ -48,6 +48,26 @@ function setModalInfo(listing) {
     // TODO: Set cursor position of textarea and make From and Subject lines read-only
 }
 
+//function to store last 10 recent listings visited
+function storeRecentListing(id) {
+    var recentlyVisited = null
+    if (localStorage.hasOwnProperty('recentlyVisited')) {
+        recentlyVisited = JSON.parse(localStorage.getItem('recentlyVisited'));
+        if (recentlyVisited.includes(id))
+            return
+
+        if(recentlyVisited.length == 10) {
+            recentlyVisited.shift(); 
+        }
+
+        recentlyVisited.push(id);
+    } else {
+        recentlyVisited = [id];
+    }
+
+    localStorage.setItem('recentlyVisited', JSON.stringify(recentlyVisited));
+}
+
 // Send get request for listing on page load
 $(document).ready(function () {
     var search = new URLSearchParams(window.location.search);
@@ -65,6 +85,7 @@ $(document).ready(function () {
             return data.json();
         })
         .then((dataJson) => {
+            storeRecentListingId(id);
             loadListing(dataJson);
             setModalInfo(dataJson);
         })

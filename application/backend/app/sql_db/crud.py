@@ -47,6 +47,25 @@ def get_listing_by_id(db: Session, listingId: int):
 
     return retVal
 
+def get_item_list_by_ids(db: Session, itemList: List[int], maxReturn: int):
+    numberFound = 0
+    retVal = []
+
+    for item in itemList:
+        currentItem = db.query(models.Listing).filter(models.Listing.id == item).first()
+        # Check if item is active and approved
+        # if currentItem.isActive and currentItem.isApproved
+        retVal.append(currentItem)
+        numberFound += 1
+        if numberFound >= maxReturn:
+            break
+
+    return retVal
+
+def get_newest_listings(db: Session, numItems: int):
+    retVal = db.query(models.Listing).order_by(desc(models.Listing.timestamp)).limit(numItems).all()
+
+    return retVal
 
 def create_listing(db: Session, listing: schemas.Listing, photoPaths):
     # Create listing object
