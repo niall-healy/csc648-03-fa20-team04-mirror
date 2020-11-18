@@ -1,4 +1,5 @@
 import datetime
+from typing import List
 
 from sqlalchemy import desc, or_
 from sqlalchemy.orm import Session
@@ -47,6 +48,7 @@ def get_listing_by_id(db: Session, listingId: int):
 
     return retVal
 
+
 def get_item_list_by_ids(db: Session, itemList: List[int], maxReturn: int):
     numberFound = 0
     retVal = []
@@ -62,10 +64,12 @@ def get_item_list_by_ids(db: Session, itemList: List[int], maxReturn: int):
 
     return retVal
 
+
 def get_newest_listings(db: Session, numItems: int):
     retVal = db.query(models.Listing).order_by(desc(models.Listing.timestamp)).limit(numItems).all()
 
     return retVal
+
 
 def create_listing(db: Session, listing: schemas.Listing, photoPaths):
     # Create listing object
