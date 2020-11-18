@@ -10,25 +10,104 @@ This allows fastAPI to do some cool things like send http responses of json obje
 """
 
 
+# =====Category=====
+class CategoryReturn(BaseModel):
+    category: str = None
+
+    class Config:
+        orm_mode = True
+
+
+class Category(CategoryReturn):
+    id: int = None
+
+    class Config:
+        orm_mode = True
+
+
 # =====Listing=====
-class ListingBase(BaseModel):  # Shared attributes for creating and reading data
+class PhotoPath(BaseModel):
+    id: int = None
+    path: str = None
+    thumbnailPath: str = None
+    listing_id: int = None
+
+    class Config:
+        orm_mode = True
+
+
+class Listing(BaseModel):  # Reading to return from API
+    id: int = None
+    seller_id: int = None
+    timestamp: datetime = datetime.now()
+    photoPaths: List[PhotoPath] = []
     name: str
     description: str
     price: int
     category: str
 
-
-class ListingCreate(ListingBase):  # Create everything in the base
-    pass
-
-
-class Listing(ListingBase):  # Reading to return from API
-    listingId: int
-    sellerId: int = None
-    timestamp: datetime = None
-    photo: str
     isApproved: bool = None
     isActive: bool = None
 
     class Config:
         orm_mode = True  # Read as ORM model
+
+
+# =====Books=====
+class Books(Listing):
+    relevantClass: str
+
+    class Config:
+        orm_mode = True
+
+
+# =====Housing=====
+class Housing(Listing):
+    streetAddress: str
+
+    class Config:
+        orm_mode = True
+
+
+# =====Automotive=====
+class Automotive(Listing):
+    listingId: int
+    year: int
+    make: str
+    model: str
+    odometer: int
+    titleStatus: str
+    fuel: str
+
+    class Config:
+        orm_mode = True
+
+
+# =====Message=====
+class Message(BaseModel):
+    id: int
+    seller_id: int
+    timestamp: datetime = datetime.now()
+    message: str
+
+    class Config:
+        orm_mode = True
+
+
+# =====User=====
+class UserBase(BaseModel):
+    email: str
+
+
+class UserCreate(UserBase):
+    password: str
+
+
+class User(UserBase):
+    id: int
+    password_hash: str
+    listings: List[Listing] = []
+    isAdmin: bool
+
+    class Config:
+        orm_mode = True

@@ -1,2 +1,3 @@
-Milestones/
-credentials/
+.idea/
+*.pyc
+.DS_Store
