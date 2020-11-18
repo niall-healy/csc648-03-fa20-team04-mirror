@@ -1,6 +1,6 @@
 import datetime
 
-from sqlalchemy import desc
+from sqlalchemy import desc, or_
 from sqlalchemy.orm import Session
 
 from app.sql_db import models, schemas
@@ -8,8 +8,11 @@ from passlib.hash import bcrypt
 
 """
 This file is used for the 4 big interactions with the database: create, read, update, & delete.
+<<<<<<< HEAD
 For now all it does is the search logic for the vertical prototype.
 There will be much more here in the future
+=======
+>>>>>>> milestone-three
 """
 
 
@@ -34,10 +37,12 @@ def get_listings_for_search(db: Session, searchQuery: str, category: str):
             retVal = db.query(models.Listing).filter(models.Listing.category == category).all()
     elif category != 'Any':
         # Note: use like() for case sensitivity, ilike() for case insensitivity
-        retVal = db.query(models.Listing).filter(models.Listing.name.ilike('%' + searchQuery + '%'),
-                                                 models.Listing.category == category).all()
+        retVal = db.query(models.Listing).filter(models.Listing.category == category,
+                                                 or_(models.Listing.name.ilike('%' + searchQuery + '%'),
+                                                     models.Listing.description.ilike('%' + searchQuery + '%'))).all()
     else:
-        retVal = db.query(models.Listing).filter(models.Listing.name.ilike('%' + searchQuery + '%')).all()
+        retVal = db.query(models.Listing).filter(or_(models.Listing.name.ilike('%' + searchQuery + '%'),
+                                                     models.Listing.description.ilike('%' + searchQuery + '%'))).all()
 
     return retVal
 
@@ -47,21 +52,35 @@ def get_listing_by_id(db: Session, listingId: int):
 
     return retVal
 
+def get_item_list_by_ids(db: Session, itemList: List[int], maxReturn: int):
+    numberFound = 0
+    retVal = []
+
+    for item in itemList:
+        currentItem = db.query(models.Listing).filter(models.Listing.id == item).first()
+        # Check if item is active and approved
+        # if currentItem.isActive and currentItem.isApproved
+        retVal.append(currentItem)
+        numberFound += 1
+        if numberFound >= maxReturn:
+            break
+
+    return retVal
+
+def get_newest_listings(db: Session, numItems: int):
+    retVal = db.query(models.Listing).order_by(desc(models.Listing.timestamp)).limit(numItems).all()
+
+    return retVal
 
 def create_listing(db: Session, listing: schemas.Listing, photoPaths):
     # Create listing object
     db_listing = models.Listing(**listing.dict())
-    db.add(db_listing)
-    db.commit()
-    db.refresh(db_listing)
-
-    # Grab newly created listing from db
-    db_listing = db.query(models.Listing).order_by(models.Listing.id.desc()).first()
 
     # Create PhotoPath objects for each photo path and add to the listing object
-    for path in photoPaths:
+    for path, thumbnailPath in photoPaths:
         pathObj = models.PhotoPath()
         pathObj.path = path
+        pathObj.thumbnailPath = thumbnailPath
         pathObj.listing_id = db_listing.id
         db_listing.photoPaths.append(pathObj)
 
@@ -83,7 +102,10 @@ def create_message(db: Session, message: str, listing_id: int):
     db.add(db_message)
     db.commit()
     db.refresh(db_message)
+<<<<<<< HEAD
 
 def get_message_by_seller_id(db: Session, user: Session):
     retVal = db.query(models.Message).filter(models.Message.seller_id == user.id).all()
     return retVal
+=======
+>>>>>>> milestone-three

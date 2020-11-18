@@ -29,6 +29,7 @@ class Category(CategoryReturn):
 class PhotoPath(BaseModel):
     id: int = None
     path: str = None
+    thumbnailPath: str = None
     listing_id: int = None
 
     class Config:
@@ -105,7 +106,6 @@ class UserCreate(UserBase):
 class User(UserBase):
     id: int
     password_hash: str
-    messageThreads: List[MessageThread] = []
     listings: List[Listing] = []
     isAdmin: bool
 

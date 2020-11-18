@@ -132,7 +132,7 @@ html {
     margin-bottom: 10px;
     border-radius: 3px;
     outline: none;
-    padding: 5px 5px 5px 0px;
+    padding: 5px 5px 5px 4px;
 }
 
 #login-form-submit {
@@ -255,7 +255,7 @@ html {
     margin-bottom: 10px;
     border-radius: 3px;
     outline: none;
-    padding: 5px 5px 5px 0px;
+    padding: 5px 5px 5px 4px;
 }
 
 #register-form-submit {
@@ -272,20 +272,7 @@ html {
     outline: none;
 }
 
-.register-form-buttons {
-    width: 100%;
-    padding: 7px;
-    border: none;
-    border-radius: 5px;
-    margin-bottom: 20px;
-    color: white;
-    font-weight: bold;
-    background-color: #23272a;
-    cursor: pointer;
-    outline: none;
-}
-
-#div-check-pw-match {
+.registration-form-alert {
     width: 100%;
     text-align: center;
     margin: 0;
@@ -297,4 +284,9 @@ html {
     background-color: #e58f8f;
     opacity: 0;
     display: none;
+}
+
+#div-checkboxTOS {
+    padding-top: 10px;
+    padding-bottom: 10px;
 }

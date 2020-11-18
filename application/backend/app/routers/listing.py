@@ -5,6 +5,9 @@ from app.sql_db.database import get_db
 from fastapi import APIRouter, Depends, Form, UploadFile, File
 from fastapi.responses import HTMLResponse
 
+from PIL import Image
+from resizeimage import resizeimage
+
 from sqlalchemy.orm import Session
 
 from typing import List
@@ -46,26 +49,25 @@ async def create_listing(db: Session = Depends(get_db),
     photoPaths = []
 
     for file in images:
-        # create random file name
-        file.filename = str(uuid.uuid4())
+        # create random file names for image and thumbnail
+        imgName = str(uuid.uuid4())
+        thmbName = str(uuid.uuid4())
 
-        # construct file path
-        path = "/images/" + file.filename
-        fileType = file.content_type.split('/', 1)[1]
-        fileType = '.' + fileType
+        fileType = '.png'
 
-        photoPaths.append(path + fileType)
+        # construct file paths
+        imgPath = "/images/" + imgName + fileType
+        thmbPath = "/images/" + thmbName + fileType
 
-        # put the file in the /images/directory
-        newFile = open('/var/www/images/' + file.filename + fileType, 'w+b')
+        photoPaths.append((imgPath, thmbPath))
 
-        # Read image data to new file
-        while True:
-            byte = await file.read(1)
-            if not byte:
-                break
-            newFile.write(byte)
+        # save as full-sized image
+        img = Image.open(file.file)
+        img.save('/var/www' + imgPath, img.format)
 
-        newFile.close()
+        # save as thumbnail
+        img = resizeimage.resize_contain(img, [256, 256], bg_color=(0, 0, 0, 0))
+        img.save('/var/www' + thmbPath, img.format)
+        img.close()
 
     return crud.create_listing(db, listing, photoPaths)
