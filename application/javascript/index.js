@@ -32,6 +32,8 @@ function generateCards(items, numberOfItems, title) {
             break;
     }
     _html += `</div></div>`;
+
+    return _html;
 }
 
 function loadRecent(items, numberOfItems) {
@@ -55,48 +57,43 @@ $(document).ready(function () {
     if (localStorage.hasOwnProperty('recentlyVisited')) {
         var recentlyVisited = JSON.parse(localStorage.getItem('recentlyVisited'));
 
-        var fetchOptions = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-            },
-            body: JSON.stringify({
-                'recentlyVisited': recentlyVisited
-            })
-        };
-
         // Get recently viewed items
         var numRecent = 5;
         var fetchURL = '/items/?numItems=' + numRecent;
 
-        fetch(fetchURL, fetchOptions)
-            .then((data) => {
-                return data.json();
-            })
-            .then((dataJson) => {
-                if (Object.keys(dataJson).length > 0)
-                    loadRecent(dataJson, numRecent);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+	for(var i = 0; i < recentlyVisited.length; i++){
+            fetchURL += '&ids=' + recentlyVisited[i];
+	}
 
-        // Get newest items
-        var numNewest = 10;
-        fetchURL = '/newest/?numItems=' + numNewest;
         fetch(fetchURL)
             .then((data) => {
                 return data.json();
             })
             .then((dataJson) => {
-                if (Object.keys(dataJson).length > 0)
-                    loadNewest(dataJson, numNewest);
-                else
-                    noPostings();
+                if (dataJson.length > 0) {
+                    loadRecent(dataJson, numRecent);
+		}
             })
             .catch((err) => {
                 console.log(err);
             });
     }
+        // Get newest items
+        var numNewest = 10;
+        fetchURL = '/newest/' + numNewest;
+        fetch(fetchURL)
+            .then((data) => {
+                return data.json();
+            })
+            .then((dataJson) => {
+		console.log(dataJson.length);
+                if (dataJson.length > 0) {
+                    loadNewest(dataJson, numNewest);
+                } else {
+                    noPostings();
+	        }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
 });
