@@ -134,8 +134,12 @@ function validateRegisterInfo(email, passwd, repasswd, checkbox) {
 
     var checkboxValue = document.getElementById("checkboxTOS")
 
+
+	  var checked = document.getElementById("checkboxTOS").checked;
+  
     if (!(studentEmailRegEx.test(email) || facultyEmailRegEx.test(email))) {
         registerErrorMsgSfsuEmail.style.opacity = 1;
+
         registerErrorSfsuEmailHolder.style.display = "contents";
         alert("Must use @sfsu.edu or @mail.sfsu.edu email");
         return false;
