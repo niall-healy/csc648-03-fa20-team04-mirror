@@ -147,7 +147,7 @@ function validateRegisterInfo(email, passwd, repasswd, checkbox){
 		return false;
 	}
 	// add checkbox to validation
-	if(checked) {
+	if(!checked) {
 	    alert("Please agree to the terms of service");
 	    return false;
 	}
