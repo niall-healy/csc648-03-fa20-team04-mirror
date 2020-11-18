@@ -61,9 +61,9 @@ $(document).ready(function () {
         var numRecent = 5;
         var fetchURL = '/items/?numItems=' + numRecent;
 
-	for(var i = 0; i < recentlyVisited.length; i++){
+        for (var i = 0; i < recentlyVisited.length; i++) {
             fetchURL += '&ids=' + recentlyVisited[i];
-	}
+        }
 
         fetch(fetchURL)
             .then((data) => {
@@ -72,28 +72,28 @@ $(document).ready(function () {
             .then((dataJson) => {
                 if (dataJson.length > 0) {
                     loadRecent(dataJson, numRecent);
-		}
+                }
             })
             .catch((err) => {
                 console.log(err);
             });
     }
-        // Get newest items
-        var numNewest = 10;
-        fetchURL = '/newest/' + numNewest;
-        fetch(fetchURL)
-            .then((data) => {
-                return data.json();
-            })
-            .then((dataJson) => {
-		console.log(dataJson.length);
-                if (dataJson.length > 0) {
-                    loadNewest(dataJson, numNewest);
-                } else {
-                    noPostings();
-	        }
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+    // Get newest items
+    var numNewest = 10;
+    fetchURL = '/newest/' + numNewest;
+    fetch(fetchURL)
+        .then((data) => {
+            return data.json();
+        })
+        .then((dataJson) => {
+            console.log(dataJson.length);
+            if (dataJson.length > 0) {
+                loadNewest(dataJson, numNewest);
+            } else {
+                noPostings();
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+        });
 });
