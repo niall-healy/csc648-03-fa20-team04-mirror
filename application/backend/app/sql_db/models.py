@@ -8,7 +8,6 @@ This file has the SQLAlchemy database models that are used to generate the datab
 It will have much more in the future as we add users, etc.
 """
 
-
 # =====Main Tables=====
 
 class User(Base):

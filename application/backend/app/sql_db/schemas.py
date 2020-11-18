@@ -9,7 +9,6 @@ This file has the Pydantic models that are used to mirror the database tables as
 This allows fastAPI to do some cool things like send http responses of json objects that match these classes.
 """
 
-
 # =====Category=====
 class CategoryReturn(BaseModel):
     category: str = None
@@ -41,11 +40,11 @@ class Listing(BaseModel):  # Reading to return from API
     seller_id: int = None
     timestamp: datetime = datetime.now()
     photoPaths: List[PhotoPath] = []
+
     name: str
     description: str
     price: int
     category: str
-
     isApproved: bool = None
     isActive: bool = None
 
