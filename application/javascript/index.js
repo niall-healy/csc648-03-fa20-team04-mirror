@@ -2,7 +2,7 @@ function generateCards(items, numberOfItems, title) {
     var _html = `<div class="container"> \
                 <h3>` + title + `</h3> \
                 <div class="card-deck">`;
-    let cardNumber = 0;
+    var cardNumber = 0;
 
     for (item in items) {
         let description = items[item].description;
@@ -10,7 +10,7 @@ function generateCards(items, numberOfItems, title) {
             description = description.substring(0, 97) + '...';
 
         _html += `<a class="card mb-4 box-border mx-auto" href="/listing/?id=${items[item].id}"> \
-                        <img class="card-img-top img-fluid" src="${items[item].photoPaths[0].thumbnailPath}" alt="item image"> \
+                        <img class="card-img-top img-fluid" src="${items[item].photoPaths[0].thumbnailPath}"> \
                         <div class="card-body d-flex flex-column"> \
                             <p class="card-title">${items[item].name}</p> \
                             <p class="card-text">` + description + ` - $${items[item].price}</p> \
@@ -54,11 +54,14 @@ function noPostings() {
 }
 
 $(document).ready(function () {
+    var numRecent = 5;
+    var numNewest = 10;
+
     if (localStorage.hasOwnProperty('recentlyVisited')) {
         var recentlyVisited = JSON.parse(localStorage.getItem('recentlyVisited'));
 
         // Get recently viewed items
-        var numRecent = 5;
+        
         var fetchURL = '/items/?numItems=' + numRecent;
 
         for (var i = 0; i < recentlyVisited.length; i++) {
@@ -79,8 +82,8 @@ $(document).ready(function () {
                 console.log(err);
             });
     }
+
     // Get newest items
-    var numNewest = 10;
     fetchURL = '/newest/' + numNewest;
     fetch(fetchURL)
         .then((data) => {
