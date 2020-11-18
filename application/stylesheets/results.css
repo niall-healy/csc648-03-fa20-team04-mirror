@@ -145,6 +145,7 @@ main {
     background-color: transparent;
     border: 1px;
     border-color: black;
+    border-style: solid;
     object-fit: cover;
 }
 
