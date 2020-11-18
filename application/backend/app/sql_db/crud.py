@@ -8,7 +8,7 @@ from passlib.hash import bcrypt
 
 """
 This file is used for the 4 big interactions with the database: create, read, update, & delete.
-For now all it does is the search logic for the vertical prototype. 
+For now all it does is the search logic for the vertical prototype.
 There will be much more here in the future
 """
 
@@ -83,3 +83,7 @@ def create_message(db: Session, message: str, listing_id: int):
     db.add(db_message)
     db.commit()
     db.refresh(db_message)
+
+def get_message_by_seller_id(db: Session, user: Session):
+    retVal = db.query(models.Message).filter(models.Message.seller_id == user.id).all()
+    return retVal
