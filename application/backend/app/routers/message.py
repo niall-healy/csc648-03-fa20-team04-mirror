@@ -6,7 +6,9 @@ from app.sql_db.database import get_db
 
 router = APIRouter()
 
-
+"""
+routers to create message objects as well as get all messages linked to the currently logged in user
+"""
 @router.post("/", response_model=schemas.Message)
 async def create_message(db: Session = Depends(get_db),
                          message: str = Form(...),
