@@ -8,8 +8,6 @@ from app.sql_db import models
 
 from app.sql_db.database import SessionLocal, engine
 
-from application.backend.app.routers import message
-
 """
 This is the main file that runs the app, it builds the tables in the database, instantiates the fastAPI app,
 redirects the root of the site to the homepage, includes the router in the app, and mounts static files
