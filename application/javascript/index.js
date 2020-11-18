@@ -55,13 +55,13 @@ function noPostings() {
 
 $(document).ready(function () {
     var numRecent = 5;
-    var numNewest = 10;
+    var numNewest = 5;
+
 
     if (localStorage.hasOwnProperty('recentlyVisited')) {
         var recentlyVisited = JSON.parse(localStorage.getItem('recentlyVisited'));
 
         // Get recently viewed items
-        
         var fetchURL = '/items/?numItems=' + numRecent;
 
         for (var i = 0; i < recentlyVisited.length; i++) {
