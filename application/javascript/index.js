@@ -1,43 +1,104 @@
-window.onload = function() {
-   function search(){
-      let text = document.getElementById("search-bar").value;
-      text = text.replace(" ", "%20");
+function generateCards(items, numberOfItems, title) {
+    var _html = `<div class="container"> \
+                <h3>` + title + `</h3> \
+                <div class="card-deck">`;
+    var cardNumber = 0;
 
-      let category = document.getElementById("category").value;
+    for (item in items) {
+        let description = items[item].description;
+        if (description.length > 100)
+            description = description.substring(0, 97) + '...';
 
-      var fetchOptions = {
-		method: "GET",
-      };
+        _html += `<a class="card mb-4 box-border mx-auto" href="/listing/?id=${items[item].id}"> \
+                        <img class="card-img-top img-fluid" src="${items[item].photoPaths[0].thumbnailPath}"> \
+                        <div class="card-body d-flex flex-column"> \
+                            <p class="card-title">${items[item].name}</p> \
+                            <p class="card-text">` + description + ` - $${items[item].price}</p> \
+                            <p class="card-text mt-auto"><small class="text-muted">${items[item].timestamp}</small></p> \
+                        </div> \
+                    </a>`;
 
-      let fetchURL = '/search/?category=' + category  + "&keywords=" + text;
-      fetch(fetchURL, fetchOptions)
-      .then((data) => {
-        return data.json() 
-      })
-      .then((jsonData) => {
-         localStorage.setItem('results', JSON.stringify(jsonData));
-         window.location.href= "http://ec2-3-21-104-38.us-east-2.compute.amazonaws.com/html/results.html";
-      })
-      .catch((err) => {
-       	 console.log(err);
-      })
-   }
-
-   document.getElementById("search-button").addEventListener('click', search);
-   var resultField = document.getElementById("result");
-   
-   if(resultField) {
-      var results = JSON.parse(localStorage.getItem('results')); 
-      var html = "";
-   
-      results.forEach((result) => {
-         html += "<img src='" + result['photo'] + "'/>";
-         html += "<p><b>Item Name: </b> " + result['name'] + "</p>\n";
-         html += "<p><b>Description: </b> " + result['description'] + "</p>\n";
-         html += "<p><b>Price: </b> " + result['price'] + "</p>\n";
-         html += "<br>\n";
-      });
-
-      resultField.innerHTML = html;
-   }
+        cardNumber += 1;
+        if (cardNumber % 2 == 0) {
+            _html += `<div class="w-100 d-none d-sm-block d-md-none"></div>`
+        }
+        if (cardNumber % 3 == 0) {
+            _html += `<div class="w-100 d-none d-md-block d-lg-none"></div>`
+        }
+        if (cardNumber % 4 == 0) {
+            _html += `<div class="w-100 d-none d-lg-block d-xl-none"></div>`
+        }
+        if (cardNumber >= numberOfItems)
+            break;
+    }
+    _html += `</div></div>`;
+  
+    return _html;
 }
+
+function loadRecent(items, numberOfItems) {
+    var _html = generateCards(items, numberOfItems, 'Recently Viewed');
+    $('#recently-viewed').html(_html);
+}
+
+function loadNewest(items, numberOfItems) {
+    var _html = generateCards(items, numberOfItems, 'Newest Listings');
+    $('#newest-listings').html(_html);
+}
+
+function noPostings() {
+    var _html = `<div class="container text-center"> \
+                    <h2>No Postings Found...</h2> \
+                </div>`;
+    $('#newest-listings').html(_html);
+}
+
+$(document).ready(function () {
+    var numRecent = 5;
+    var numNewest = 5;
+
+
+    if (localStorage.hasOwnProperty('recentlyVisited')) {
+        var recentlyVisited = JSON.parse(localStorage.getItem('recentlyVisited'));
+
+        // Get recently viewed items
+        var fetchURL = '/items/?numItems=' + numRecent;
+
+        for (var i = 0; i < recentlyVisited.length; i++) {
+            fetchURL += '&ids=' + recentlyVisited[i];
+        }
+
+        fetch(fetchURL)
+            .then((data) => {
+                return data.json();
+            })
+            .then((dataJson) => {
+                if (dataJson.length > 0) {
+                    loadRecent(dataJson, numRecent);
+                }
+
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
+
+    // Get newest items
+    fetchURL = '/newest/' + numNewest;
+    fetch(fetchURL)
+        .then((data) => {
+            return data.json();
+        })
+        .then((dataJson) => {
+            console.log(dataJson.length);
+            if (dataJson.length > 0) {
+                loadNewest(dataJson, numNewest);
+            } else {
+                noPostings();
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+
+});
