@@ -32,7 +32,7 @@ function loadListings(dataJson) {
         _html +=
             '<div class="col-sm-12 col-md p-2">' +
             '<button id="' + dataJson[listing].id + '" type="button" class="btn btn-primary btn-block pull-right no-overflow" data-toggle="modal" data-target="#modal"' +
-            'onclick="event.stopPropagation(); openModal(this)">Contact Seller</button>';
+            'onclick="event.stopPropagation(); openContactModal(this);">Contact Seller</button>';
         _html += '</div></div></li>';
 
         isOdd = !isOdd;
@@ -90,7 +90,16 @@ function displayResults() {
 
 var items;
 
-function openModal(buttonObj) {
+function openContactModal(buttonObj) {
+
+    user = JSON.parse(localStorage.getItem('loggedInUser'));
+
+    // If user is not logged in, redirect to login page
+    if(!user) {
+      window.location.assign('/html/login-register.html');
+      return;
+    }
+
     $('#modal').modal();
 
     // Find relevant listing
@@ -101,7 +110,7 @@ function openModal(buttonObj) {
         }
     }
     modal = document.getElementById('contact-text');
-    user = JSON.parse(localStorage.getItem('loggedInUser'));
+
 
     modal.value = "";
     modal.value += 'From: ' + user.email + '\n';
