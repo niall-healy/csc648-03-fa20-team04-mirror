@@ -36,6 +36,21 @@ function loadListing(listing) {
     $('#carousel').carousel();
 }
 
+function openContactModal() {
+
+    user = JSON.parse(localStorage.getItem('loggedInUser'));
+
+    // If user is not logged in, redirect to login page
+    if(!user) {
+      window.location.assign('/html/login-register.html');
+      return;
+    }
+
+    $('#modal').modal();
+
+    // TODO: Set cursor position of textarea and make From and Subject lines read-only
+}
+
 function setModalInfo(listing) {
     modal = document.getElementById('contact-text');
     user = JSON.parse(localStorage.getItem('loggedInUser'));
