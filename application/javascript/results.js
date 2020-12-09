@@ -153,6 +153,12 @@ $(document).ready(function () {
 
     $('#price-max').on('input', function () {
         $('#price-max-field').prop('value', $(this).prop('value') * 10);
+<<<<<<< HEAD
+=======
+        if ($('#price-max').prop('value') == 200) {
+            $('#price-max-field').prop('value', "");
+        }
+>>>>>>> milestone-five
     });
 
     $('#price-min-field').on('input', function () {

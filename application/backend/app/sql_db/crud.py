@@ -1,4 +1,8 @@
 import datetime
+<<<<<<< HEAD
+=======
+from typing import List
+>>>>>>> milestone-five
 
 from sqlalchemy import desc, or_
 from sqlalchemy.orm import Session
@@ -47,6 +51,10 @@ def get_listing_by_id(db: Session, listingId: int):
 
     return retVal
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> milestone-five
 def get_item_list_by_ids(db: Session, itemList: List[int], maxReturn: int):
     numberFound = 0
     retVal = []
@@ -59,6 +67,7 @@ def get_item_list_by_ids(db: Session, itemList: List[int], maxReturn: int):
         numberFound += 1
         if numberFound >= maxReturn:
             break
+<<<<<<< HEAD
 
     return retVal
 
@@ -97,7 +106,47 @@ def create_message(db: Session, message: str, listing_id: int):
     db.add(db_message)
     db.commit()
     db.refresh(db_message)
+=======
+>>>>>>> milestone-five
 
 def get_message_by_seller_id(db: Session, user: Session):
     retVal = db.query(models.Message).filter(models.Message.seller_id == user.id).all()
     return retVal
+
+
+def get_newest_listings(db: Session, numItems: int):
+    retVal = db.query(models.Listing).order_by(desc(models.Listing.timestamp)).limit(numItems).all()
+
+    return retVal
+
+
+def create_listing(db: Session, listing: schemas.Listing, photoPaths):
+    # Create listing object
+    db_listing = models.Listing(**listing.dict())
+
+    # Create PhotoPath objects for each photo path and add to the listing object
+    for path, thumbnailPath in photoPaths:
+        pathObj = models.PhotoPath()
+        pathObj.path = path
+        pathObj.thumbnailPath = thumbnailPath
+        pathObj.listing_id = db_listing.id
+        db_listing.photoPaths.append(pathObj)
+
+    db.add(db_listing)
+    db.commit()
+    db.refresh(db_listing)
+
+    return db_listing
+
+
+def get_all_categories(db: Session):
+    return db.query(models.Category).all()
+
+
+def create_message(db: Session, message: str, listing_id: int):
+    listing = get_listing_by_id(db, listing_id)
+    db_message = models.Message(seller_id=listing.seller_id,
+                                message=message)
+    db.add(db_message)
+    db.commit()
+    db.refresh(db_message)

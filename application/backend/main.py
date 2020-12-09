@@ -3,7 +3,13 @@ from fastapi import FastAPI
 from starlette.responses import RedirectResponse
 from starlette.staticfiles import StaticFiles
 
+<<<<<<< HEAD
 from app.routers import search, register, login, listing, message, index
+=======
+
+from app.routers import search, register, login, listing, message, index
+
+>>>>>>> milestone-five
 from app.sql_db import models
 
 from app.sql_db.database import SessionLocal, engine
@@ -21,12 +27,17 @@ app = FastAPI()
 
 
 # redirect root of the site to our homepage
+<<<<<<< HEAD
+=======
+
+>>>>>>> milestone-five
 @app.get("/")
 async def root():
     return RedirectResponse(url='/html/index.html')
 
 # include the routers
 app.include_router(search.router)
+<<<<<<< HEAD
 
 app.include_router(index.router)
 
@@ -49,6 +60,31 @@ app.include_router(
 )
 
 app.include_router(
+=======
+
+app.include_router(index.router)
+
+app.include_router(
+    listing.router,
+    prefix="/listing",
+    tags=["listing"]
+)
+
+
+app.include_router(
+    login.router,
+    prefix="/login",
+    tags=["login"]
+)
+
+app.include_router(
+    register.router,
+    prefix="/register",
+    tags=["register"]
+)
+
+app.include_router(
+>>>>>>> milestone-five
     search.router,
     prefix="/search",
     tags=["search"]

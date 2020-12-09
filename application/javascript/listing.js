@@ -49,7 +49,12 @@ function setModalInfo(listing) {
 }
 
 //function to store last 10 recent listings visited
+<<<<<<< HEAD
 function storeRecentListing(id) {
+=======
+function storeRecentListingId(id) {
+
+>>>>>>> milestone-five
     var recentlyVisited = null
     if (localStorage.hasOwnProperty('recentlyVisited')) {
         recentlyVisited = JSON.parse(localStorage.getItem('recentlyVisited'));
@@ -71,7 +76,11 @@ function storeRecentListing(id) {
 // Send get request for listing on page load
 $(document).ready(function () {
     var search = new URLSearchParams(window.location.search);
+<<<<<<< HEAD
     var id = search.get('id');
+=======
+    var id = parseInt(search.get('id'));
+>>>>>>> milestone-five
 
     var fetchOptions = {
         method: 'GET'
@@ -92,4 +101,8 @@ $(document).ready(function () {
         .catch((err) => {
             console.log(err);
         })
+<<<<<<< HEAD
 });
+=======
+});
+>>>>>>> milestone-five

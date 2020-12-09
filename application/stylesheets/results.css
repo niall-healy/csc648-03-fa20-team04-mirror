@@ -140,12 +140,19 @@ main {
 
 #main-body .thumbnail {
     display: block;
+<<<<<<< HEAD
     overflow: hidden;
+=======
+>>>>>>> milestone-five
     width: 150px;
     height: 150px;
     background-color: transparent;
     border: 1px;
     border-color: black;
+<<<<<<< HEAD
+=======
+    border-style: solid;
+>>>>>>> milestone-five
     object-fit: cover;
 }
 

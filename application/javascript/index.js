@@ -2,7 +2,11 @@ function generateCards(items, numberOfItems, title) {
     var _html = `<div class="container"> \
                 <h3>` + title + `</h3> \
                 <div class="card-deck">`;
+<<<<<<< HEAD
     let cardNumber = 0;
+=======
+    var cardNumber = 0;
+>>>>>>> milestone-five
 
     for (item in items) {
         let description = items[item].description;
@@ -10,7 +14,11 @@ function generateCards(items, numberOfItems, title) {
             description = description.substring(0, 97) + '...';
 
         _html += `<a class="card mb-4 box-border mx-auto" href="/listing/?id=${items[item].id}"> \
+<<<<<<< HEAD
                         <img class="card-img-top img-fluid" src="${items[item].photoPaths[0].thumbnailPath}" alt="item image"> \
+=======
+                        <img class="card-img-top img-fluid" src="${items[item].photoPaths[0].thumbnailPath}"> \
+>>>>>>> milestone-five
                         <div class="card-body d-flex flex-column"> \
                             <p class="card-title">${items[item].name}</p> \
                             <p class="card-text">` + description + ` - $${items[item].price}</p> \
@@ -32,6 +40,11 @@ function generateCards(items, numberOfItems, title) {
             break;
     }
     _html += `</div></div>`;
+<<<<<<< HEAD
+=======
+  
+    return _html;
+>>>>>>> milestone-five
 }
 
 function loadRecent(items, numberOfItems) {
@@ -42,6 +55,7 @@ function loadRecent(items, numberOfItems) {
 function loadNewest(items, numberOfItems) {
     var _html = generateCards(items, numberOfItems, 'Newest Listings');
     $('#newest-listings').html(_html);
+<<<<<<< HEAD
 }
 
 function noPostings() {
@@ -85,18 +99,74 @@ $(document).ready(function () {
         // Get newest items
         var numNewest = 10;
         fetchURL = '/newest/?numItems=' + numNewest;
+=======
+}
+
+function noPostings() {
+    var _html = `<div class="container text-center"> \
+                    <h2>No Postings Found...</h2> \
+                </div>`;
+    $('#newest-listings').html(_html);
+}
+
+$(document).ready(function () {
+    var numRecent = 5;
+    var numNewest = 5;
+
+
+    if (localStorage.hasOwnProperty('recentlyVisited')) {
+        var recentlyVisited = JSON.parse(localStorage.getItem('recentlyVisited'));
+
+        // Get recently viewed items
+        var fetchURL = '/items/?numItems=' + numRecent;
+
+        for (var i = 0; i < recentlyVisited.length; i++) {
+            fetchURL += '&ids=' + recentlyVisited[i];
+        }
+
+>>>>>>> milestone-five
         fetch(fetchURL)
             .then((data) => {
                 return data.json();
             })
             .then((dataJson) => {
+<<<<<<< HEAD
                 if (Object.keys(dataJson).length > 0)
                     loadNewest(dataJson, numNewest);
                 else
                     noPostings();
+=======
+                if (dataJson.length > 0) {
+                    loadRecent(dataJson, numRecent);
+                }
+
+>>>>>>> milestone-five
             })
             .catch((err) => {
                 console.log(err);
             });
     }
+<<<<<<< HEAD
 });
+=======
+
+    // Get newest items
+    fetchURL = '/newest/' + numNewest;
+    fetch(fetchURL)
+        .then((data) => {
+            return data.json();
+        })
+        .then((dataJson) => {
+            console.log(dataJson.length);
+            if (dataJson.length > 0) {
+                loadNewest(dataJson, numNewest);
+            } else {
+                noPostings();
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+
+});
+>>>>>>> milestone-five

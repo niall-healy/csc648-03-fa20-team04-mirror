@@ -9,6 +9,20 @@ This file has the Pydantic models that are used to mirror the database tables as
 This allows fastAPI to do some cool things like send http responses of json objects that match these classes.
 """
 
+# =====Category=====
+class CategoryReturn(BaseModel):
+    category: str = None
+
+    class Config:
+        orm_mode = True
+
+
+class Category(CategoryReturn):
+    id: int = None
+
+    class Config:
+        orm_mode = True
+
 
 # =====Category=====
 class CategoryReturn(BaseModel):
@@ -41,11 +55,14 @@ class Listing(BaseModel):  # Reading to return from API
     seller_id: int = None
     timestamp: datetime = datetime.now()
     photoPaths: List[PhotoPath] = []
+<<<<<<< HEAD
+=======
+
+>>>>>>> milestone-five
     name: str
     description: str
     price: int
     category: str
-
     isApproved: bool = None
     isActive: bool = None
 
@@ -60,7 +77,30 @@ class Books(Listing):
     class Config:
         orm_mode = True
 
+    isApproved: bool = None
+    isActive: bool = None
 
+    class Config:
+        orm_mode = True  # Read as ORM model
+
+
+<<<<<<< HEAD
+# =====Books=====
+class Books(Listing):
+    relevantClass: str
+
+    class Config:
+        orm_mode = True
+=======
+# =====Housing=====
+class Housing(Listing):
+    streetAddress: str
+>>>>>>> milestone-five
+
+    class Config:
+        orm_mode = True
+
+<<<<<<< HEAD
 # =====Housing=====
 class Housing(Listing):
     streetAddress: str
@@ -68,6 +108,8 @@ class Housing(Listing):
     class Config:
         orm_mode = True
 
+=======
+>>>>>>> milestone-five
 
 # =====Automotive=====
 class Automotive(Listing):

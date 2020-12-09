@@ -122,7 +122,11 @@ function getRegisterInfo() {
         email: form.querySelector('input[name="username"]').value,
         password: form.querySelector('input[name="password"]').value,
         password2: form.querySelector('input[name="password2"]').value,
+<<<<<<< HEAD
         checkbox: form.querySelector('input[name="checkboxTOS"]').value // add to registration validation
+=======
+        checkbox: form.querySelector('input[name="checkboxTOS"]').checked // add to registration validation
+>>>>>>> milestone-five
     };
     return registerInfo;
 }
@@ -132,11 +136,14 @@ function validateRegisterInfo(email, passwd, repasswd, checkbox) {
     let studentEmailRegEx = new RegExp(/^[A-Za-z0-9._%+-]+@mail.sfsu.edu$/);
     let facultyEmailRegEx = new RegExp(/^[A-Za-z0-9._%+-]+@sfsu.edu$/);
 
+<<<<<<< HEAD
     var checkboxValue = document.getElementById("checkboxTOS")
 
 
 	  var checked = document.getElementById("checkboxTOS").checked;
   
+=======
+>>>>>>> milestone-five
     if (!(studentEmailRegEx.test(email) || facultyEmailRegEx.test(email))) {
         registerErrorMsgSfsuEmail.style.opacity = 1;
 
@@ -155,7 +162,11 @@ function validateRegisterInfo(email, passwd, repasswd, checkbox) {
         return false;
     }
     // add checkbox to validation
+<<<<<<< HEAD
     if (checkbox != 1) {
+=======
+    if (!checkbox) {
+>>>>>>> milestone-five
         alert("Please agree to the terms of service");
         return false;
     }
@@ -234,6 +245,12 @@ function checkValidEmail(inputId) {
 }
 
 // Add event handler for the second password field to make sure they match
+<<<<<<< HEAD
 $(document).ready(function() {
     $("#register-password-field, #retype-password-field").keyup(checkPassword);
 });
+=======
+$(document).ready(function () {
+    $("#register-password-field, #retype-password-field").keyup(checkPassword);
+});
+>>>>>>> milestone-five

@@ -8,6 +8,20 @@ This file has the SQLAlchemy database models that are used to generate the datab
 It will have much more in the future as we add users, etc.
 """
 
+# =====Main Tables=====
+
+class User(Base):
+    __tablename__ = "user"
+
+    id = Column(Integer, primary_key=True, index=True)
+    email = Column(String(85), unique=True, index=True)
+    password_hash = Column(String(100))
+
+    listings = relationship("Listing", back_populates="seller", cascade="all, delete-orphan", passive_deletes=True)
+
+    def __repr__(self):
+        return "%s(%r)" % (self.__class__, self.__dict__)
+
 
 # =====Main Tables=====
 
