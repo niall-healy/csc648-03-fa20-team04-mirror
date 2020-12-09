@@ -4,9 +4,9 @@ function loadListings(dataJson) {
     let isOdd = true;
     for (listing in dataJson) {
         _html +=
-            '<li onclick="location.href=\'/listing/?id=' +
+            '<li id="' +
             dataJson[listing].id +
-            '\'" class="list-group-item list-group-item-action p-2 ' +
+            '" class="list-group-item list-group-item-action p-2 ' +
             (isOdd ? 'list-group-item-1' : 'list-group-item-2') +
             '">' +
             '<div class="row no-gutters">';
@@ -39,9 +39,25 @@ function loadListings(dataJson) {
     }
 
     $('#results').html(_html);
+
+    var listings = document.getElementById('results').children;
+
+    // Set onclick attribute for every li
+    // This has to be done in a separate scope. If not, dynamically adding the id to the href link
+    // does not work properly (took me like an hour to figure this out lol).
+    for(var i = 0; i < listings.length; i++){
+       setOnClick(listings[i]);
+    }
+
     displayResults();
 }
 
+// Redirect to listing page in new tab
+function setOnClick(li){
+   li.onclick = function(){
+      $('<a href="/listing/?id=' + li.id + '" target="_blank"></a>')[0].click();
+   }
+}
 // Apply alternating colors
 function reapplyAlternatingColors() {
     let isOdd = true;

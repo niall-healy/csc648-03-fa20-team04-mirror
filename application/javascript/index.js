@@ -9,7 +9,7 @@ function generateCards(items, numberOfItems, title) {
         if (description.length > 100)
             description = description.substring(0, 97) + '...';
 
-        _html += `<a class="card mb-4 box-border mx-auto" href="/listing/?id=${items[item].id}"> \
+        _html += `<a class="card mb-4 box-border mx-auto" href="/listing/?id=${items[item].id}" target="_blank"> \
                         <img class="card-img-top img-fluid" src="${items[item].photoPaths[0].thumbnailPath}"> \
                         <div class="card-body d-flex flex-column"> \
                             <p class="card-title">${items[item].name}</p> \
