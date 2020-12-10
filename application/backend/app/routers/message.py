@@ -18,8 +18,9 @@ async def create_message(message: Message,
     return crud.create_message(db, message, listing_id)
 
 
-"""
+
+# get router for pictures returns all messages as message schemas
 @router.get("/", response_model=schemas.Message)
 async def get_message_by_seller_id(db: Session = Depends(get_db()),
-                                    id: int):
-"""
+                                   user: schemas.User = Depends(get_current_user):
+    return crud.get_message_by_seller_id(db, user)

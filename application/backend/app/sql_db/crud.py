@@ -101,3 +101,8 @@ def create_message(db: Session, message: str, listing_id: int):
     db.add(db_message)
     db.commit()
     db.refresh(db_message)
+
+
+def get_message_by_seller_id(db: Session, user: schemas.User):
+    retVal = db.query(models.Message).filter(models.Message.seller_id == user.id).all()
+    return retVal
