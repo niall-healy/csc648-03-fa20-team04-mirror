@@ -128,12 +128,38 @@ function openContactModal(buttonObj) {
     modal = document.getElementById('contact-text');
 
 
+    // Add listing id to be used by sendMessage
+    $('#modal').data('id', listing.id);
+
     modal.value = "";
     modal.value += 'From: ' + user.email + '\n';
     modal.value += 'Subject: ' + listing.name + '\n';
     modal.value += '----------------------------------------------------------------------------';
 
     // TODO: Set cursor position of textarea and make From and Subject lines read-only
+}
+
+function sendMessage(){
+   var message = document.getElementById('contact-text').value;
+
+   var id = $('#modal').data('id');
+
+   var fetchBody = {
+      "message": message,
+      "listing_id": id
+   }
+
+   var fetchOptions = {
+      method: "POST",
+      body: JSON.stringify(fetchBody)
+   }
+
+   var fetchURL = '/message/';
+
+   fetch(fetchURL, fetchOptions)
+	.then((response) => {
+           //console.log(response);
+	})
 }
 
 $(document).ready(function () {

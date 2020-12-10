@@ -63,6 +63,30 @@ function setModalInfo(listing) {
     // TODO: Set cursor position of textarea and make From and Subject lines read-only
 }
 
+function sendMessage(){
+   var message = document.getElementById('contact-text').value;
+
+   var search = new URLSearchParams(window.location.search);
+   var id = parseInt(search.get('id'));
+
+   var fetchBody = {
+      "message": message,
+      "listing_id": id
+   }
+
+   var fetchOptions = {
+      method: "POST",
+      body: JSON.stringify(fetchBody)
+   }
+
+   var fetchURL = '/message/';
+
+   fetch(fetchURL, fetchOptions)
+	.then((response) => {
+           //console.log(response);
+	})
+}
+
 //function to store last 10 recent listings visited
 function storeRecentListingId(id) {
 
