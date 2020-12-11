@@ -102,3 +102,11 @@ body {
 .input-group-prepend .category-item {
     padding-left: 8%;
 }
+
+.navbar-nav {
+    font-size: 18px;
+}
+
+#search-bar {
+    font-size: 18px;
+}
