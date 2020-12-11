@@ -1,7 +1,7 @@
 import datetime
 from typing import List
 
-from sqlalchemy import desc, or_
+from sqlalchemy import desc, asc, or_
 from sqlalchemy.orm import Session
 
 from app.sql_db import models, schemas
@@ -25,22 +25,28 @@ def create_user(db: Session, user: schemas.UserCreate):
     return db_user
 
 
-def get_listings_for_search(db: Session, searchQuery: str, category: str):
+def get_listings_for_search(db: Session, searchQuery: str, category: str, sort: str):
     if len(searchQuery) == 0:
         if category == 'Any':
-            retVal = db.query(models.Listing).all()
+            retVal = db.query(models.Listing)
         else:
-            retVal = db.query(models.Listing).filter(models.Listing.category == category).all()
-    elif category != 'Any':
-        # Note: use like() for case sensitivity, ilike() for case insensitivity
-        retVal = db.query(models.Listing).filter(models.Listing.category == category,
-                                                 or_(models.Listing.name.ilike('%' + searchQuery + '%'),
-                                                     models.Listing.description.ilike('%' + searchQuery + '%'))).all()
+            # Note: use like() for case sensitivity, ilike() for case insensitivity
+            retVal = db.query(models.Listing).filter(or_(models.Listing.name.ilike('%' + searchQuery + '%'),
+                                                         models.Listing.description.ilike('%' + searchQuery + '%')))
     else:
-        retVal = db.query(models.Listing).filter(or_(models.Listing.name.ilike('%' + searchQuery + '%'),
-                                                     models.Listing.description.ilike('%' + searchQuery + '%'))).all()
+        if category == 'Any':
+            retVal = db.query(models.Listing).filter(models.Listing.category == category)
+        else:
+            retVal = db.query(models.Listing).filter(models.Listing.category == category,
+                                                     or_(models.Listing.name.ilike('%' + searchQuery + '%'),
+                                                         models.Listing.description.ilike('%' + searchQuery + '%')))
 
-    return retVal
+    if sort == 'priceAscending':
+        retVal = retVal.order_by(asc(models.Listing.price))
+    elif sort == 'priceDescending':
+        retVal = retVal.order_by(desc(models.Listing.price))
+
+    return retVal.all()
 
 
 def get_listing_by_id(db: Session, listingId: int):
