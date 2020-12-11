@@ -12,3 +12,11 @@
 #nav-tab {
     text-decoration: none !important;
 }
+
+.nav-tabs .nav-link {
+    font-size: 18px;
+}
+
+#nav-profile {
+    font-size: 18px;
+}
