@@ -308,3 +308,11 @@ html {
 #search-bar {
     font-size: 18px;
 }
+
+#register-required {
+    text-align: right;
+}
+
+span.asterisk {
+    color: red;
+}

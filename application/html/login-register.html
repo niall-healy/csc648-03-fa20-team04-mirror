@@ -46,7 +46,7 @@
 
         <!-- Login Error Handling -->
         <div id="login-error-msg-holder">
-            <p id="login-error-msg"> Invalid username and/or password</span></p>
+            <!-- <p id="login-error-msg"> Invalid username and/or password</span></p> -->
         </div>
 
         <form id="login-form" class="mw-100 login-register-form">
@@ -76,20 +76,23 @@
         </div>
 
         <form id="register-form" class="login-register-form">
-            <div class="p-1">Email</div> <input type="text" name="username" id="register-username-field" class="register-form-field" placeholder="Email" onkeyup="checkValidEmail(this.id);">
+            <div id="register-required">
+                <span class="asterisk">*</span>Required fields
+            </div>
+            <div class="p-1">Email<span class="asterisk">*</span></div> <input type="text" name="username" id="register-username-field" class="register-form-field" placeholder="Email" onkeyup="checkValidEmail(this.id);">
             <!-- Valid email check -->
             <div class="registration-form-alert" id="div-check-valid-email-register"></div>
 
-            <div class="p-1">Password</div> <input type="password" name="password" id="register-password-field" class="register-form-field" placeholder="Password" onChange="checkPassword();">
+            <div class="p-1">Password<span class="asterisk">*</span></div> <input type="password" name="password" id="register-password-field" class="register-form-field" placeholder="Password" onChange="checkPassword();">
             <!-- Minimum character PW check -->
             <div class="registration-form-alert" id="div-check-pw-min-characters"></div>
 
-            <div class="p-1">Confirm Password</div> <input type="password" name="password2" id="retype-password-field" class="register-form-field" placeholder="Confirm Password" onChange="checkPassword();">
+            <div class="p-1">Confirm Password<span class="asterisk">*</span></div> <input type="password" name="password2" id="retype-password-field" class="register-form-field" placeholder="Confirm Password" onChange="checkPassword();">
             <!-- Equivalent PW Check -->
             <div class="registration-form-alert" id="div-check-pw-match"></div>
 
             <div id="div-checkboxTOS">
-                <input type="checkbox" name="checkboxTOS" id="checkboxTOS" value="1"> I agree to the <a href="#">Terms of Service</a>.
+                <input type="checkbox" name="checkboxTOS" id="checkboxTOS" value="1"> I agree to the <a href="#">Terms of Service</a>.<span class="asterisk">*</span></div>
             </div>
 
             <input type="submit" value="Register" id="register-form-submit" onclick="registerOnClick(event);">
