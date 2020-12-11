@@ -50,6 +50,14 @@ async function handleLogin() {
             if (!response.ok) {
                 loginErrorMsg.style.opacity = 1;
                 loginErrorMsgHolder.style.display = "contents";
+
+		if(response.status == 409){
+		   $('#login-error-msg').html('Too many concurrent users');
+		}
+		else if(response.status == 401){
+		   $('#login-error-msg').html('Invalid username and/or password');
+		}
+
                 throw new Error(response.status)
             } else {
                 loginErrorMsg.style.opacity = 0;
@@ -58,8 +66,6 @@ async function handleLogin() {
             }
         })
         .then((dataJson) => {
-            console.log(dataJson);
-
             let loggedInUser = {
                 email: info.email,
                 authToken: dataJson.access_token
@@ -108,7 +114,6 @@ async function handleRegister() {
 
         })
         .then((dataJson) => {
-            console.log(dataJson);
             alert("Successfully registered. You may Login now!");
         })
         .catch((err) => {
