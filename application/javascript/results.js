@@ -1,11 +1,13 @@
+let items;
+
 // Load the search results from the server into the html
-function loadListings(dataJson) {
+function loadListings() {
     let _html = '';
     let isOdd = true;
-    for (listing in dataJson) {
+    for (listing in items) {
         _html +=
             '<li id="' +
-            dataJson[listing].id +
+            items[listing].id +
             '" class="list-group-item list-group-item-action p-2 ' +
             (isOdd ? 'list-group-item-1' : 'list-group-item-2') +
             '">' +
@@ -13,25 +15,25 @@ function loadListings(dataJson) {
         _html +=
             '<div class="col-lg-7 d-flex">' +
             '<img class="thumbnail rounded" src="' +
-            dataJson[listing].photoPaths[0].thumbnailPath +
+            items[listing].photoPaths[0].thumbnailPath +
             '">';
         _html +=
             '<div class="p-2">' +
             '<h5><b>' +
-            dataJson[listing].name +
+            items[listing].name +
             '</b></h5>';
         _html +=
             '<p class="text-secondary no-overflow">' +
-            dataJson[listing].description +
+            items[listing].description +
             '</p></div></div>';
         _html +=
             '<div class="col d-flex p-2"><b>Price: </b>$' +
             '<div class="price">' +
-            dataJson[listing].price +
+            items[listing].price +
             '</div></div>';
         _html +=
             '<div class="col-sm-12 col-md p-2">' +
-            '<button id="' + dataJson[listing].id + '" type="button" class="btn btn-primary btn-block pull-right no-overflow" data-toggle="modal" data-target="#modal"' +
+            '<button id="' + items[listing].id + '" type="button" class="btn btn-primary btn-block pull-right no-overflow" data-toggle="modal" data-target="#modal"' +
             'onclick="event.stopPropagation(); openContactModal(this);">Contact Seller</button>';
         _html += '</div></div></li>';
 
@@ -58,6 +60,11 @@ function setOnClick(li){
       $('<a href="/listing/?id=' + li.id + '" target="_blank"></a>')[0].click();
    }
 }
+
+function clearResults() {
+    $('#results').empty();
+}
+
 // Apply alternating colors
 function reapplyAlternatingColors() {
     let isOdd = true;
@@ -104,7 +111,7 @@ function displayResults() {
     $('.num-results').html('<h5>Showing ' + counter + ' results...</h5>');
 }
 
-var items;
+
 
 function openContactModal(buttonObj) {
 
@@ -179,7 +186,7 @@ $(document).ready(function () {
         })
         .then((dataJson) => {
             items = dataJson;
-            loadListings(dataJson);
+            loadListings();
         })
         .catch((err) => {
             console.log(err);
@@ -232,4 +239,22 @@ $(document).ready(function () {
     $('#collapsable').on('hide.bs.collapse', function () {
         $('.rotate').toggleClass('fa-rotate-180');
     });
+
+    $('#sort').on('changed.bs.select', function() {
+        clearResults();
+
+        fetchURL = '/search/?category=' + category + '&keywords=' + keywords + '&sort=' + $(this).val();
+
+        fetch(fetchURL, fetchOptions)
+            .then((data) => {
+                return data.json();
+            })
+            .then((dataJson) => {
+                items = dataJson;
+                loadListings();
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    })
 });

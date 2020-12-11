@@ -90,8 +90,12 @@
                 </div>
                 <div class="col-xl col-lg-12">
                     <main>
-                        <div id="main-header">
+                        <div id="main-header" class="d-flex justify-content-between">
                             <div class="num-results"></div>
+                            <select id="sort" class="selectpicker form-selector" data-width="auto" name="sort" title="Sort by..." required>
+                                <option value="priceAscending">Price: Low to High</option>
+                                <option value="priceDescending">Price: High to Low</option>
+                            </select>
                         </div>
                         <div id="main-body">
                             <ul class="list-group text-dark">
