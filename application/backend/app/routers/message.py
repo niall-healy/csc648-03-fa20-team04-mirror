@@ -10,15 +10,16 @@ from pydantic import BaseModel
 
 router = APIRouter()
 
+
 class Message(BaseModel):
     message: str
     listing_id: int
+
 
 @router.post("/", response_model=schemas.Message)
 async def create_message(message: Message,
                          db: Session = Depends(get_db)):
     return crud.create_message(db, message.message, message.listing_id)
-
 
 
 # get router for pictures returns all messages as message schemas

@@ -8,6 +8,7 @@ This file has the SQLAlchemy database models that are used to generate the datab
 It will have much more in the future as we add users, etc.
 """
 
+
 # =====Main Tables=====
 
 class User(Base):
@@ -18,6 +19,7 @@ class User(Base):
     password_hash = Column(String(100))
 
     listings = relationship("Listing", back_populates="seller", cascade="all, delete-orphan", passive_deletes=True)
+    messages = relationship("Message", back_populates="seller", cascade="all, delete-orphan", passive_deletes=True)
 
     def __repr__(self):
         return "%s(%r)" % (self.__class__, self.__dict__)
@@ -45,9 +47,12 @@ class Message(Base):
     __tablename__ = 'message'
 
     id = Column(Integer, primary_key=True, index=True)
-    seller_id = Column(Integer, ForeignKey('user.id'))  # listing owner
+    seller_id = Column(Integer, ForeignKey('user.id'))      # listing owner
+    listing_id = Column(Integer, ForeignKey('listing.id'))  # corresponding listing
     timestamp = Column(DateTime)
     message = Column(String(256), index=True)  # 256 character message
+
+    seller = relationship("User", back_populates="messages")
 
 
 class PhotoPath(Base):
