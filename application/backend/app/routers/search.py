@@ -20,8 +20,8 @@ router = APIRouter()
 
 # returns a JSON formatted response of listings from the %like search
 @router.get("/search/", response_model=List[schemas.Listing])
-async def read_listings(keywords: str, category: str, db: Session = Depends(get_db)):
-    return crud.get_listings_for_search(db, keywords, category)
+async def read_listings(keywords: str, category: str, sort: str = 'id', db: Session = Depends(get_db)):
+    return crud.get_listings_for_search(db, keywords, category, sort)
 
 
 # returns results html page

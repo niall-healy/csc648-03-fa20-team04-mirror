@@ -36,6 +36,21 @@ function loadListing(listing) {
     $('#carousel').carousel();
 }
 
+function openContactModal() {
+
+    user = JSON.parse(localStorage.getItem('loggedInUser'));
+
+    // If user is not logged in, redirect to login page
+    if(!user) {
+      window.location.assign('/html/login-register.html');
+      return;
+    }
+
+    $('#modal').modal();
+
+    // TODO: Set cursor position of textarea and make From and Subject lines read-only
+}
+
 function setModalInfo(listing) {
     modal = document.getElementById('contact-text');
     user = JSON.parse(localStorage.getItem('loggedInUser'));
@@ -46,6 +61,30 @@ function setModalInfo(listing) {
     modal.value += '----------------------------------------------------------------------------';
 
     // TODO: Set cursor position of textarea and make From and Subject lines read-only
+}
+
+function sendMessage(){
+   var message = document.getElementById('contact-text').value;
+
+   var search = new URLSearchParams(window.location.search);
+   var id = parseInt(search.get('id'));
+
+   var fetchBody = {
+      "message": message,
+      "listing_id": id
+   }
+
+   var fetchOptions = {
+      method: "POST",
+      body: JSON.stringify(fetchBody)
+   }
+
+   var fetchURL = '/message/';
+
+   fetch(fetchURL, fetchOptions)
+	.then((response) => {
+           //console.log(response);
+	})
 }
 
 //function to store last 10 recent listings visited
