@@ -31,11 +31,11 @@ def get_listings_for_search(db: Session, searchQuery: str, category: str, sort: 
             retVal = db.query(models.Listing)
         else:
             # Note: use like() for case sensitivity, ilike() for case insensitivity
-            retVal = db.query(models.Listing).filter(or_(models.Listing.name.ilike('%' + searchQuery + '%'),
-                                                         models.Listing.description.ilike('%' + searchQuery + '%')))
+            retVal = db.query(models.Listing).filter(models.Listing.category == category)
     else:
         if category == 'Any':
-            retVal = db.query(models.Listing).filter(models.Listing.category == category)
+            retVal = db.query(models.Listing).filter(or_(models.Listing.name.ilike('%' + searchQuery + '%'),
+                                                         models.Listing.description.ilike('%' + searchQuery + '%')))
         else:
             retVal = db.query(models.Listing).filter(models.Listing.category == category,
                                                      or_(models.Listing.name.ilike('%' + searchQuery + '%'),
