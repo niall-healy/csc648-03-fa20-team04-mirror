@@ -110,3 +110,8 @@ body {
 #search-bar {
     font-size: 18px;
 }
+
+.navbar-brand {
+    font-size: 22px;
+    margin-right: 9%;
+}
