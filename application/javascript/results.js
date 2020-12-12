@@ -1,7 +1,7 @@
 let items;
 
 // Load the search results from the server into the html
-function loadListings() {
+function loadResults() {
     let _html = '';
     let isOdd = true;
     for (listing in items) {
@@ -51,7 +51,7 @@ function loadListings() {
        setOnClick(listings[i]);
     }
 
-    displayResults();
+    displayResultsCount();
 }
 
 // Redirect to listing page in new tab
@@ -65,43 +65,8 @@ function clearResults() {
     $('#results').empty();
 }
 
-// Apply alternating colors
-function reapplyAlternatingColors() {
-    let isOdd = true;
-    $('#main-body li').each(function () {
-        if ($(this).css('display') != 'none') {
-            $(this).removeClass();
-            $(this).attr('class', 'list-group-item list-group-item-action p-2');
-            (isOdd ? $(this).addClass('list-group-item-1') : $(this).addClass('list-group-item-2'));
-            isOdd = !isOdd;
-        }
-    });
-}
-
-// Applys price filter
-function filterPrice() {
-    let min = $('#price-min-field').prop('value');
-    let max = $('#price-max-field').prop('value');
-    if (max == '' || max == 2000) {
-        max = Number.MAX_SAFE_INTEGER;
-        $('#price-max-field').prop('value', '');
-    }
-
-    $('#main-body li').each(function () {
-        let price = $(this).find('.price');
-        if (parseInt(price.html()) < min || parseInt(price.html()) > max) {
-            $(this).css('display', 'none');
-        } else {
-            $(this).css('display', 'grid');
-        }
-    });
-
-    displayResults();
-    reapplyAlternatingColors();
-}
-
 // Displays number of results
-function displayResults() {
+function displayResultsCount() {
     let counter = 0;
     $('#main-body li').each(function () {
         if ($(this).css('display') != 'none') {
@@ -110,8 +75,6 @@ function displayResults() {
     });
     $('.num-results').html('<h5>Showing ' + counter + ' results...</h5>');
 }
-
-
 
 function openContactModal(buttonObj) {
 
@@ -186,7 +149,7 @@ $(document).ready(function () {
         })
         .then((dataJson) => {
             items = dataJson;
-            loadListings();
+            loadResults();
         })
         .catch((err) => {
             console.log(err);
@@ -204,42 +167,6 @@ $(document).ready(function () {
         document.getElementById('search-bar').placeholder = 'Search...';
     }
 
-    // sync price sliders
-    $('#price-min').on('input', function () {
-        $('#price-min-field').prop('value', $(this).prop('value') * 10);
-    });
-
-    $('#price-max').on('input', function () {
-        $('#price-max-field').prop('value', $(this).prop('value') * 10);
-        if ($('#price-max').prop('value') == 200) {
-            $('#price-max-field').prop('value', "");
-        }
-    });
-
-    $('#price-min-field').on('input', function () {
-        $('#price-min').prop('value', $(this).prop('value') / 10);
-    });
-
-    $('#price-max-field').on('input', function () {
-        $('#price-max').prop('value', $(this).prop('value') / 10);
-    });
-
-    // apply filters
-    $('#apply-button').on('click', function () {
-        filterPrice();
-        $(this).prop('aria-pressed', 'false');
-        $(this).blur();
-    });
-
-    // flip filter arrow on collapse
-    $('#collapsable').on('show.bs.collapse', function () {
-        $('.rotate').toggleClass('fa-rotate-180');
-    });
-
-    $('#collapsable').on('hide.bs.collapse', function () {
-        $('.rotate').toggleClass('fa-rotate-180');
-    });
-
     $('#sort').on('changed.bs.select', function() {
         clearResults();
 
@@ -251,7 +178,7 @@ $(document).ready(function () {
             })
             .then((dataJson) => {
                 items = dataJson;
-                loadListings();
+                loadResults();
             })
             .catch((err) => {
                 console.log(err);
