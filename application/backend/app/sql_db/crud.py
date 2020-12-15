@@ -31,15 +31,17 @@ def get_listings_for_search(db: Session, searchQuery: str, category: str, sort: 
             retVal = db.query(models.Listing)
         else:
             # Note: use like() for case sensitivity, ilike() for case insensitivity
-            retVal = db.query(models.Listing).filter(models.Listing.category.category == category)
+            retVal = db.query(models.Listing).join(models.Listing.category).filter(models.Category.category == category)
     else:
         if category == 'Any':
             retVal = db.query(models.Listing).filter(or_(models.Listing.name.ilike('%' + searchQuery + '%'),
                                                          models.Listing.description.ilike('%' + searchQuery + '%')))
         else:
-            retVal = db.query(models.Listing).filter(models.Listing.category.category == category,
-                                                     or_(models.Listing.name.ilike('%' + searchQuery + '%'),
-                                                         models.Listing.description.ilike('%' + searchQuery + '%')))
+            retVal = db.query(models.Listing).join(models.Listing.category).filter(models.Category.category == category,
+                                                                                   or_(models.Listing.name.ilike(
+                                                                                       '%' + searchQuery + '%'),
+                                                                                       models.Listing.description.ilike(
+                                                                                           '%' + searchQuery + '%')))
 
     if sort == 'priceAscending':
         retVal = retVal.order_by(asc(models.Listing.price))
@@ -106,7 +108,8 @@ def get_all_categories(db: Session):
 
 def create_message(db: Session, message: str, listing_id: int):
     listing = get_listing_by_id(db, listing_id)
-    db_message = models.Message(seller_id=listing.seller_id, listing_id=listing_id, timestamp=datetime.datetime.now(), message=message)
+    db_message = models.Message(seller_id=listing.seller_id, listing_id=listing_id, timestamp=datetime.datetime.now(),
+                                message=message)
     db.add(db_message)
     db.commit()
     db.refresh(db_message)
