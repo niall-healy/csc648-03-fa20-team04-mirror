@@ -47,7 +47,8 @@ class Listing(BaseModel):  # Reading to return from API
     name: str
     description: str
     price: int
-    category: str
+    category_id: int = None
+    category: Category = None
     isApproved: bool = None
     isActive: bool = None
 

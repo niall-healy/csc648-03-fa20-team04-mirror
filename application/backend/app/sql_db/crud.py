@@ -31,13 +31,13 @@ def get_listings_for_search(db: Session, searchQuery: str, category: str, sort: 
             retVal = db.query(models.Listing)
         else:
             # Note: use like() for case sensitivity, ilike() for case insensitivity
-            retVal = db.query(models.Listing).filter(models.Listing.category == category)
+            retVal = db.query(models.Listing).filter(models.Listing.category.category == category)
     else:
         if category == 'Any':
             retVal = db.query(models.Listing).filter(or_(models.Listing.name.ilike('%' + searchQuery + '%'),
                                                          models.Listing.description.ilike('%' + searchQuery + '%')))
         else:
-            retVal = db.query(models.Listing).filter(models.Listing.category == category,
+            retVal = db.query(models.Listing).filter(models.Listing.category.category == category,
                                                      or_(models.Listing.name.ilike('%' + searchQuery + '%'),
                                                          models.Listing.description.ilike('%' + searchQuery + '%')))
 
@@ -77,9 +77,13 @@ def get_newest_listings(db: Session, numItems: int):
     return retVal
 
 
-def create_listing(db: Session, listing: schemas.Listing, photoPaths):
+def create_listing(db: Session, listing: schemas.Listing, photoPaths, category_string):
     # Create listing object
     db_listing = models.Listing(**listing.dict())
+
+    category = db.query(models.Category).filter(models.Category.category == category_string).first()
+    db_listing.category = category
+    db_listing.category_id = category.id
 
     # Create PhotoPath objects for each photo path and add to the listing object
     for path, thumbnailPath in photoPaths:

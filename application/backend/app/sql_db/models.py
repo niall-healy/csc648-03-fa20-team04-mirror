@@ -33,13 +33,14 @@ class Listing(Base):
     timestamp = Column(DateTime)
     description = Column(String(144), index=True)
     price = Column(Numeric)  # Fixed precision number for price
-    category = Column(String(32), index=True)
     isApproved = Column(Boolean, default=False)
     isActive = Column(Boolean, default=False)
 
     seller_id = Column(Integer, ForeignKey('user.id'))  # ForeignKey constrains data to match userId
+    category_id = Column(Integer, ForeignKey('category.id'))
 
     seller = relationship("User", back_populates="listings")
+    category = relationship("Category", backref="listings")
     photoPaths = relationship("PhotoPath", back_populates="listing", cascade="all, delete-orphan", passive_deletes=True)
 
 

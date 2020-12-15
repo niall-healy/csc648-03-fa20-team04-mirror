@@ -44,8 +44,7 @@ async def create_listing(db: Session = Depends(get_db),
                          description: str = Form(...),
                          images: List[UploadFile] = File(...)):
     # create new listing object
-    listing = schemas.Listing(name=name, description=description, price=price, category=category,
-                              seller_id=user.id)
+    listing = schemas.Listing(name=name, description=description, price=price, seller_id=user.id)
     photoPaths = []
 
     for file in images:
@@ -70,4 +69,4 @@ async def create_listing(db: Session = Depends(get_db),
         img.save('/var/www' + thmbPath, img.format)
         img.close()
 
-    return crud.create_listing(db, listing, photoPaths)
+    return crud.create_listing(db, listing, photoPaths, category)
