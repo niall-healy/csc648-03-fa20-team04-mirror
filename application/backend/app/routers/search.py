@@ -1,5 +1,5 @@
-from starlette.responses import RedirectResponse
 
+from starlette.responses import RedirectResponse
 from app.sql_db import crud, schemas
 from app.sql_db.database import get_db
 
@@ -19,9 +19,14 @@ router = APIRouter()
 
 
 # returns a JSON formatted response of listings from the %like search
-@router.get("/search/", response_model=List[schemas.Listing])
-async def read_listings(keywords: str, category: str, sort: str = 'id', db: Session = Depends(get_db)):
-    return crud.get_listings_for_search(db, keywords, category, sort)
+@router.get("/search/", response_model=schemas.AllListings)
+async def read_listings(keywords: str, category: str, sort: str = 'id', skip: int = 0, limit: int = 15, db: Session = Depends(get_db)):
+    results_list = crud.get_listings_for_search(db, keywords, category, sort)
+    response_object = {
+        "listings": results_list[skip: skip + limit],
+        "listings_count": len(results_list),
+    }
+    return response_object
 
 
 # returns results html page

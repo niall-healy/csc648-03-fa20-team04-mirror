@@ -53,6 +53,14 @@ class Listing(BaseModel):  # Reading to return from API
         orm_mode = True  # Read as ORM model
 
 
+class AllListings(BaseModel):
+    listings: List[Listing] = []
+    listings_count: int
+
+    class Config:
+        orm_mode = True
+
+
 # =====Books=====
 class Books(Listing):
     relevantClass: str

@@ -1,13 +1,15 @@
-let items;
+let allListings;
+let listingsCount = 0;
 
 // Load the search results from the server into the html
-function loadResults() {
+function loadListings() {
     let _html = '';
     let isOdd = true;
-    for (listing in items) {
+    
+    for (listing in allListings) {
         _html +=
             '<li id="' +
-            items[listing].id +
+            allListings[listing].id +
             '" class="list-group-item list-group-item-action p-2 ' +
             (isOdd ? 'list-group-item-1' : 'list-group-item-2') +
             '">' +
@@ -15,25 +17,25 @@ function loadResults() {
         _html +=
             '<div class="col-lg-7 d-flex">' +
             '<img class="thumbnail rounded" src="' +
-            items[listing].photoPaths[0].thumbnailPath +
+            allListings[listing].photoPaths[0].thumbnailPath +
             '">';
         _html +=
             '<div class="p-2">' +
             '<h5><b>' +
-            items[listing].name +
+            allListings[listing].name +
             '</b></h5>';
         _html +=
             '<p class="text-secondary no-overflow">' +
-            items[listing].description +
+            allListings[listing].description +
             '</p></div></div>';
         _html +=
             '<div class="col d-flex p-2"><b>Price: </b>$' +
             '<div class="price">' +
-            items[listing].price +
+            allListings[listing].price +
             '</div></div>';
         _html +=
             '<div class="col-sm-12 col-md p-2">' +
-            '<button id="' + items[listing].id + '" type="button" class="btn btn-primary btn-block pull-right no-overflow" data-toggle="modal" data-target="#modal"' +
+            '<button id="' + allListings[listing].id + '" type="button" class="btn btn-primary btn-block pull-right no-overflow" data-toggle="modal" data-target="#modal"' +
             'onclick="event.stopPropagation(); openContactModal(this);">Contact Seller</button>';
         _html += '</div></div></li>';
 
@@ -51,7 +53,8 @@ function loadResults() {
        setOnClick(listings[i]);
     }
 
-    displayResultsCount();
+    // Update listings count
+    $('.num-results').html('<h5>Showing ' + allListings.length + ' results out of ' + listingsCount + ' total...</h5>');
 }
 
 // Redirect to listing page in new tab
@@ -63,17 +66,6 @@ function setOnClick(li){
 
 function clearResults() {
     $('#results').empty();
-}
-
-// Displays number of results
-function displayResultsCount() {
-    let counter = 0;
-    $('#main-body li').each(function () {
-        if ($(this).css('display') != 'none') {
-            counter++;
-        }
-    });
-    $('.num-results').html('<h5>Showing ' + counter + ' results...</h5>');
 }
 
 function openContactModal(buttonObj) {
@@ -90,9 +82,9 @@ function openContactModal(buttonObj) {
 
     // Find relevant listing
     var listing;
-    for (var i = 0; i < items.length; i++) {
-        if (items[i].id == buttonObj.id) {
-            listing = items[i];
+    for (var i = 0; i < allListings.length; i++) {
+        if (allListings[i].id == buttonObj.id) {
+            listing = allListings[i];
         }
     }
     modal = document.getElementById('contact-text');
@@ -156,8 +148,9 @@ $(document).ready(function () {
             return data.json();
         })
         .then((dataJson) => {
-            items = dataJson;
-            loadResults();
+            allListings = dataJson['listings'];
+            listingsCount = dataJson['listings_count']
+            loadListings();
         })
         .catch((err) => {
             console.log(err);
@@ -185,8 +178,9 @@ $(document).ready(function () {
                 return data.json();
             })
             .then((dataJson) => {
-                items = dataJson;
-                loadResults();
+                allListings = dataJson['listings'];
+                listingsCount = dataJson['listings_count']
+                loadListings();
             })
             .catch((err) => {
                 console.log(err);
