@@ -102,12 +102,11 @@ def get_all_categories(db: Session):
 
 def create_message(db: Session, message: str, listing_id: int):
     listing = get_listing_by_id(db, listing_id)
-    db_message = models.Message(seller_id=listing.seller_id, listing_id=listing_id, message=message)
+    db_message = models.Message(seller_id=listing.seller_id, listing_id=listing_id, timestamp=datetime.datetime.now(), message=message)
     db.add(db_message)
     db.commit()
     db.refresh(db_message)
 
 
 def get_message_by_seller_id(db: Session, user: schemas.User):
-    retVal = db.query(models.Message).filter(models.Message.seller_id == user.id).all()
-    return retVal
+    return user.messages

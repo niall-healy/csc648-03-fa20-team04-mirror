@@ -101,16 +101,19 @@ function openContactModal(buttonObj) {
     // Add listing id to be used by sendMessage
     $('#modal').data('id', listing.id);
 
-    modal.value = "";
-    modal.value += 'From: ' + user.email + '\n';
-    modal.value += 'Subject: ' + listing.name + '\n';
-    modal.value += '----------------------------------------------------------------------------';
-
-    // TODO: Set cursor position of textarea and make From and Subject lines read-only
+    $('#from-text').html('From: ' + user.email);
+    $('#listing-text').html('Listing: ' + listing.name);
+    $('#contact-text').val('');
 }
 
 function sendMessage(){
-   var message = document.getElementById('contact-text').value;
+   $('#modal').modal('toggle');
+
+   var message = "";
+   message += $('#from-text').html() + '\n';
+   message += $('#listing-text').html() + '\n';
+
+   message += $('#contact-text').val();
 
    var id = $('#modal').data('id');
 
@@ -128,7 +131,12 @@ function sendMessage(){
 
    fetch(fetchURL, fetchOptions)
 	.then((response) => {
-           //console.log(response);
+	   if(response.ok){
+              alert('Message sent!');
+	   }
+	   else {
+              alert('Message failed to send.');
+	   }
 	})
 }
 
