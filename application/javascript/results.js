@@ -1,11 +1,12 @@
 let allListings;
 let listingsCount = 0;
+let skip = 0;
 
 // Load the search results from the server into the html
 function loadListings() {
     let _html = '';
     let isOdd = true;
-    
+
     for (listing in allListings) {
         _html +=
             '<li id="' +
@@ -49,8 +50,8 @@ function loadListings() {
     // Set onclick attribute for every li
     // This has to be done in a separate scope. If not, dynamically adding the id to the href link
     // does not work properly (took me like an hour to figure this out lol).
-    for(var i = 0; i < listings.length; i++){
-       setOnClick(listings[i]);
+    for (var i = 0; i < listings.length; i++) {
+        setOnClick(listings[i]);
     }
 
     // Update listings count
@@ -58,10 +59,10 @@ function loadListings() {
 }
 
 // Redirect to listing page in new tab
-function setOnClick(li){
-   li.onclick = function(){
-      $('<a href="/listing/?id=' + li.id + '" target="_blank"></a>')[0].click();
-   }
+function setOnClick(li) {
+    li.onclick = function () {
+        $('<a href="/listing/?id=' + li.id + '" target="_blank"></a>')[0].click();
+    }
 }
 
 function clearResults() {
@@ -73,9 +74,9 @@ function openContactModal(buttonObj) {
     user = JSON.parse(localStorage.getItem('loggedInUser'));
 
     // If user is not logged in, redirect to login page
-    if(!user) {
-      window.location.assign('/html/login-register.html');
-      return;
+    if (!user) {
+        window.location.assign('/html/login-register.html');
+        return;
     }
 
     $('#modal').modal();
@@ -98,38 +99,59 @@ function openContactModal(buttonObj) {
     $('#contact-text').val('');
 }
 
-function sendMessage(){
-   $('#modal').modal('toggle');
+function sendMessage() {
+    $('#modal').modal('toggle');
 
-   var message = "";
-   message += $('#from-text').html() + '\n';
-   message += $('#listing-text').html() + '\n';
+    var message = "";
+    message += $('#from-text').html() + '\n';
+    message += $('#listing-text').html() + '\n';
 
-   message += $('#contact-text').val();
+    message += $('#contact-text').val();
 
-   var id = $('#modal').data('id');
+    var id = $('#modal').data('id');
 
-   var fetchBody = {
-      "message": message,
-      "listing_id": id
-   }
+    var fetchBody = {
+        "message": message,
+        "listing_id": id
+    }
 
-   var fetchOptions = {
-      method: "POST",
-      body: JSON.stringify(fetchBody)
-   }
+    var fetchOptions = {
+        method: "POST",
+        body: JSON.stringify(fetchBody)
+    }
 
-   var fetchURL = '/message/';
+    var fetchURL = '/message/';
 
-   fetch(fetchURL, fetchOptions)
-	.then((response) => {
-	   if(response.ok){
-              alert('Message sent!');
-	   }
-	   else {
-              alert('Message failed to send.');
-	   }
-	})
+    fetch(fetchURL, fetchOptions)
+        .then((response) => {
+            if (response.ok) {
+                alert('Message sent!');
+            } else {
+                alert('Message failed to send.');
+            }
+        })
+}
+
+// render disabled states for edge cases in pagination
+function loadPageNumbers() {
+    pagination = $('.pagination')
+    currentPage = $('.pagination .active a').html()
+    previousPageButton = $('.pagination .previous')
+    nextPageButton = $('.pagination .next')
+    totalPages = listingsCount / 15
+
+    if (currentPage == 1) {
+        previousPageButton.addClass('disabled')
+    } else {
+        previousPageButton.removeClass('disabled')
+    }
+
+    if (currentPage >= totalPages) {
+        nextPageButton.addClass('disabled')
+    } else {
+        nextPageButton.removeClass('disabled')
+    }
+
 }
 
 $(document).ready(function () {
@@ -151,6 +173,7 @@ $(document).ready(function () {
             allListings = dataJson['listings'];
             listingsCount = dataJson['listings_count']
             loadListings();
+            loadPageNumbers();
         })
         .catch((err) => {
             console.log(err);
@@ -168,10 +191,11 @@ $(document).ready(function () {
         document.getElementById('search-bar').placeholder = 'Search...';
     }
 
-    $('#sort').on('changed.bs.select', function() {
+    // change sort for listings
+    $('#sort').on('changed.bs.select', function () {
         clearResults();
 
-        fetchURL = '/search/?category=' + category + '&keywords=' + keywords + '&sort=' + $(this).val();
+        fetchURL = '/search/?category=' + category + '&keywords=' + keywords + '&sort=' + $(this).val() + '&skip=' + skip;;
 
         fetch(fetchURL, fetchOptions)
             .then((data) => {
@@ -179,11 +203,44 @@ $(document).ready(function () {
             })
             .then((dataJson) => {
                 allListings = dataJson['listings'];
-                listingsCount = dataJson['listings_count']
+                listingsCount = dataJson['listings_count'];
                 loadListings();
             })
             .catch((err) => {
                 console.log(err);
             });
     })
+
+    // change page numbers
+    $('.pagination a').click(function (e) {
+        previousPageButton = $('.pagination .previous');
+        nextPageButton = $('.pagination .next');
+        currentPage = $('.pagination .active a');
+        let buttonValue = $(this).html();
+        console.log(buttonValue)
+        if (buttonValue == '&lt;' && !previousPageButton.hasClass('disabled')) {
+            skip -= 15;
+        } else if (buttonValue == '&gt;' && !nextPageButton.hasClass('disabled')) {
+            skip += 15;
+        }
+        currentPage.html((skip / 15) + 1);
+
+        clearResults();
+
+        fetchURL = '/search/?category=' + category + '&keywords=' + keywords + '&sort=' + $('#sort').val() + '&skip=' + skip;
+
+        fetch(fetchURL, fetchOptions)
+            .then((data) => {
+                return data.json();
+            })
+            .then((dataJson) => {
+                allListings = dataJson['listings'];
+                listingsCount = dataJson['listings_count'];
+                loadListings();
+                loadPageNumbers();
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    });
 });
