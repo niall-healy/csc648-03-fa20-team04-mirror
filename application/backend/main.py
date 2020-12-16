@@ -64,7 +64,5 @@ app.include_router(
     tags=["message"]
 )
 
-# create a object that handles deletion of old listings
-delete_listings = DeleteOldListings()
 # mount static files
 app.mount("/", StaticFiles(directory=".."), name="static")
