@@ -1,3 +1,5 @@
+import datetime
+
 
 from typing import List
 
@@ -116,4 +118,5 @@ def create_message(db: Session, message: str, listing_id: int):
 
 
 def get_message_by_seller_id(db: Session, user: schemas.User):
-    return user.messages
+    return db.query(models.Message).filter(models.Message.seller_id == user.id).all()
+
