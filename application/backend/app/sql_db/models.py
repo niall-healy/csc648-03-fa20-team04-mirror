@@ -33,6 +33,7 @@ class Listing(Base):
     timestamp = Column(DateTime)
     description = Column(String(144), index=True)
     price = Column(Numeric)  # Fixed precision number for price
+    course = Column(String(32))
     isApproved = Column(Boolean, default=False)
     isActive = Column(Boolean, default=False)
 

@@ -35,13 +35,13 @@ def get_listings_for_search(db: Session, searchQuery: str, category: str, sort: 
     else:
         if category == 'Any':
             retVal = db.query(models.Listing).filter(or_(models.Listing.name.ilike('%' + searchQuery + '%'),
-                                                         models.Listing.description.ilike('%' + searchQuery + '%')))
+                                                         models.Listing.description.ilike('%' + searchQuery + '%'),
+                                                         models.Listing.course.ilike('%' + searchQuery + '%')))
         else:
-            retVal = db.query(models.Listing).join(models.Listing.category).filter(models.Category.category == category,
-                                                                                   or_(models.Listing.name.ilike(
-                                                                                       '%' + searchQuery + '%'),
-                                                                                       models.Listing.description.ilike(
-                                                                                           '%' + searchQuery + '%')))
+            retVal = db.query(models.Listing).join(models.Listing.category).filter(
+                models.Category.category == category, or_(models.Listing.name.ilike('%' + searchQuery + '%'),
+                                                          models.Listing.description.ilike('%' + searchQuery + '%'),
+                                                          models.Listing.course.ilike('%' + searchQuery + '%')))
 
     if sort == 'priceAscending':
         retVal = retVal.order_by(asc(models.Listing.price))

@@ -42,9 +42,10 @@ async def create_listing(db: Session = Depends(get_db),
                          price: int = Form(...),
                          category: str = Form(...),
                          description: str = Form(...),
+                         course: str = Form(...),
                          images: List[UploadFile] = File(...)):
     # create new listing object
-    listing = schemas.Listing(name=name, description=description, price=price, seller_id=user.id)
+    listing = schemas.Listing(name=name, description=description, price=price, seller_id=user.id, course=course)
     photoPaths = []
 
     for file in images:
