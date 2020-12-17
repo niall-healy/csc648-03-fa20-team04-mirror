@@ -82,6 +82,7 @@ class Message(BaseModel):
 # =====User=====
 class UserBase(BaseModel):
     email: str
+    timestamp: datetime = datetime.now()
 
 
 class UserCreate(UserBase):
