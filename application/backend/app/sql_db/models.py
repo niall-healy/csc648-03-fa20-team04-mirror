@@ -19,6 +19,7 @@ class User(Base):
     id = Column(Integer, primary_key=True, index=True)
     email = Column(String(85), unique=True, index=True)
     password_hash = Column(String(100))
+    timestamp = Column(DateTime)
 
     listings = relationship("Listing", back_populates="seller", cascade="all, delete-orphan", passive_deletes=True)
     messages = relationship("Message", back_populates="seller", cascade="all, delete-orphan", passive_deletes=True)
