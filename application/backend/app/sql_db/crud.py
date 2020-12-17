@@ -1,7 +1,9 @@
 import datetime
+
+
 from typing import List
 
-from sqlalchemy import desc, or_
+from sqlalchemy import desc, asc, or_
 from sqlalchemy.orm import Session
 
 from app.sql_db import models, schemas
@@ -25,22 +27,30 @@ def create_user(db: Session, user: schemas.UserCreate):
     return db_user
 
 
-def get_listings_for_search(db: Session, searchQuery: str, category: str):
+def get_listings_for_search(db: Session, searchQuery: str, category: str, sort: str):
     if len(searchQuery) == 0:
         if category == 'Any':
-            retVal = db.query(models.Listing).all()
+            retVal = db.query(models.Listing)
         else:
-            retVal = db.query(models.Listing).filter(models.Listing.category == category).all()
-    elif category != 'Any':
-        # Note: use like() for case sensitivity, ilike() for case insensitivity
-        retVal = db.query(models.Listing).filter(models.Listing.category == category,
-                                                 or_(models.Listing.name.ilike('%' + searchQuery + '%'),
-                                                     models.Listing.description.ilike('%' + searchQuery + '%'))).all()
+            # Note: use like() for case sensitivity, ilike() for case insensitivity
+            retVal = db.query(models.Listing).join(models.Listing.category).filter(models.Category.category == category)
     else:
-        retVal = db.query(models.Listing).filter(or_(models.Listing.name.ilike('%' + searchQuery + '%'),
-                                                     models.Listing.description.ilike('%' + searchQuery + '%'))).all()
+        if category == 'Any':
+            retVal = db.query(models.Listing).filter(or_(models.Listing.name.ilike('%' + searchQuery + '%'),
+                                                         models.Listing.description.ilike('%' + searchQuery + '%')))
+        else:
+            retVal = db.query(models.Listing).join(models.Listing.category).filter(models.Category.category == category,
+                                                                                   or_(models.Listing.name.ilike(
+                                                                                       '%' + searchQuery + '%'),
+                                                                                       models.Listing.description.ilike(
+                                                                                           '%' + searchQuery + '%')))
 
-    return retVal
+    if sort == 'priceAscending':
+        retVal = retVal.order_by(asc(models.Listing.price))
+    elif sort == 'priceDescending':
+        retVal = retVal.order_by(desc(models.Listing.price))
+
+    return retVal.all()
 
 
 def get_listing_by_id(db: Session, listingId: int):
@@ -71,9 +81,13 @@ def get_newest_listings(db: Session, numItems: int):
     return retVal
 
 
-def create_listing(db: Session, listing: schemas.Listing, photoPaths):
+def create_listing(db: Session, listing: schemas.Listing, photoPaths, category_string):
     # Create listing object
     db_listing = models.Listing(**listing.dict())
+
+    category = db.query(models.Category).filter(models.Category.category == category_string).first()
+    db_listing.category = category
+    db_listing.category_id = category.id
 
     # Create PhotoPath objects for each photo path and add to the listing object
     for path, thumbnailPath in photoPaths:
@@ -96,7 +110,7 @@ def get_all_categories(db: Session):
 
 def create_message(db: Session, message: str, listing_id: int):
     listing = get_listing_by_id(db, listing_id)
-    db_message = models.Message(seller_id=listing.seller_id,
+    db_message = models.Message(seller_id=listing.seller_id, listing_id=listing_id, timestamp=datetime.datetime.now(),
                                 message=message)
     db.add(db_message)
     db.commit()
@@ -104,5 +118,5 @@ def create_message(db: Session, message: str, listing_id: int):
 
 
 def get_message_by_seller_id(db: Session, user: schemas.User):
-    retVal = db.query(models.Message).filter(models.Message.seller_id == user.id).all()
-    return retVal
+    return db.query(models.Message).filter(models.Message.seller_id == user.id).all()
+

@@ -1,11 +1,16 @@
+let allListings;
+let listingsCount = 0;
+let skip = 0;
+
 // Load the search results from the server into the html
-function loadListings(dataJson) {
+function loadListings() {
     let _html = '';
     let isOdd = true;
-    for (listing in dataJson) {
+
+    for (listing in allListings) {
         _html +=
             '<li id="' +
-            dataJson[listing].id +
+            allListings[listing].id +
             '" class="list-group-item list-group-item-action p-2 ' +
             (isOdd ? 'list-group-item-1' : 'list-group-item-2') +
             '">' +
@@ -13,25 +18,25 @@ function loadListings(dataJson) {
         _html +=
             '<div class="col-lg-7 d-flex">' +
             '<img class="thumbnail rounded" src="' +
-            dataJson[listing].photoPaths[0].thumbnailPath +
+            allListings[listing].photoPaths[0].thumbnailPath +
             '">';
         _html +=
             '<div class="p-2">' +
             '<h5><b>' +
-            dataJson[listing].name +
+            allListings[listing].name +
             '</b></h5>';
         _html +=
             '<p class="text-secondary no-overflow">' +
-            dataJson[listing].description +
+            allListings[listing].description +
             '</p></div></div>';
         _html +=
             '<div class="col d-flex p-2"><b>Price: </b>$' +
             '<div class="price">' +
-            dataJson[listing].price +
+            allListings[listing].price +
             '</div></div>';
         _html +=
             '<div class="col-sm-12 col-md p-2">' +
-            '<button id="' + dataJson[listing].id + '" type="button" class="btn btn-primary btn-block pull-right no-overflow" data-toggle="modal" data-target="#modal"' +
+            '<button id="' + allListings[listing].id + '" type="button" class="btn btn-primary btn-block pull-right no-overflow" data-toggle="modal" data-target="#modal"' +
             'onclick="event.stopPropagation(); openContactModal(this);">Contact Seller</button>';
         _html += '</div></div></li>';
 
@@ -45,84 +50,42 @@ function loadListings(dataJson) {
     // Set onclick attribute for every li
     // This has to be done in a separate scope. If not, dynamically adding the id to the href link
     // does not work properly (took me like an hour to figure this out lol).
-    for(var i = 0; i < listings.length; i++){
-       setOnClick(listings[i]);
+    for (var i = 0; i < listings.length; i++) {
+        setOnClick(listings[i]);
     }
 
-    displayResults();
+    // Update listings count
+    $('.num-results').html('<h5>Showing ' + allListings.length + ' results out of ' + listingsCount + ' total...</h5>');
 }
 
 // Redirect to listing page in new tab
-function setOnClick(li){
-   li.onclick = function(){
-      $('<a href="/listing/?id=' + li.id + '" target="_blank"></a>')[0].click();
-   }
-}
-// Apply alternating colors
-function reapplyAlternatingColors() {
-    let isOdd = true;
-    $('#main-body li').each(function () {
-        if ($(this).css('display') != 'none') {
-            $(this).removeClass();
-            $(this).attr('class', 'list-group-item list-group-item-action p-2');
-            (isOdd ? $(this).addClass('list-group-item-1') : $(this).addClass('list-group-item-2'));
-            isOdd = !isOdd;
-        }
-    });
-}
-
-// Applys price filter
-function filterPrice() {
-    let min = $('#price-min-field').prop('value');
-    let max = $('#price-max-field').prop('value');
-    if (max == '' || max == 2000) {
-        max = Number.MAX_SAFE_INTEGER;
-        $('#price-max-field').prop('value', '');
+function setOnClick(li) {
+    li.onclick = function () {
+        $('<a href="/listing/?id=' + li.id + '" target="_blank"></a>')[0].click();
     }
-
-    $('#main-body li').each(function () {
-        let price = $(this).find('.price');
-        if (parseInt(price.html()) < min || parseInt(price.html()) > max) {
-            $(this).css('display', 'none');
-        } else {
-            $(this).css('display', 'grid');
-        }
-    });
-
-    displayResults();
-    reapplyAlternatingColors();
 }
 
-// Displays number of results
-function displayResults() {
-    let counter = 0;
-    $('#main-body li').each(function () {
-        if ($(this).css('display') != 'none') {
-            counter++;
-        }
-    });
-    $('.num-results').html('<h5>Showing ' + counter + ' results...</h5>');
+function clearResults() {
+    $('#results').empty();
 }
-
-var items;
 
 function openContactModal(buttonObj) {
 
     user = JSON.parse(localStorage.getItem('loggedInUser'));
 
     // If user is not logged in, redirect to login page
-    if(!user) {
-      window.location.assign('/html/login-register.html');
-      return;
+    if (!user) {
+        window.location.assign('/html/login-register.html');
+        return;
     }
 
     $('#modal').modal();
 
     // Find relevant listing
     var listing;
-    for (var i = 0; i < items.length; i++) {
-        if (items[i].id == buttonObj.id) {
-            listing = items[i];
+    for (var i = 0; i < allListings.length; i++) {
+        if (allListings[i].id == buttonObj.id) {
+            listing = allListings[i];
         }
     }
     modal = document.getElementById('contact-text');
@@ -131,35 +94,64 @@ function openContactModal(buttonObj) {
     // Add listing id to be used by sendMessage
     $('#modal').data('id', listing.id);
 
-    modal.value = "";
-    modal.value += 'From: ' + user.email + '\n';
-    modal.value += 'Subject: ' + listing.name + '\n';
-    modal.value += '----------------------------------------------------------------------------';
-
-    // TODO: Set cursor position of textarea and make From and Subject lines read-only
+    $('#from-text').html('From: ' + user.email);
+    $('#listing-text').html('Listing: ' + listing.name);
+    $('#contact-text').val('');
 }
 
-function sendMessage(){
-   var message = document.getElementById('contact-text').value;
+function sendMessage() {
+    $('#modal').modal('toggle');
 
-   var id = $('#modal').data('id');
+    var message = "";
+    message += $('#from-text').html() + '\n';
+    message += $('#listing-text').html() + '\n';
 
-   var fetchBody = {
-      "message": message,
-      "listing_id": id
-   }
+    message += $('#contact-text').val();
 
-   var fetchOptions = {
-      method: "POST",
-      body: JSON.stringify(fetchBody)
-   }
+    var id = $('#modal').data('id');
 
-   var fetchURL = '/message/';
+    var fetchBody = {
+        "message": message,
+        "listing_id": id
+    }
 
-   fetch(fetchURL, fetchOptions)
-	.then((response) => {
-           //console.log(response);
-	})
+    var fetchOptions = {
+        method: "POST",
+        body: JSON.stringify(fetchBody)
+    }
+
+    var fetchURL = '/message/';
+
+    fetch(fetchURL, fetchOptions)
+        .then((response) => {
+            if (response.ok) {
+                alert('Message sent!');
+            } else {
+                alert('Message failed to send.');
+            }
+        })
+}
+
+// render disabled states for edge cases in pagination
+function loadPageNumbers() {
+    pagination = $('.pagination')
+    currentPage = $('.pagination .active a').html()
+    previousPageButton = $('.pagination .previous')
+    nextPageButton = $('.pagination .next')
+    totalPages = listingsCount / 15
+
+    if (currentPage == 1) {
+        previousPageButton.addClass('disabled')
+    } else {
+        previousPageButton.removeClass('disabled')
+    }
+
+    if (currentPage >= totalPages) {
+        nextPageButton.addClass('disabled')
+    } else {
+        nextPageButton.removeClass('disabled')
+    }
+
 }
 
 $(document).ready(function () {
@@ -178,8 +170,10 @@ $(document).ready(function () {
             return data.json();
         })
         .then((dataJson) => {
-            items = dataJson;
-            loadListings(dataJson);
+            allListings = dataJson['listings'];
+            listingsCount = dataJson['listings_count']
+            loadListings();
+            loadPageNumbers();
         })
         .catch((err) => {
             console.log(err);
@@ -197,39 +191,56 @@ $(document).ready(function () {
         document.getElementById('search-bar').placeholder = 'Search...';
     }
 
-    // sync price sliders
-    $('#price-min').on('input', function () {
-        $('#price-min-field').prop('value', $(this).prop('value') * 10);
-    });
+    // change sort for listings
+    $('#sort').on('changed.bs.select', function () {
+        clearResults();
 
-    $('#price-max').on('input', function () {
-        $('#price-max-field').prop('value', $(this).prop('value') * 10);
-        if ($('#price-max').prop('value') == 200) {
-            $('#price-max-field').prop('value', "");
+        fetchURL = '/search/?category=' + category + '&keywords=' + keywords + '&sort=' + $(this).val() + '&skip=' + skip;;
+
+        fetch(fetchURL, fetchOptions)
+            .then((data) => {
+                return data.json();
+            })
+            .then((dataJson) => {
+                allListings = dataJson['listings'];
+                listingsCount = dataJson['listings_count'];
+                loadListings();
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    })
+
+    // change page numbers
+    $('.pagination a').click(function (e) {
+        previousPageButton = $('.pagination .previous');
+        nextPageButton = $('.pagination .next');
+        currentPage = $('.pagination .active a');
+        let buttonValue = $(this).html();
+        console.log(buttonValue)
+        if (buttonValue == '&lt;' && !previousPageButton.hasClass('disabled')) {
+            skip -= 15;
+        } else if (buttonValue == '&gt;' && !nextPageButton.hasClass('disabled')) {
+            skip += 15;
         }
-    });
+        currentPage.html((skip / 15) + 1);
 
-    $('#price-min-field').on('input', function () {
-        $('#price-min').prop('value', $(this).prop('value') / 10);
-    });
+        clearResults();
 
-    $('#price-max-field').on('input', function () {
-        $('#price-max').prop('value', $(this).prop('value') / 10);
-    });
+        fetchURL = '/search/?category=' + category + '&keywords=' + keywords + '&sort=' + $('#sort').val() + '&skip=' + skip;
 
-    // apply filters
-    $('#apply-button').on('click', function () {
-        filterPrice();
-        $(this).prop('aria-pressed', 'false');
-        $(this).blur();
-    });
-
-    // flip filter arrow on collapse
-    $('#collapsable').on('show.bs.collapse', function () {
-        $('.rotate').toggleClass('fa-rotate-180');
-    });
-
-    $('#collapsable').on('hide.bs.collapse', function () {
-        $('.rotate').toggleClass('fa-rotate-180');
+        fetch(fetchURL, fetchOptions)
+            .then((data) => {
+                return data.json();
+            })
+            .then((dataJson) => {
+                allListings = dataJson['listings'];
+                listingsCount = dataJson['listings_count'];
+                loadListings();
+                loadPageNumbers();
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     });
 });

@@ -4,10 +4,13 @@ from datetime import datetime
 
 from pydantic import BaseModel
 
+from sqlalchemy import DateTime
+
 """
 This file has the Pydantic models that are used to mirror the database tables as python objects.
 This allows fastAPI to do some cool things like send http responses of json objects that match these classes.
 """
+
 
 # =====Category=====
 class CategoryReturn(BaseModel):
@@ -44,7 +47,8 @@ class Listing(BaseModel):  # Reading to return from API
     name: str
     description: str
     price: int
-    category: str
+    category_id: int = None
+    category: Category = None
     isApproved: bool = None
     isActive: bool = None
 
@@ -52,31 +56,9 @@ class Listing(BaseModel):  # Reading to return from API
         orm_mode = True  # Read as ORM model
 
 
-# =====Books=====
-class Books(Listing):
-    relevantClass: str
-
-    class Config:
-        orm_mode = True
-
-
-# =====Housing=====
-class Housing(Listing):
-    streetAddress: str
-
-    class Config:
-        orm_mode = True
-
-
-# =====Automotive=====
-class Automotive(Listing):
-    listingId: int
-    year: int
-    make: str
-    model: str
-    odometer: int
-    titleStatus: str
-    fuel: str
+class AllListings(BaseModel):
+    listings: List[Listing] = []
+    listings_count: int
 
     class Config:
         orm_mode = True
@@ -86,7 +68,8 @@ class Automotive(Listing):
 class Message(BaseModel):
     id: int
     seller_id: int
-    timestamp: datetime = datetime.now()
+    listing_id: int
+    timestamp: datetime
     message: str
 
     class Config:
@@ -106,6 +89,7 @@ class User(UserBase):
     id: int
     password_hash: str
     listings: List[Listing] = []
+    messages: List[Message] = []
     isAdmin: bool
 
     class Config:
