@@ -15,6 +15,15 @@ function loadListing(listing) {
        $('#listing-course').append(listing.course);
     }
 
+    // disable contact button if post is not yet approved
+    if(!listing.isApproved) {
+        const notApproved = document.getElementById("contact-button")
+
+        notApproved.disabled = true;
+        notApproved.style.background-color = "#e58f8f";
+        notApproved.style.color = "#8a0000";
+    }
+
     var carousel = document.getElementById('carousel-inner');
     var indicators = document.getElementById('carousel-indicators');
 
