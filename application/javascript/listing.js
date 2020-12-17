@@ -16,12 +16,16 @@ function loadListing(listing) {
     }
 
     // disable contact button if post is not yet approved
+    const contactButton = document.getElementById("contact-button")
     if(!listing.isApproved) {
-        const notApproved = document.getElementById("contact-button")
-
-        notApproved.disabled = true;
-        notApproved.style.background-color = "#e58f8f";
-        notApproved.style.color = "#8a0000";
+        contactButton.disabled = true;
+        contactButton.style.background-color = "#e58f8f";
+        contactButton.style.color = "#8a0000";
+    }
+    else if(listing.isApproved) {
+        contactButton.disabled = false;
+        contactButton.style.background-color = "#0275d8";
+        contactButton.style.color = "white";
     }
 
     var carousel = document.getElementById('carousel-inner');
