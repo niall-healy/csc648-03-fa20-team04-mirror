@@ -49,6 +49,27 @@ main {
 }
 
 /* main body */
+#main-body .pagination{
+    margin: 8px;
+}
+
+.pagination > li > a
+{
+    background-color: #23272a;
+    color: white;
+    border-color: 	#bfc5c9;
+}
+
+.pagination > li > a:focus,
+.pagination > li > a:hover,
+.pagination > li > span:focus,
+.pagination > li > span:hover
+{
+    color: #626f7d;
+    background-color: #f8f9fa;
+    border-color: 	#bfc5c9;
+}
+
 #main-body img {
     user-select: none;
     -moz-user-select: none;
