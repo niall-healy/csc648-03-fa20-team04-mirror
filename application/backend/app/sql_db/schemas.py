@@ -9,6 +9,8 @@ from sqlalchemy import DateTime
 """
 This file has the Pydantic models that are used to mirror the database tables as python objects.
 This allows fastAPI to do some cool things like send http responses of json objects that match these classes.
+
+Authors: Lukas Pettersson, Joseph Babel, Niall Healy
 """
 
 
@@ -47,6 +49,7 @@ class Listing(BaseModel):  # Reading to return from API
     name: str
     description: str
     price: int
+    course: str = None
     category_id: int = None
     category: Category = None
     isApproved: bool = None

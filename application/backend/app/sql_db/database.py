@@ -7,6 +7,8 @@ This file is for connecting to MySQL database, creating SQLAlchemy engine for co
 creating a SessionLocal class for future instantiation of database session,
 creating a Base class to be inherited from for future creation of database(ORM) models and classes, and
 creating a dependency to instantiate a new SessionLocal for each request that auto closes.
+
+Author: Lukas Pettersson
 """
 
 # Connect to MySQL database

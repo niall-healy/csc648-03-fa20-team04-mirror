@@ -45,7 +45,7 @@
                     <div id="form-body" class="bg-dark d-flex justify-content-center">
                         <form id="post-listing-form">
                             <label for="listing-name-field">Listing Name</label>
-                            <input id="listing-name-field" class="form-field" type="text" name="name" placeholder="Listing Name" required />
+                            <input id="listing-name-field" class="form-field" type="text" name="name" placeholder="Listing Name" maxlength="31" required />
                             <label for="price-field">Price</label>
                             <input id="price-field" class="form-field" pattern="^[0-9]+$" oninput="this.setCustomValidity('')" oninvalid="this.setCustomValidity('Please only enter numeric characters.')" type="text" name="price" placeholder="Price" required />
                             <label for="form-category">Category</label>
@@ -54,6 +54,8 @@
                                 <option value="Housing">Housing</option>
                                 <option value="Automotive">Automotive</option>
                             </select>
+			    <label id="class-label" class="input-hidden" for="class-field">Subject / Course Number</label>
+			    <input id="class-field" class="form-field input-hidden" name="course" type="text" name="name" maxlength="31" placeholder="e.g. CSC 201">
                             <label for="description-field">Description</label>
                             <textarea id="description-field" class="form-field" rows="5" name="description" placeholder="Description" maxlength="144" required></textarea>
                             <label for="file-upload">Upload Images</label>

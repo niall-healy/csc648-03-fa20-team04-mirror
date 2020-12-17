@@ -13,6 +13,13 @@ from starlette import status
 from app.sql_db import crud
 from app.sql_db.database import get_db
 
+"""
+This file contains the logic for logging a user in: creating auth tokens, getting current user from auth token, 
+decrypting password, etc.
+
+Author: Niall Healy with much help from the FastAPI tutorial
+"""
+
 router = APIRouter()
 
 # Variables used for password encryption
@@ -24,6 +31,7 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/login")
 MAX_USERS = 50
 LOGGED_IN_USERS = 0
 LOGGED_IN_TOKENS = []
+
 
 # Used as the response model for the login post router
 class Token(BaseModel):
@@ -59,6 +67,7 @@ async def login_for_access_token(db: Session = Depends(get_db), form_data: OAuth
             headers={"WWW-Authenticate": "Bearer"},
         )
     return {"access_token": access_token, "token_type": "bearer"}
+
 
 def flush_out_inactive():
     global LOGGED_IN_TOKENS
