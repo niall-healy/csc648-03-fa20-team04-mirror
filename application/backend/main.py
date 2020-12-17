@@ -64,6 +64,5 @@ app.include_router(
     tags=["message"]
 )
 
-
 # mount static files
 app.mount("/", StaticFiles(directory=".."), name="static")

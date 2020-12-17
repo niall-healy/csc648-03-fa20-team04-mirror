@@ -27,13 +27,13 @@
     <script src="/javascript/nav.js" defer></script>
     <script src="/javascript/results.js" defer></script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9PXEDKF2FT"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4L1HTVDYJ9"></script>
     <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
-    gtag('config', 'G-9PXEDKF2FT');
+      gtag('config', 'G-4L1HTVDYJ9');
     </script>
 </head>
 
@@ -52,6 +52,8 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    <p id="from-text"></p>
+                    <p id="listing-text"></p>
                     <textarea id="contact-text" name="text" placeholder="Please be respectful when messaging others."
                         rows="15" style="width:100%"></textarea>
                 </div>
@@ -65,38 +67,26 @@
     <div class="custom-box">
         <div class="container-flex">
             <div class="row">
-                <div class="col-xl-3 col-lg-12">
-                    <div id="filters">
-                        <div id="filters-header" class="d-flex justify-content-between" data-toggle="collapse" data-target="#collapsable" aria-expanded="true" aria-controls="collapsable">
-                            <h5>Filters</h5>
-                            <div>
-                                <i class="fa fa-chevron-down rotate"></i>
-                            </div>
-                        </div>
-                        <div id="collapsable" class="collapse show">
-                            <div id="filters-body">
-                                <div id="price-filter">
-                                    <label for="price-min">Price Min:</label>
-                                    <input id="price-min" class="slider" type="range" min="0" max="199" value="0">
-                                    <input id="price-min-field" type="number" min="0" max="1990" step="10" placeholder="0">
-                                    <label for="price-max">Price Max:</label>
-                                    <input id="price-max" class="slider" type="range" min="1" max="200" value="200">
-                                    <input id="price-max-field" type="number" min="10" max="2000" step="10" placeholder="2000+">
-                                </div>
-                                <button id="apply-button" type="button" class="btn btn-primary pull-right">Apply</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div class="col-xl col-lg-12">
                     <main>
-                        <div id="main-header">
+                        <div id="main-header" class="d-flex justify-content-between">
                             <div class="num-results"></div>
+                            <select id="sort" class="selectpicker form-selector" data-width="auto" name="sort" title="Sort by..." required>
+                                <option value="priceAscending">Price: Low to High</option>
+                                <option value="priceDescending">Price: High to Low</option>
+                            </select>
                         </div>
                         <div id="main-body">
                             <ul class="list-group text-dark">
                                 <div id="results"></div>
                             </ul>
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination justify-content-center">
+                                  <li class="page-item previous disabled"><a class="page-link"><</a></li>
+                                  <li class="page-item active"><a class="page-link">1</a></li>
+                                  <li class="page-item next disabled"><a class="page-link">></a></li>
+                                </ul>
+                            </nav>
                         </div>
                     </main>
                 </div>
