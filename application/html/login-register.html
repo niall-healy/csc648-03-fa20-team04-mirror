@@ -94,6 +94,9 @@
                 <input type="checkbox" name="checkboxTOS" id="checkboxTOS" value="1"> I agree to the <a href="#">Terms of Service</a>.<span class="asterisk">*</span></div>
             </div>
 
+            <div class="p-1">Please verify you are not a robot</div> <input type="text" name="captcha" class="register-form-field" placeholder="What is 3 + 5?" onkeyup="checkCaptcha(this.value.toLowerCase());">
+            <div class="registration-form-alert" id="div-check-captcha"></div>
+
             <input type="submit" value="Register" id="register-form-submit" onclick="registerOnClick(event);">
         </form>
 

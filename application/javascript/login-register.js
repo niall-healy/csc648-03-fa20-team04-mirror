@@ -84,7 +84,7 @@ async function handleLogin() {
 // Send register post request
 async function handleRegister() {
     let info = getRegisterInfo();
-    if (!validateRegisterInfo(info.email, info.password, info.password2, info.checkbox)) {
+    if (!validateRegisterInfo(info.email, info.password, info.password2, info.checkbox, info.captcha)) {
         return;
     }
 
@@ -127,13 +127,14 @@ function getRegisterInfo() {
         email: form.querySelector('input[name="username"]').value,
         password: form.querySelector('input[name="password"]').value,
         password2: form.querySelector('input[name="password2"]').value,
-        checkbox: form.querySelector('input[name="checkboxTOS"]').checked // add to registration validation
+        checkbox: form.querySelector('input[name="checkboxTOS"]').checked, // add to registration validation
+        captcha: form.querySelector('input[name="captcha"]').value.toLowerCase(),
     };
     return registerInfo;
 }
 
 // Check that all registration info is valid
-function validateRegisterInfo(email, passwd, repasswd, checkbox) {
+function validateRegisterInfo(email, passwd, repasswd, checkbox, captcha) {
     let studentEmailRegEx = new RegExp(/^[A-Za-z0-9._%+-]+@mail.sfsu.edu$/);
     let facultyEmailRegEx = new RegExp(/^[A-Za-z0-9._%+-]+@sfsu.edu$/);
 
@@ -157,6 +158,9 @@ function validateRegisterInfo(email, passwd, repasswd, checkbox) {
     // add checkbox to validation
     if (!checkbox) {
         alert("Please agree to the terms of service");
+        return false;
+    }
+    if (captcha != "8" && captcha != "eight") {
         return false;
     }
 
@@ -227,6 +231,20 @@ function checkValidEmail(inputId) {
         errorBox.style.display = "block";
         errorBox.innerHTML = "Domain must be '@mail.sfsu.edu' or '@sfsu.edu'";
     } else {
+        errorBox.style.opacity = 0;
+        errorBox.style.display = "none";
+        errorBox.innerHTML = "";
+    }
+}
+
+function checkCaptcha(inputValue) {
+    var errorBox = document.getElementById('div-check-captcha');
+    if (inputValue != "8" && inputValue != "eight") {
+        errorBox.style.opacity = 1;
+        errorBox.style.display = "block";
+        errorBox.innerHTML = "Captcha response incorrect";
+    }
+    else {
         errorBox.style.opacity = 0;
         errorBox.style.display = "none";
         errorBox.innerHTML = "";
