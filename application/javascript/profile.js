@@ -57,7 +57,6 @@ $(document).ready(function () {
             return response.json();
         })
         .then((dataJson) => {
-            console.log(dataJson);
             allMessages = dataJson;
             loadMessages()
         })
