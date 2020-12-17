@@ -15,6 +15,12 @@ from typing import List
 import os.path
 import uuid
 
+"""
+This file contains the routers and logic for listings.
+
+Authors: Lukas Pettersson, Aaron Lander, Niall Healy
+"""
+
 # instantiates an APIRouter
 router = APIRouter()
 

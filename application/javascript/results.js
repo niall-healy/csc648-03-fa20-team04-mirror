@@ -1,3 +1,10 @@
+/*
+This file contains javascript that gets search results from the server and
+builds the search results page.
+
+Author: Joseph Babel
+*/
+
 let allListings;
 let listingsCount = 0;
 let skip = 0;

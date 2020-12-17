@@ -1,3 +1,10 @@
+/*
+This file contains the javascript for displaying a user's info, messages, and
+listings
+
+Author: Joseph Babel
+*/
+
 let allMessages;
 
 function loadMessages() {
@@ -10,7 +17,7 @@ function loadMessages() {
         messageListing = messageElements[1];
         messageBody = messageElements[2];
 
-        _html += 
+        _html +=
             '<li id="' +
             allMessages[message].id +
             '" class="' +

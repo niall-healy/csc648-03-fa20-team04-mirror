@@ -1,3 +1,10 @@
+/*
+This file contains the javascript that loads newest and recently viewed listings
+for the homepage.
+
+Author: Dale Armstrong
+*/
+
 function generateCards(items, numberOfItems, title) {
     var _html = `<div class="container"> \
                 <h3>` + title + `</h3> \
@@ -32,7 +39,7 @@ function generateCards(items, numberOfItems, title) {
             break;
     }
     _html += `</div></div>`;
-  
+
     return _html;
 }
 

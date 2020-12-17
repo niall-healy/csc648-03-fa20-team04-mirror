@@ -1,3 +1,9 @@
+/*
+This file contains javascript for loading an individual listing page
+
+Author: Aaron Lander
+*/
+
 // Load response from server into html
 function loadListing(listing) {
     document.getElementById('listing-name').innerHTML += listing.name;
@@ -102,7 +108,7 @@ function storeRecentListingId(id) {
             return
 
         if(recentlyVisited.length == 10) {
-            recentlyVisited.shift(); 
+            recentlyVisited.shift();
         }
 
         recentlyVisited.push(id);

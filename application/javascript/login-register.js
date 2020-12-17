@@ -1,3 +1,10 @@
+/*
+This file contains the javascript that sends login and register requests to the
+backend, with responsive input validation
+
+Authors: Niall Healy, Vern Saeteurn
+*/
+
 // constants for error messages
 /* Login error message: invalid email/password */
 const loginErrorMsgHolder = document.getElementById("login-error-msg-holder");

@@ -1,7 +1,12 @@
+/*
+This file contains the javascript that sends a listing to the backend.
+
+Author: Joesph Babel
+*/
+
 // TO-DO
 // drag and drop images to browser for upload
 // prepare images to be sent to backend
-// add additional fields depending on category (i.e. Category: books | will ask for ISBN:   ,Class:   , etc..)
 
 // Add event listener for submit listing button
 window.onload = function () {

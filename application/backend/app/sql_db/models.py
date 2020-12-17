@@ -6,6 +6,8 @@ from app.sql_db.database import Base
 """
 This file has the SQLAlchemy database models that are used to generate the database tables.
 It will have much more in the future as we add users, etc.
+
+Authors: Lukas Pettersson, Joseph Babel, Niall Healy
 """
 
 

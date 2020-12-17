@@ -11,6 +11,8 @@ from passlib.hash import bcrypt
 
 """
 This file is used for the 4 big interactions with the database: create, read, update, & delete.
+
+Author(s): This file contains logic for many routers, all team members contributed
 """
 
 

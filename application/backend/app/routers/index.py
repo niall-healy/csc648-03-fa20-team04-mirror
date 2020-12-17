@@ -11,7 +11,14 @@ from sqlalchemy.orm import Session
 
 from typing import List
 
+"""
+This file contains routers for displaying newest and recently viewed listings on the homepage
+
+Author: Dale Armstrong
+"""
+
 router = APIRouter()
+
 
 # Attempts to return the specified number of recently viewed items
 @router.get("/items/", response_model=List[schemas.Listing])
@@ -23,4 +30,3 @@ async def read_items(numItems: int, ids: List[int] = Query(None), db: Session = 
 @router.get("/newest/{numItems}", response_model=List[schemas.Listing])
 async def read_listings(numItems: int, db: Session = Depends(get_db)):
     return crud.get_newest_listings(db, numItems)
-
