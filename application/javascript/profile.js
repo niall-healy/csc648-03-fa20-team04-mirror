@@ -24,14 +24,16 @@ function loadMessages() {
             (isOdd ? 'list-group-item-1' : 'list-group-item-2') +
             ' p-2">';
         _html +=
-            '<p><b>' +
+            '<p class="text-dark"><b>' +
+
             messageHeader +
             '</b><br>' +
             '<a href="/listing/?id=' +
             allMessages[message].listing_id + '">' +
             messageListing +
             '</a></p>' +
-            '<p>' +
+            '<p class="text-dark">' +
+
             messageBody +
             '</p>' +
             '</li>';
