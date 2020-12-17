@@ -29,3 +29,11 @@
 #messages > li > p {
     font-size: 18px;
 }
+
+.nav-tabs .nav-link {
+    font-size: 18px;
+}
+
+#nav-profile {
+    font-size: 18px;
+}

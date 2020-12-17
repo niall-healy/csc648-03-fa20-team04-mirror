@@ -130,3 +130,15 @@ main {
     width: 100%;
     display: block;
 }
+
+label {
+    font-size: 18px;
+}
+
+#price-filter {
+    font-size: 18px;
+}
+
+#apply-button {
+    font-size: 18px;
+}
