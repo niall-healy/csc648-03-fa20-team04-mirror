@@ -25,6 +25,7 @@ function loadMessages() {
             ' p-2">';
         _html +=
             '<p class="text-dark"><b>' +
+
             messageHeader +
             '</b><br>' +
             '<a href="/listing/?id=' +
@@ -32,6 +33,7 @@ function loadMessages() {
             messageListing +
             '</a></p>' +
             '<p class="text-dark">' +
+
             messageBody +
             '</p>' +
             '</li>';

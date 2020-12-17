@@ -15,8 +15,8 @@
     <script src="/javascript/nav.js" defer></script>
     <script src="/javascript/listing.js" defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-    <link rel="stylesheet" type="text/css" href="../stylesheets/style.css" />
-    <link rel="stylesheet" type="text/css" href="../stylesheets/listing.css" />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/style.css" />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/listing.css" />
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-4L1HTVDYJ9"></script>
     <script>
@@ -28,7 +28,7 @@
 </head>
 
 <body>
-    <h5 class="team-info">SFSU Software Engineering Project CSC 648-848, Fall 2020. For Demonstration Only</h5>
+    <h2 class="team-info">SFSU Software Engineering Project CSC 648-848, Fall 2020. For Demonstration Only</h2>
     <!-- Modal -->
     <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -76,17 +76,22 @@
                     <li class="list-group-item p-2 list-group-item-1">
                         <h5 id="listing-name">
                             <b>Name: </b>
-                            <h5>
+                        </h5>
                     </li>
                     <li class="list-group-item p-2 list-group-item-2">
                         <h5 id="listing-description">
                             <b>Description: </b>
-                            <h5>
+                        </h5>
                     </li>
                     <li class="list-group-item p-2 list-group-item-1">
                         <h5 id="listing-price">
                             <b>Price: </b>
-                            <h5>
+                        </h5>
+                    </li>
+                    <li id="course-item" class="list-group-item p-2 list-group-item-2">
+                        <h5 id="listing-course">
+                            <b>Subject/Course Number: </b>
+                        </h5>
                     </li>
                 </ul>
                 <button type="button" id="contact-button" data-toggle="modal" data-target="#modal" onclick="event.stopPropagation(); openContactModal();" class="btn btn-primary btn-block no-overflow">Contact Seller</button>
