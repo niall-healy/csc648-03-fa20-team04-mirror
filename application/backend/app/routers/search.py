@@ -11,7 +11,9 @@ from sqlalchemy.orm import Session
 from typing import List
 
 """
-This file is used to route HTTP requests from the frontend to the appropriate place in the backend.
+This file contains the routers for the search results page and getting categories from the server
+
+Authors: Joesph Babel, Aaron Lander
 """
 
 # instantiates an APIRouter

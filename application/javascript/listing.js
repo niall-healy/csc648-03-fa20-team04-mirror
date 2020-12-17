@@ -1,8 +1,19 @@
+/*
+This file contains javascript for loading an individual listing page
+
+Author: Aaron Lander
+*/
+
 // Load response from server into html
 function loadListing(listing) {
     document.getElementById('listing-name').innerHTML += listing.name;
     document.getElementById('listing-description').innerHTML += listing.description;
     document.getElementById('listing-price').innerHTML += '$' + listing.price;
+
+    if(listing.course){
+       $('#course-item').css({"display": "block"});
+       $('#listing-course').append(listing.course);
+    }
 
     var carousel = document.getElementById('carousel-inner');
     var indicators = document.getElementById('carousel-indicators');
@@ -102,7 +113,7 @@ function storeRecentListingId(id) {
             return
 
         if(recentlyVisited.length == 10) {
-            recentlyVisited.shift(); 
+            recentlyVisited.shift();
         }
 
         recentlyVisited.push(id);
