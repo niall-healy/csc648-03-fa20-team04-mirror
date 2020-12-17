@@ -34,7 +34,7 @@ function loadListings() {
             '<div class="col p-2"><b>Price: </b>$' +
             allListings[listing].price +
             '<br><br>' +
-            (isTextbook ? '<b>Class: </b>' +
+            (isTextbook ? '<b>Course: </b>' +
             allListings[listing].course : '') +
             '</div>'
         _html +=
