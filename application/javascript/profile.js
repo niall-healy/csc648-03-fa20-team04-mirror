@@ -1,3 +1,10 @@
+/*
+This file contains the javascript for displaying a user's info, messages, and
+listings
+
+Author: Joseph Babel
+*/
+
 let allMessages;
 
 function loadMessages() {
@@ -10,21 +17,23 @@ function loadMessages() {
         messageListing = messageElements[1];
         messageBody = messageElements[2];
 
-        _html += 
+        _html +=
             '<li id="' +
             allMessages[message].id +
             '" class="' +
             (isOdd ? 'list-group-item-1' : 'list-group-item-2') +
             ' p-2">';
         _html +=
-            '<p><b>' +
+            '<p class="text-dark"><b>' +
+
             messageHeader +
             '</b><br>' +
             '<a href="/listing/?id=' +
             allMessages[message].listing_id + '">' +
             messageListing +
             '</a></p>' +
-            '<p>' +
+            '<p class="text-dark">' +
+
             messageBody +
             '</p>' +
             '</li>';

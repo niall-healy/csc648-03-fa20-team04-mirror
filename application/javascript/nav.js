@@ -2,6 +2,8 @@
 This file generates the nav bar. This removes the need to copy paste the html
 in every single html file. We also get the categories from the server and handle
 search persistence here.
+
+Author: Dale Armstrong, Niall Healy
 */
 
 $(document).ready(function() {

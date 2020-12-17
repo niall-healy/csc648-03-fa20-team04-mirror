@@ -9,6 +9,11 @@ from app.sql_db.database import get_db
 from pydantic import BaseModel
 
 from typing import List
+"""
+This file contains routers for messaging.
+
+Authors: Lukas Pettersson, Aaron Lander
+"""
 
 router = APIRouter()
 
