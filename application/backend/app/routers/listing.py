@@ -10,7 +10,7 @@ from resizeimage import resizeimage
 
 from sqlalchemy.orm import Session
 
-from typing import List
+from typing import List, Optional
 
 import os.path
 import uuid
@@ -47,10 +47,11 @@ async def create_listing(db: Session = Depends(get_db),
                          name: str = Form(...),
                          price: int = Form(...),
                          category: str = Form(...),
+                         course: Optional[str] = Form(None),
                          description: str = Form(...),
                          images: List[UploadFile] = File(...)):
     # create new listing object
-    listing = schemas.Listing(name=name, description=description, price=price, seller_id=user.id)
+    listing = schemas.Listing(name=name, description=description, price=price, seller_id=user.id, course=course)
     photoPaths = []
 
     for file in images:
