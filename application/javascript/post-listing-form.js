@@ -11,6 +11,24 @@ window.onload = function () {
         e.preventDefault();
         submitListing();
     });
+
+    $('#form-category').change(function(){
+	let categoryDropdown = document.getElementById('form-category');
+        if(categoryDropdown.value == 'Textbooks'){
+	    $('#class-label').removeClass('input-hidden');
+	    $('#class-field').removeClass('input-hidden');
+	    //$('#class-field').css("display", "block");
+	    //$('#class-field').attr("type", "text");
+	    $('#class-field').prop("required", "true");
+        }
+	else {
+	    $('#class-label').addClass('input-hidden');
+	    $('#class-field').addClass('input-hidden');
+	    //$('#class-field').css("display", "none");
+	    //$('#class-field').attr("type", "hidden");
+	    $('#class-field').removeAttr('required');
+	}
+    })
 }
 
 // Send the post request with the listing info
@@ -26,7 +44,7 @@ async function submitListing() {
             headers: {
                 'Authorization': 'Bearer ' + user.authToken,
             },
-            body: new FormData(form),
+            body: new FormData(form)
         }
 
         var fetchURL = '/listing/';
