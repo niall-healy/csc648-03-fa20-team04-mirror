@@ -67,8 +67,9 @@ def get_item_list_by_ids(db: Session, itemList: List[int], maxReturn: int):
         currentItem = db.query(models.Listing).filter(models.Listing.id == item).first()
         # Check if item is active and approved
         # if currentItem.isActive and currentItem.isApproved
-        retVal.append(currentItem)
-        numberFound += 1
+        if currentItem:
+            retVal.append(currentItem)
+            numberFound += 1
         if numberFound >= maxReturn:
             break
 
