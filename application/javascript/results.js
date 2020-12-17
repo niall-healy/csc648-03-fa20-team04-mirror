@@ -4,9 +4,11 @@ let listingsCount = 0;
 // Load the search results from the server into the html
 function loadListings() {
     let _html = '';
-    let isOdd = true;
-    
+
     for (listing in allListings) {
+    let isOdd = true;
+    let isTextbook = allListings[listing].course != null;
+
         _html +=
             '<li id="' +
             allListings[listing].id +
@@ -29,10 +31,12 @@ function loadListings() {
             allListings[listing].description +
             '</p></div></div>';
         _html +=
-            '<div class="col d-flex p-2"><b>Price: </b>$' +
-            '<div class="price">' +
+            '<div class="col p-2"><b>Price: </b>$' +
             allListings[listing].price +
-            '</div></div>';
+            '<br><br>' +
+            (isTextbook ? '<b>Class: </b>' +
+            allListings[listing].course : '') +
+            '</div>'
         _html +=
             '<div class="col-sm-12 col-md p-2">' +
             '<button id="' + allListings[listing].id + '" type="button" class="btn btn-primary btn-block pull-right no-overflow" data-toggle="modal" data-target="#modal"' +
