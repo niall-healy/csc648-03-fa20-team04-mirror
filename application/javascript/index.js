@@ -13,8 +13,13 @@ function generateCards(items, numberOfItems, title) {
                         <img class="card-img-top img-fluid" src="${items[item].photoPaths[0].thumbnailPath}"> \
                         <div class="card-body d-flex flex-column"> \
                             <p class="card-title">${items[item].name}</p> \
-                            <p class="card-text">` + description + ` - $${items[item].price}</p> \
-                            <p class="card-text mt-auto"><small class="text-muted">${items[item].timestamp}</small></p> \
+                            <p class="card-text">` + description + ` - $${items[item].price}</p>`;
+
+	if(items[item].course) {
+	    _html += `<p id="card-course" class="card-text">Course: ${items[item].course}</p>`;
+	}
+
+        _html += `<p class="card-text mt-auto"><small class="text-muted">${items[item].timestamp}</small></p> \
                         </div> \
                     </a>`;
 
