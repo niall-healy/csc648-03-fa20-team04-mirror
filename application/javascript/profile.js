@@ -19,7 +19,7 @@ function loadMessages() {
             let messageListing = messageElements[1];
             let messageBody = messageElements[2];
             let messageDate = new Date(allMessages[message].timestamp);
-    
+
             _html +=
                 '<li id="' +
                 allMessages[message].id +
@@ -41,7 +41,7 @@ function loadMessages() {
                 allMessages[message].listing_id +
                 '\'" type="button" class="btn btn-primary">View Listing</button>'
                 '</li>';
-    
+
             isOdd = !isOdd;
         }
     } else {
@@ -92,7 +92,7 @@ function loadListings() {
                 '<br><br>' +
                 (isApproved ? '<b>Approved: </b>Yes' : '<b>Approved: </b>No') +
                 '</div></div></li>';
-    
+
             isOdd = !isOdd;
         }
     } else {
@@ -110,7 +110,11 @@ $(document).ready(function () {
 
     if (userJSON != null) {
         let user = JSON.parse(userJSON);
-        
+
+        let welcome = document.getElementById('welcome-message');
+        let userEmail = document.getElementById('user-email');
+        welcome.innerHTML += user.email;
+        userEmail.innerHTML += user.email;
 
         fetchOptions = {
             method: "GET",
@@ -246,7 +250,7 @@ function deactivateAccount(e) {
         body: new FormData(form)
     }
 
-    var fetchURL = 'profile/deactivate/';
+    var fetchURL = '/profile/deactivate/';
 
     fetch(fetchURL, fetchOptions)
         .then((response) => {
