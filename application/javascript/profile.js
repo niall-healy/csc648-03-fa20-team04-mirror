@@ -133,9 +133,9 @@ $(document).ready(function () {
         .then((dataJson) => {
             allMessages = dataJson;
             loadMessages()
-        })
+        });
 
-    fetchURL = '/listing/user/'
+    fetchURL = '/listing/user/';
 
     fetch(fetchURL, fetchOptions)
     .then((response) => {
@@ -144,10 +144,10 @@ $(document).ready(function () {
     .then((dataJson) => {
         allListings = dataJson;
         loadListings();
-    })
+    });
 
 
-    fetchURL = '/profile/'
+    fetchURL = '/profile/';
 
     fetch(fetchURL, fetchOptions)
     .then((response) => {
@@ -155,7 +155,7 @@ $(document).ready(function () {
     })
     .then((dataJson) => {
         loadProfileData(dataJson);
-    })
+    });
 
 });
 
