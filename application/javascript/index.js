@@ -59,10 +59,9 @@ function setOnClick(data) {
     for (var i = 0; i < data.length; i++) {
         if(!ids.includes(data[i].id)) {
             divs = document.getElementsByClassName('item-' + data[i].id);
-	        ids.push(data[i].id);
+            ids.push(data[i].id);
 
 	    for(const div of divs){
-		    console.log(div);
             set(div);
 	    }
 	}
