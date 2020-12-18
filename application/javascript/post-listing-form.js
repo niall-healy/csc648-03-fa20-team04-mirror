@@ -67,6 +67,7 @@ async function submitListing() {
             method: "POST",
             headers: {
                 'Authorization': 'Bearer ' + user.authToken,
+                'Content-Type': 'application/x-www-form-urlencoded'
             },
             body: new FormData(form)
         }

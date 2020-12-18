@@ -145,7 +145,24 @@ $(document).ready(function () {
         allListings = dataJson;
         loadListings();
     })
+
+
+    fetchURL = '/profile/'
+
+    fetch(fetchURL, fetchOptions)
+    .then((response) => {
+        return response.json();
+    })
+    .then((dataJson) => {
+        loadProfileData(dataJson);
+    })
+
 });
+
+function loadProfileData(userinfo) {
+    document.getElementById("user-email").innerHTML = userinfo.email;
+    document.getElementById("user-joined").innerHTML = userinfo.timestamp;
+}
 
 function swapChangePassword() {
     if (document.getElementById("change-password").style.display == "block") {
@@ -197,10 +214,18 @@ function changePasswordOnClick(e) {
 
     var form = document.getElementById('change-password-form');
 
+    let userJSON = localStorage.getItem('loggedInUser');
+
+    if (userJSON != null) 
+        let user = JSON.parse(userJSON);
+    else
+        return false;
+
     var fetchOptions = {
         method: "POST",
         headers: {
             'Authorization': 'Bearer ' + user.authToken,
+            'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: new FormData(form)
     }
@@ -246,6 +271,7 @@ function deactivateAccount(e) {
         method: "POST",
         headers: {
             'Authorization': 'Bearer ' + user.authToken,
+            'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: new FormData(form)
     }

@@ -130,3 +130,10 @@ def create_message(db: Session, message: str, listing_id: int):
 
 def get_message_by_seller_id(db: Session, user: schemas.User):
     return db.query(models.Message).filter(models.Message.seller_id == user.id).all()
+
+
+def get_user_info(db: Session, user: schemas.User):
+    return db.query(models.User).filter(models.User.email == user.email).first()
+
+def change_user_password(db: Session, user: schemas.User):
+    return None
