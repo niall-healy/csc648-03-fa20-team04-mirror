@@ -13,10 +13,12 @@ function generateCards(items, numberOfItems, title, recent) {
 
     for (item in items) {
         let description = items[item].description;
+      
         if (description.length > 20)
             description = description.substring(0, 20) + '...';
 
         _html += `<div id="` + items[item].id + `" class="card mb-4 box-border mx-auto`;
+
 
         if (recent)
             _html += ` recent-view`;
@@ -36,6 +38,7 @@ function generateCards(items, numberOfItems, title, recent) {
 
 
         _html += `<button type="button" data-toggle="modal" data-target="#modal" onclick="event.stopPropagation(); openContactModal('` + items[item].name + `', ` +  items[item].id + `);" \
+
 	          class="btn btn-primary btn-block no-overflow mt-1 sticky-bottom">Contact Seller</button> \
                         </div> \
                     </div>`;
