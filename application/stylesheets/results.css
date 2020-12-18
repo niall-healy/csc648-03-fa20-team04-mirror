@@ -142,3 +142,7 @@ label {
 #apply-button {
     font-size: 18px;
 }
+
+#modal-x-button {
+    color: white;
+}

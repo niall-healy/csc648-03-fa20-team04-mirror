@@ -16,7 +16,7 @@ function generateCards(items, numberOfItems, title) {
         if (description.length > 100)
             description = description.substring(0, 97) + '...';
 
-        _html += `<a class="card mb-4 box-border mx-auto" href="/listing/?id=${items[item].id}" target="_blank"> \
+        _html += `<div class="card mb-4 box-border mx-auto" onclick="openListing(` + items[item].id + `);"> \
                         <img class="card-img-top img-fluid" src="${items[item].photoPaths[0].thumbnailPath}"> \
                         <div class="card-body d-flex flex-column"> \
                             <p class="card-title">${items[item].name}</p> \
@@ -24,11 +24,15 @@ function generateCards(items, numberOfItems, title) {
 
 	if(items[item].course) {
 	    _html += `<p id="card-course" class="card-text">Course: ${items[item].course}</p>`;
+	} else {
+	    _html += `<p class="card-text" style="opacity: 0">Empty space</p>`;
 	}
 
-        _html += `<p class="card-text mt-auto"><small class="text-muted">${items[item].timestamp}</small></p> \
+
+        _html += `<button type="button" data-toggle="modal" data-target="#modal" onclick="event.stopPropagation(); openContactModal('` + items[item].name + `', ` +  items[item].id + `);" \ 
+	          class="btn btn-primary btn-block no-overflow mt-1 sticky-bottom">Contact Seller</button> \
                         </div> \
-                    </a>`;
+                    </div>`;
 
         cardNumber += 1;
         if (cardNumber % 2 == 0) {
@@ -48,6 +52,10 @@ function generateCards(items, numberOfItems, title) {
     return _html;
 }
 
+function openListing(id) {
+    location.href = '/listing/?id=' + id;
+}
+
 function loadRecent(items, numberOfItems) {
     var _html = generateCards(items, numberOfItems, 'Recently Viewed');
     $('#recently-viewed').html(_html);
@@ -63,6 +71,61 @@ function noPostings() {
                     <h2>No Postings Found...</h2> \
                 </div>`;
     $('#newest-listings').html(_html);
+}
+
+function openContactModal(name, id) {
+
+    user = JSON.parse(localStorage.getItem('loggedInUser'));
+
+    // If user is not logged in, redirect to login page
+    if (!user) {
+        window.location.assign('/html/login-register.html');
+        return;
+    }
+
+    $('#modal').modal();
+
+    modal = document.getElementById('contact-text');
+
+    // Add listing id to be used by sendMessage
+    $('#modal').data('id', id);
+
+    $('#from-text').html('From: ' + user.email);
+    $('#listing-text').html('Listing: ' + name);
+    $('#contact-text').val('');
+}
+
+function sendMessage() {
+    $('#modal').modal('toggle');
+
+    var message = "";
+    message += $('#from-text').html() + '\n';
+    message += $('#listing-text').html() + '\n';
+
+    message += $('#contact-text').val();
+
+    var id = $('#modal').data('id');
+
+    var fetchBody = {
+        "message": message,
+        "listing_id": id
+    }
+
+    var fetchOptions = {
+        method: "POST",
+        body: JSON.stringify(fetchBody)
+    }
+
+    var fetchURL = '/message/';
+
+    fetch(fetchURL, fetchOptions)
+        .then((response) => {
+            if (response.ok) {
+                alert('Message sent!');
+            } else {
+                alert('Message failed to send.');
+            }
+        })
 }
 
 $(document).ready(function () {

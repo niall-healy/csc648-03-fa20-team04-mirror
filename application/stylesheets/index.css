@@ -1,4 +1,5 @@
 .card {
+    cursor: pointer;
     max-width: 220px;
     text-decoration: none !important;
     color: white !important;
@@ -33,3 +34,15 @@
 
 }
 
+.modal-content {
+    background-color: #343a40;
+    color: #FFFFFF;
+}
+
+#modal-title {
+    margin-left: 35%;
+}
+
+#modal-x-button {
+    color: white;
+}
