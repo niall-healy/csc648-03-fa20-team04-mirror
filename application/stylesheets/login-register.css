@@ -133,6 +133,7 @@ html {
     border-radius: 3px;
     outline: none;
     padding: 5px 5px 5px 4px;
+    font-size: 18px;
 }
 
 #login-form-submit {
@@ -147,6 +148,7 @@ html {
     background-color: #0275d8;
     cursor: pointer;
     outline: none;
+    font-size: 18px;
 }
 
 .login-form-buttons {
@@ -160,6 +162,7 @@ html {
     background-color: #23272a;
     cursor: pointer;
     outline: none;
+    font-size: 18px;
 }
 
 /* elements for registration container */
@@ -256,6 +259,7 @@ html {
     border-radius: 3px;
     outline: none;
     padding: 5px 5px 5px 4px;
+    font-size: 18px;
 }
 
 #register-form-submit {
@@ -270,6 +274,7 @@ html {
     background-color: #0275d8;
     cursor: pointer;
     outline: none;
+    font-size: 18px;
 }
 
 .registration-form-alert {
@@ -289,4 +294,25 @@ html {
 #div-checkboxTOS {
     padding-top: 10px;
     padding-bottom: 10px;
+    font-size: 18px;
+}
+
+.p-1 {
+    font-size: 18px;
+}
+
+.navbar-nav {
+    font-size: 18px;
+}
+
+#search-bar {
+    font-size: 18px;
+}
+
+#register-required {
+    text-align: right;
+}
+
+span.asterisk {
+    color: red;
 }

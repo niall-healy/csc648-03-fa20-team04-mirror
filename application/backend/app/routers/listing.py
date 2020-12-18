@@ -10,10 +10,16 @@ from resizeimage import resizeimage
 
 from sqlalchemy.orm import Session
 
-from typing import List
+from typing import List, Optional
 
 import os.path
 import uuid
+
+"""
+This file contains the routers and logic for listings.
+
+Authors: Lukas Pettersson, Aaron Lander, Niall Healy
+"""
 
 # instantiates an APIRouter
 router = APIRouter()
@@ -34,6 +40,12 @@ async def get_listing(id: int, db: Session = Depends(get_db)):
     return crud.get_listing_by_id(db, id)
 
 
+# get listings by user
+@router.get("/user/", response_model=List[schemas.Listing])
+async def get_listings_by_user(db: Session = Depends(get_db), user: schemas.User = Depends(get_current_user)):
+    return crud.get_listings_by_user(db, user)
+
+
 # post listing
 @router.post("/", response_model=schemas.Listing)
 async def create_listing(db: Session = Depends(get_db),
@@ -41,11 +53,11 @@ async def create_listing(db: Session = Depends(get_db),
                          name: str = Form(...),
                          price: int = Form(...),
                          category: str = Form(...),
+                         course: Optional[str] = Form(None),
                          description: str = Form(...),
                          images: List[UploadFile] = File(...)):
     # create new listing object
-    listing = schemas.Listing(name=name, description=description, price=price, category=category,
-                              seller_id=user.id)
+    listing = schemas.Listing(name=name, description=description, price=price, seller_id=user.id, course=course)
     photoPaths = []
 
     for file in images:
@@ -70,4 +82,4 @@ async def create_listing(db: Session = Depends(get_db),
         img.save('/var/www' + thmbPath, img.format)
         img.close()
 
-    return crud.create_listing(db, listing, photoPaths)
+    return crud.create_listing(db, listing, photoPaths, category)

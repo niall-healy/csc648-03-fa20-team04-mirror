@@ -4,6 +4,12 @@ from sqlalchemy.orm import Session
 from app.sql_db import schemas, crud
 from app.sql_db.database import get_db
 
+"""
+This file contains the post router for registering an account
+
+Author: Niall Healy
+"""
+
 router = APIRouter()
 
 

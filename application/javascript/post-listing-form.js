@@ -1,9 +1,36 @@
-// TO-DO
-// drag and drop images to browser for upload
-// prepare images to be sent to backend
-// add additional fields depending on category (i.e. Category: books | will ask for ISBN:   ,Class:   , etc..)
+/*
+This file contains the javascript that sends a listing to the backend.
 
-// Add event listener for submit listing button
+Author: Joseph Babel
+*/
+
+// Render categories into form
+function renderCategoriesIntoForm(allCategories) {
+    for (i = 1; i < allCategories.length; i++) {
+        $('#form-category').append('<option value="' + allCategories[i] + '">' + allCategories[i] + '</option>');
+    }
+    $('#form-category').selectpicker("refresh");
+}
+
+// Try to load categories from local storage
+function loadCategoriesIntoForm() {
+    let localStorageCategories = JSON.parse(localStorage.getItem('categories'));
+    if (localStorageCategories == null || localStorageCategories.length == 0) {
+        fetch('/categories/')
+            .then((data) => {
+                return data.json();
+            })
+            .then((dataJson) => {
+                renderCategoriesIntoForm(dataJson);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    } else {
+        renderCategoriesIntoForm(localStorageCategories);
+    }
+}
+
 window.onload = function () {
     let postListingButton = document.getElementById('submit-button');
 
@@ -11,6 +38,21 @@ window.onload = function () {
         e.preventDefault();
         submitListing();
     });
+
+    $('#form-category').change(function () {
+        let categoryDropdown = document.getElementById('form-category');
+        if (categoryDropdown.value == 'Textbooks') {
+            $('#class-label').removeClass('input-hidden');
+            $('#class-field').removeClass('input-hidden');
+            $('#class-field').prop("required", "true");
+        } else {
+            $('#class-label').addClass('input-hidden');
+            $('#class-field').addClass('input-hidden');
+            $('#class-field').removeAttr('required');
+        }
+    })
+
+    loadCategoriesIntoForm();
 }
 
 // Send the post request with the listing info
@@ -26,7 +68,7 @@ async function submitListing() {
             headers: {
                 'Authorization': 'Bearer ' + user.authToken,
             },
-            body: new FormData(form),
+            body: new FormData(form)
         }
 
         var fetchURL = '/listing/';

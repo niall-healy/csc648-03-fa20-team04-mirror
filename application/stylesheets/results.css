@@ -1,7 +1,7 @@
 /* center main content */
 .custom-box {
     display: block;
-    width: 90%;
+    width: 65%;
     max-width: 1600px;
     padding: 25px;
     margin: auto;
@@ -17,92 +17,6 @@
         width: 100%;
         padding: 0px;
         margin: 0px;
-    }
-}
-
-/* filters */
-#filters {
-    display: grid;
-    background-color: #343a40;
-    border-radius: 7px;
-    box-shadow: 0px 0px 5px 2px black;
-}
-
-#filters-header {
-    color: white;
-    background-color: #23272a;
-    border-bottom: 1px solid #343a40;
-    padding-top: 10px;
-    padding-left: 15px;
-    padding-right: 15px;
-    cursor: pointer;
-}
-
-i {
-    display: block;
-    text-align: center;
-}
-
-#filters-body {
-    background-color: #343a40;
-    padding: 15px;
-}
-
-#filters-body * {
-    display: block;
-    margin: auto;
-    margin-bottom: 15px;
-    width: 90%;
-}
-
-#filters-body #apply-button {
-    margin-top: 30px;
-    width: 50%;
-    max-width: 200px;
-}
-
-#price-min-field::placeholder,
-#price-max-field::placeholder {
-    color: black;
-}
-
-.slider {
-    -webkit-appearance: none;
-    height: 10px;
-    border-radius: 5px;
-    background: #d3d3d3;
-    outline: none;
-    opacity: 0.7;
-    -webkit-transition: .2s;
-    transition: opacity .2s;
-}
-
-.slider:hover {
-    opacity: 1;
-}
-
-.slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    background: #0d0f0f;
-    cursor: pointer;
-}
-
-.slider::-moz-range-thumb {
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    background: #0d0f0f;
-    cursor: pointer;
-}
-
-@media screen and (max-width: 1200px) {
-    #filters {
-        box-shadow: none;
-        border-radius: 0px;
     }
 }
 
@@ -127,9 +41,35 @@ main {
     padding-top: 10px;
     padding-left: 15px;
     padding-right: 15px;
+    padding-bottom: 10px;
+}
+
+#main-header .num-results {
+    margin-top: 5px;
 }
 
 /* main body */
+#main-body .pagination{
+    margin: 8px;
+}
+
+.pagination > li > a
+{
+    background-color: #23272a;
+    color: white;
+    border-color: 	#bfc5c9;
+}
+
+.pagination > li > a:focus,
+.pagination > li > a:hover,
+.pagination > li > span:focus,
+.pagination > li > span:hover
+{
+    color: #626f7d;
+    background-color: #f8f9fa;
+    border-color: 	#bfc5c9;
+}
+
 #main-body img {
     user-select: none;
     -moz-user-select: none;
@@ -150,7 +90,6 @@ main {
 }
 
 #main-body p {
-    white-space: nowrap;
     margin-top: 5px;
 }
 
@@ -185,8 +124,23 @@ main {
 /* no overflow */
 .no-overflow {
     overflow: hidden;
-    white-space: nowrap;
     text-overflow: ellipsis;
     width: 100%;
     display: block;
+}
+
+label {
+    font-size: 18px;
+}
+
+#price-filter {
+    font-size: 18px;
+}
+
+#apply-button {
+    font-size: 18px;
+}
+
+#modal-x-button {
+    color: white;
 }
