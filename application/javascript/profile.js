@@ -50,44 +50,53 @@ function loadMessages() {
 // Load the search results from the server into the html
 function loadListings() {
     let _html = '';
-
-    for (listing in allListings) {
     let isOdd = true;
-    let isTextbook = allListings[listing].course != null;
 
-        _html +=
-            '<li id="' +
-            allListings[listing].id +
-            '" class="list-group-item list-group-item-action p-2 ' +
-            (isOdd ? 'list-group-item-1' : 'list-group-item-2') +
-            '">' +
-            '<div class="row no-gutters">';
-        _html +=
-            '<div class="col-lg-10 d-flex">' +
-            '<img class="thumbnail rounded" src="' +
-            allListings[listing].photoPaths[0].thumbnailPath +
-            '">';
-        _html +=
-            '<div class="p-2">' +
-            '<h5><b>' +
-            allListings[listing].name +
-            '</b></h5>';
-        _html +=
-            '<p class="text-secondary no-overflow">' +
-            allListings[listing].description +
-            '</p></div></div>';
-        _html +=
-            '<div class="col p-2"><b>Price: </b>$' +
-            allListings[listing].price +
-            '<br><br>' +
-            (isTextbook ? '<b>Course: </b>' +
-            allListings[listing].course : '') +
-            '</div></div></li>'
+    if (allListings.length != 0) {
+        for (listing in allListings) {
+            let isTextbook = allListings[listing].course != null;
+            let isApproved = allListings[listing].isApproved;
 
-        isOdd = !isOdd;
+            _html +=
+                '<li onclick="location.href=\'/listing/?id=' +
+                allListings[listing].id +
+                '\'" class="list-group-item list-group-item-action p-2 ' +
+                (isOdd ? 'list-group-item-1' : 'list-group-item-2') +
+                '">' +
+                '<div class="row no-gutters">';
+            _html +=
+                '<div class="col-lg-10 d-flex">' +
+                '<img class="thumbnail rounded" src="' +
+                allListings[listing].photoPaths[0].thumbnailPath +
+                '">';
+            _html +=
+                '<div class="p-2">' +
+                '<h5><b>' +
+                allListings[listing].name +
+                '</b></h5>';
+            _html +=
+                '<p class="text-secondary no-overflow">' +
+                allListings[listing].description +
+                '</p></div></div>';
+            _html +=
+                '<div class="col p-2"><b>Price: </b>$' +
+                allListings[listing].price +
+                '<br><br>' +
+                (isTextbook ? '<b>Course: </b>' +
+                allListings[listing].course : '') +
+                '<br><br>' +
+                (isApproved ? '<b>Approved: </b>Yes' : '<b>Approved: </b>No') +
+                '</div></div></li>';
+    
+            isOdd = !isOdd;
+        }
+    } else {
+        _html = 'No listings found...'
     }
 
-    $('#results').html(_html);
+
+
+    $('#listings').html(_html);
 }
 
 $(document).ready(function () {
