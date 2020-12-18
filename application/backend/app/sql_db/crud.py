@@ -58,6 +58,10 @@ def get_listings_for_search(db: Session, searchQuery: str, category: str, sort: 
     return retVal.all()
 
 
+def get_listings_by_user(db: Session, user: schemas.User):
+    return db.query(models.Listing).filter(models.Listing.seller_id == user.id).all()
+
+
 def get_listing_by_id(db: Session, listingId: int):
     retVal = db.query(models.Listing).filter(models.Listing.id == listingId).first()
 
