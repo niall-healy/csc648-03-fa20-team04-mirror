@@ -12,6 +12,7 @@ function loadListing(listing) {
 
     if(listing.course){
        $('#course-item').css({"display": "block"});
+       $('#course-item').removeClass('input-hidden');
        $('#listing-course').append(listing.course);
     }
 
@@ -19,12 +20,14 @@ function loadListing(listing) {
     const contactButton = document.getElementById("contact-button")
     if(!listing.isApproved) {
         contactButton.disabled = true;
-        contactButton.style.background-color = "#e58f8f";
-        contactButton.style.color = "#8a0000";
+        contactButton.innerHTML = "This listing has not yet been approved";
+        contactButton.classList.add('btn-danger');
+        contactButton.style.color = "black";
     }
-    else if(listing.isApproved) {
+    else {
         contactButton.disabled = false;
-        contactButton.style.background-color = "#0275d8";
+        contactButton.innerHTML = "Contact Seller";
+        contactButton.classList.add('btn-primary');
         contactButton.style.color = "white";
     }
 
