@@ -90,7 +90,6 @@ main {
 }
 
 #main-body p {
-    white-space: nowrap;
     margin-top: 5px;
 }
 
@@ -125,7 +124,6 @@ main {
 /* no overflow */
 .no-overflow {
     overflow: hidden;
-    white-space: nowrap;
     text-overflow: ellipsis;
     width: 100%;
     display: block;

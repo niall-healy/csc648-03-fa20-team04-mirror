@@ -14,13 +14,14 @@ function generateCards(items, numberOfItems, title) {
     for (item in items) {
         let description = items[item].description;
         if (description.length > 100)
-            description = description.substring(0, 97) + '...';
+            description = description.substring(0, 20) + '...';
 
-        _html += `<div class="card mb-4 box-border mx-auto" onclick="openListing(` + items[item].id + `);"> \
+        _html += `<div id="` + items[item].id + `" class="card mb-4 box-border mx-auto item-` + items[item].id + `"> \
                         <img class="card-img-top img-fluid" src="${items[item].photoPaths[0].thumbnailPath}"> \
                         <div class="card-body d-flex flex-column"> \
                             <p class="card-title">${items[item].name}</p> \
-                            <p class="card-text">` + description + ` - $${items[item].price}</p>`;
+                            <p class="card-text">` + description + `</p>
+                            <p class="card-text">$` + items[item].price  + `</p>`;
 
 	if(items[item].course) {
 	    _html += `<p id="card-course" class="card-text">Course: ${items[item].course}</p>`;
@@ -52,8 +53,26 @@ function generateCards(items, numberOfItems, title) {
     return _html;
 }
 
-function openListing(id) {
-    location.href = '/listing/?id=' + id;
+function setOnClick(data) {
+    ids = [];
+
+    for (var i = 0; i < data.length; i++) {
+        if(!ids.includes(data[i].id)) {
+            divs = document.getElementsByClassName('item-' + data[i].id);
+	        ids.push(data[i].id);
+
+	    for(const div of divs){
+		    console.log(div);
+            set(div);
+	    }
+	}
+    }
+}
+
+function set(div){
+    div.onclick = function () {
+        $('<a href="/listing/?id=' + div.id + '" target="_blank"></a>')[0].click();
+    }
 }
 
 function loadRecent(items, numberOfItems) {
@@ -132,7 +151,6 @@ $(document).ready(function () {
     var numRecent = 5;
     var numNewest = 5;
 
-
     if (localStorage.hasOwnProperty('recentlyVisited')) {
         var recentlyVisited = JSON.parse(localStorage.getItem('recentlyVisited'));
 
@@ -150,6 +168,7 @@ $(document).ready(function () {
             .then((dataJson) => {
                 if (dataJson.length > 0) {
                     loadRecent(dataJson, numRecent);
+                    setOnClick(dataJson);
                 }
 
             })
@@ -168,6 +187,7 @@ $(document).ready(function () {
             console.log(dataJson.length);
             if (dataJson.length > 0) {
                 loadNewest(dataJson, numNewest);
+                setOnClick(dataJson);
             } else {
                 noPostings();
             }
@@ -175,5 +195,4 @@ $(document).ready(function () {
         .catch((err) => {
             console.log(err);
         });
-
 });
