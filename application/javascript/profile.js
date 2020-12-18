@@ -12,37 +12,42 @@ function loadMessages() {
     let _html = '';
     let isOdd = true;
 
-    for (message in allMessages) {
-        let messageElements = allMessages[message].message.split('\n');
-        let messageHeader = messageElements[0];
-        let messageListing = messageElements[1];
-        let messageBody = messageElements[2];
-        let messageDate = new Date(allMessages[message].timestamp);
-
-        _html +=
-            '<li id="' +
-            allMessages[message].id +
-            '" class="' +
-            (isOdd ? 'list-group-item-1' : 'list-group-item-2') +
-            ' p-2 d-flex justify-content-between">';
-        _html +=
-            '<div><div class="d-flex"><p class="text-dark"><b>' +
-            messageHeader +
-            '</b><br>' +
-            messageListing +
-            '</div><div class="text-secondary">Date: ' +
-            messageDate +
-            '</p><br></div>' +
-            '<p class="text-dark">' +
-            messageBody +
-            '</p></div>' +
-            '<button onclick="location.href=\'/listing/?id=' +
-            allMessages[message].listing_id +
-            '\'" type="button" class="btn btn-primary">View Listing</button>'
-            '</li>';
-
-        isOdd = !isOdd;
+    if (allMessages.length != 0) {
+        for (message in allMessages) {
+            let messageElements = allMessages[message].message.split('\n');
+            let messageHeader = messageElements[0];
+            let messageListing = messageElements[1];
+            let messageBody = messageElements[2];
+            let messageDate = new Date(allMessages[message].timestamp);
+    
+            _html +=
+                '<li id="' +
+                allMessages[message].id +
+                '" class="' +
+                (isOdd ? 'list-group-item-1' : 'list-group-item-2') +
+                ' p-2 d-flex justify-content-between">';
+            _html +=
+                '<div><div class="d-flex"><p class="text-dark"><b>' +
+                messageHeader +
+                '</b><br>' +
+                messageListing +
+                '</div><div class="text-secondary">Date: ' +
+                messageDate +
+                '</p><br></div>' +
+                '<p class="text-dark">' +
+                messageBody +
+                '</p></div>' +
+                '<button onclick="location.href=\'/listing/?id=' +
+                allMessages[message].listing_id +
+                '\'" type="button" class="btn btn-primary">View Listing</button>'
+                '</li>';
+    
+            isOdd = !isOdd;
+        }
+    } else {
+        _html = '<h5>No messages found...</h5>'
     }
+
 
     $('#messages').html(_html);
 }
@@ -91,7 +96,7 @@ function loadListings() {
             isOdd = !isOdd;
         }
     } else {
-        _html = 'No listings found...'
+        _html = '<h5>No listings found...</h5>'
     }
 
 
