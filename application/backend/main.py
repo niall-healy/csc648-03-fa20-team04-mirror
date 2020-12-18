@@ -13,6 +13,8 @@ from app.sql_db.database import SessionLocal, engine
 """
 This is the main file that runs the app, it builds the tables in the database, instantiates the fastAPI app,
 redirects the root of the site to the homepage, includes the router in the app, and mounts static files
+
+Author: Lukas Pettersson
 """
 
 # build tables in the database
@@ -39,6 +41,11 @@ app.include_router(
     tags=["listing"]
 )
 
+app.include_router(
+    listing.router,
+    prefix="/profile",
+    tags=["profile"]
+)
 
 app.include_router(
     login.router,
@@ -63,7 +70,6 @@ app.include_router(
     prefix="/message",
     tags=["message"]
 )
-
 
 # mount static files
 app.mount("/", StaticFiles(directory=".."), name="static")

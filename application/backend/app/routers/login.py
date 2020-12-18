@@ -13,13 +13,24 @@ from starlette import status
 from app.sql_db import crud
 from app.sql_db.database import get_db
 
+"""
+This file contains the logic for logging a user in: creating auth tokens, getting current user from auth token, 
+decrypting password, etc.
+
+Author: Niall Healy with much help from the FastAPI tutorial
+"""
+
 router = APIRouter()
 
 # Variables used for password encryption
 SECRET_KEY = environ.get('CSC648WEBSITE_SECRET_KEY')
 ALGORITHM = 'HS256'
-ACCESS_TOKEN_EXPIRE_MINUTES = 60
+ACCESS_TOKEN_EXPIRE_MINUTES = 30
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/login")
+
+MAX_USERS = 50
+LOGGED_IN_USERS = 0
+LOGGED_IN_TOKENS = []
 
 
 # Used as the response model for the login post router
@@ -30,18 +41,48 @@ class Token(BaseModel):
 
 @router.post("/", response_model=Token)
 async def login_for_access_token(db: Session = Depends(get_db), form_data: OAuth2PasswordRequestForm = Depends()):
+    global LOGGED_IN_USERS
+    global LOGGED_IN_TOKENS
+
     user = authenticate_user(db, form_data.username, form_data.password)
+    flush_out_inactive()
+
     if user is None:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect username or password",
             headers={"WWW-Authenticate": "Bearer"},
         )
-    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    access_token = create_access_token(
-        data={"sub": user.email}, expires_delta=access_token_expires
-    )
+    if LOGGED_IN_USERS < MAX_USERS:
+        access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+        access_token = create_access_token(
+            data={"sub": user.email}, expires_delta=access_token_expires
+        )
+        LOGGED_IN_TOKENS.append(access_token)
+        LOGGED_IN_USERS += 1
+    else:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="Too many users logged in",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
     return {"access_token": access_token, "token_type": "bearer"}
+
+
+def flush_out_inactive():
+    global LOGGED_IN_TOKENS
+    global LOGGED_IN_USERS
+
+    ACTIVE_USERS = []
+
+    for token in LOGGED_IN_TOKENS:
+        try:
+            jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+            ACTIVE_USERS.append(token)
+        except Exception as e:
+            LOGGED_IN_USERS -= 1
+
+    LOGGED_IN_TOKENS = ACTIVE_USERS
 
 
 # Checks if the email and password correspond to a valid user in the db

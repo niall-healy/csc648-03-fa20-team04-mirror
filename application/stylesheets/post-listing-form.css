@@ -4,6 +4,15 @@ body {
     color: #FFFFFF;
 }
 
+.input-hidden{
+    height:0;
+    width:0;
+    visibility: hidden;
+    padding:0;
+    margin:0;
+    float:right;
+}
+
 .team-info {
     text-align: center;
 }
@@ -56,13 +65,15 @@ main {
     padding-left: 5px;
 }
 
-#post-listing-form #price-field {
+#post-listing-form #price-field, #post-listing-form #class-field {
     width: 40%;
 }
 
 #post-listing-form #submit-button {
     margin-top: 20px;
     width: 30%;
+    font-size: 18px;
+    padding: 1px;
 }
 
 #image-preview * {
@@ -75,4 +86,16 @@ main {
     width: 140px;
     height: 140px;
     object-fit: cover;
+}
+
+.form-field {
+    font-size: 18px;
+}
+
+#post-listing-form button {
+    font-size: 18px;
+}
+
+.dropdown-menu {
+    font-size: 18px;
 }

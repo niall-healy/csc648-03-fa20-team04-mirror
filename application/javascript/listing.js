@@ -1,8 +1,35 @@
+/*
+This file contains javascript for loading an individual listing page
+
+Author: Aaron Lander
+*/
+
 // Load response from server into html
 function loadListing(listing) {
     document.getElementById('listing-name').innerHTML += listing.name;
     document.getElementById('listing-description').innerHTML += listing.description;
     document.getElementById('listing-price').innerHTML += '$' + listing.price;
+
+    if(listing.course){
+       $('#course-item').css({"display": "block"});
+       $('#course-item').removeClass('input-hidden');
+       $('#listing-course').append(listing.course);
+    }
+
+    // disable contact button if post is not yet approved
+    const contactButton = document.getElementById("contact-button")
+    if(!listing.isApproved) {
+        contactButton.disabled = true;
+        contactButton.innerHTML = "This listing has not yet been approved";
+        contactButton.classList.add('btn-danger');
+        contactButton.style.color = "black";
+    }
+    else {
+        contactButton.disabled = false;
+        contactButton.innerHTML = "Contact Seller";
+        contactButton.classList.add('btn-primary');
+        contactButton.style.color = "white";
+    }
 
     var carousel = document.getElementById('carousel-inner');
     var indicators = document.getElementById('carousel-indicators');
@@ -36,16 +63,60 @@ function loadListing(listing) {
     $('#carousel').carousel();
 }
 
-function setModalInfo(listing) {
-    modal = document.getElementById('contact-text');
+function openContactModal() {
+
     user = JSON.parse(localStorage.getItem('loggedInUser'));
 
-    modal.value = "";
-    modal.value += 'From: ' + user.email + '\n';
-    modal.value += 'Subject: ' + listing.name + '\n';
-    modal.value += '----------------------------------------------------------------------------';
+    // If user is not logged in, redirect to login page
+    if(!user) {
+      window.location.assign('/html/login-register.html');
+      return;
+    }
 
-    // TODO: Set cursor position of textarea and make From and Subject lines read-only
+    $('#modal').modal();
+    $('#contact-text').val('');
+}
+
+function setModalInfo(listing) {
+    user = JSON.parse(localStorage.getItem('loggedInUser'));
+
+    $('#from-text').html('From: ' + user.email);
+    $('#listing-text').html('Listing: ' + listing.name);
+}
+
+function sendMessage(){
+   $('#modal').modal('toggle');
+
+   var message = "";
+   message += $('#from-text').html() + '\n';
+   message += $('#listing-text').html() + '\n';
+
+   message += $('#contact-text').val();
+
+   var search = new URLSearchParams(window.location.search);
+   var id = parseInt(search.get('id'));
+
+   var fetchBody = {
+      "message": message,
+      "listing_id": id
+   }
+
+   var fetchOptions = {
+      method: "POST",
+      body: JSON.stringify(fetchBody)
+   }
+
+   var fetchURL = '/message/';
+
+   fetch(fetchURL, fetchOptions)
+	.then((response) => {
+	   if(response.ok){
+              alert('Message sent!');
+	   }
+	   else {
+              alert('Message failed to send.');
+	   }
+	})
 }
 
 //function to store last 10 recent listings visited
@@ -58,7 +129,7 @@ function storeRecentListingId(id) {
             return
 
         if(recentlyVisited.length == 10) {
-            recentlyVisited.shift(); 
+            recentlyVisited.shift();
         }
 
         recentlyVisited.push(id);
