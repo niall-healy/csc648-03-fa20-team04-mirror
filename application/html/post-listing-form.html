@@ -47,7 +47,7 @@
                             <label for="listing-name-field">Listing Name</label>
                             <input id="listing-name-field" class="form-field" type="text" name="name" placeholder="Listing Name" maxlength="31" required />
                             <label for="price-field">Price</label>
-                            <input id="price-field" class="form-field" pattern="^[0-9]+$" oninput="this.setCustomValidity('')" oninvalid="this.setCustomValidity('Please only enter numeric characters.')" type="text" name="price" placeholder="Price" required />
+                            <input id="price-field" class="form-field" pattern="^[0-9]+$" oninput="this.setCustomValidity('')" oninvalid="this.setCustomValidity('Please only enter numeric characters.')" type="text" name="price" placeholder="Price" maxlength="7" required />
                             <label for="form-category">Category</label>
                             <select id="form-category" class="selectpicker form-selector" data-width="40%" name="category" title="Category Type" required>
                                 <option value="Textbooks">Textbooks</option>
