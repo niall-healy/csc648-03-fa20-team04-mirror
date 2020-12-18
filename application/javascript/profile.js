@@ -110,6 +110,7 @@ $(document).ready(function () {
 
     if (userJSON != null) {
         let user = JSON.parse(userJSON);
+        
 
         fetchOptions = {
             method: "GET",
@@ -195,12 +196,12 @@ function changePasswordOnClick(e) {
     var fetchOptions = {
         method: "POST",
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization': 'Bearer ' + user.authToken,
         },
-        body: new URLSearchParams(new FormData(form)).toString(),
+        body: new FormData(form)
     }
 
-    var fetchURL = '/changePassword/';
+    var fetchURL = '/profile/changePassword/';
 
     fetch(fetchURL, fetchOptions)
         .then((response) => {
@@ -240,12 +241,12 @@ function deactivateAccount(e) {
     var fetchOptions = {
         method: "POST",
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization': 'Bearer ' + user.authToken,
         },
-        body: new URLSearchParams(new FormData(form)).toString(),
+        body: new FormData(form)
     }
 
-    var fetchURL = '/deactivate/';
+    var fetchURL = 'profile/deactivate/';
 
     fetch(fetchURL, fetchOptions)
         .then((response) => {

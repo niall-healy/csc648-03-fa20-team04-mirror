@@ -41,6 +41,11 @@ app.include_router(
     tags=["listing"]
 )
 
+app.include_router(
+    listing.router,
+    prefix="/profile",
+    tags=["profile"]
+)
 
 app.include_router(
     login.router,
