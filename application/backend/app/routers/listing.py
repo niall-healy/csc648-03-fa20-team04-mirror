@@ -40,6 +40,12 @@ async def get_listing(id: int, db: Session = Depends(get_db)):
     return crud.get_listing_by_id(db, id)
 
 
+# get listings by user
+@router.get("/user/", response_model=List[schemas.Listing])
+async def get_listings_by_user(db: Session = Depends(get_db), user: schemas.User = Depends(get_current_user)):
+    return crud.get_listings_by_user(db, user)
+
+
 # post listing
 @router.post("/", response_model=schemas.Listing)
 async def create_listing(db: Session = Depends(get_db),
