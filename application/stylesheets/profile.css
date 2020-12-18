@@ -13,6 +13,35 @@
     text-decoration: none !important;
 }
 
+/* listings */
+#listings > li > img {
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
+#listings > li > .thumbnail {
+    display: block;
+    width: 150px;
+    height: 150px;
+    background-color: transparent;
+    border: 1px;
+    border-color: black;
+    border-style: solid;
+    object-fit: cover;
+}
+
+#listings > p {
+    white-space: nowrap;
+    margin-top: 5px;
+}
+
+#listings > li {
+    cursor: pointer;
+}
+
 /* messages */
 #messages > .list-group-item-1 {
     background-color: #cbd1d6;
