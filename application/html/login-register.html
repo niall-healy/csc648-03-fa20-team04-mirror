@@ -48,7 +48,7 @@
             <p id="login-error-msg"> Invalid username and/or password</span></p>
         </div>
         <form id="login-form" class="mw-100 login-register-form">
-            <div class="p-1">Email</div> <input type="text" name="username" id="login-username-field" class="login-form-field" placeholder="Email" onkeyup="checkValidEmail(this.id);">
+            <div class="p-1">Email</div> <input type="text" name="username" id="login-username-field" class="login-form-field" placeholder="Email" onkeyup="checkValidEmail(this.id);" maxlength="320">
             <!-- Valid email check -->
             <div class="registration-form-alert" id="div-check-valid-email-login"></div>
 
@@ -77,7 +77,7 @@
             <div id="register-required">
                 <span class="asterisk">*</span>Required fields
             </div>
-            <div class="p-1">Email<span class="asterisk">*</span></div> <input type="text" name="username" id="register-username-field" class="register-form-field" placeholder="Email" onkeyup="checkValidEmail(this.id);">
+            <div class="p-1">Email<span class="asterisk">*</span></div> <input type="text" name="username" id="register-username-field" class="register-form-field" placeholder="Email" onkeyup="checkValidEmail(this.id);" maxlength="320">
             <!-- Valid email check -->
             <div class="registration-form-alert" id="div-check-valid-email-register"></div>
 
@@ -93,7 +93,7 @@
                 <input type="checkbox" name="checkboxTOS" id="checkboxTOS" value="1"> I agree to the <a href="#">Terms of Service</a>.<span class="asterisk">*</span></div>
             </div>
 
-            <div class="p-1">Please verify you are not a robot<span class="asterisk">*</span></div> <input type="text" name="captcha" class="register-form-field" placeholder="What is 3 + 5?" onkeyup="checkCaptcha(this.value.toLowerCase());">
+            <div class="p-1">Please verify you are not a robot<span class="asterisk">*</span></div> <input type="text" name="captcha" class="register-form-field" placeholder="What is 3 + 5?" onkeyup="checkCaptcha(this.value.toLowerCase());" maxlength="10">
             <div class="registration-form-alert" id="div-check-captcha"></div>
 
             <input type="submit" value="Register" id="register-form-submit" onclick="registerOnClick(event);">

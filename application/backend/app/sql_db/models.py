@@ -17,7 +17,7 @@ class User(Base):
     __tablename__ = "user"
 
     id = Column(Integer, primary_key=True, index=True)
-    email = Column(String(85), unique=True, index=True)
+    email = Column(String(320), unique=True, index=True)
     password_hash = Column(String(100))
     timestamp = Column(DateTime)
 
