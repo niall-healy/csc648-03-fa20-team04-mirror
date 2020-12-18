@@ -5,7 +5,7 @@ for the homepage.
 Author: Dale Armstrong
 */
 
-function generateCards(items, numberOfItems, title) {
+function generateCards(items, numberOfItems, title, recent) {
     var _html = `<div class="container"> \
                 <h3>` + title + `</h3> \
                 <div class="card-deck">`;
@@ -16,12 +16,17 @@ function generateCards(items, numberOfItems, title) {
         if (description.length > 100)
             description = description.substring(0, 20) + '...';
 
-        _html += `<div id="` + items[item].id + `" class="card mb-4 box-border mx-auto item-` + items[item].id + `"> \
-                        <img class="card-img-top img-fluid" src="${items[item].photoPaths[0].thumbnailPath}"> \
-                        <div class="card-body d-flex flex-column"> \
-                            <p class="card-title">${items[item].name}</p> \
-                            <p class="card-text">` + description + `</p>
-                            <p class="card-text">$` + items[item].price  + `</p>`;
+        _html += `<div id="` + items[item].id + `" class="card mb-4 box-border mx-auto`;
+        
+        if (recent)
+            _html += ` recent-view`;
+
+        _html += ` item-` + items[item].id + `"> \
+                <img class="card-img-top img-fluid" src="${items[item].photoPaths[0].thumbnailPath}"> \
+                <div class="card-body d-flex flex-column"> \
+                    <p class="card-title">${items[item].name}</p> \
+                    <p class="card-text">` + description + `</p>
+                    <p class="card-text">$` + items[item].price  + `</p>`;
 
 	if(items[item].course) {
 	    _html += `<p id="card-course" class="card-text">Course: ${items[item].course}</p>`;
@@ -75,12 +80,12 @@ function set(div){
 }
 
 function loadRecent(items, numberOfItems) {
-    var _html = generateCards(items, numberOfItems, 'Recently Viewed');
+    var _html = generateCards(items, numberOfItems, 'Recently Viewed', true);
     $('#recently-viewed').html(_html);
 }
 
 function loadNewest(items, numberOfItems) {
-    var _html = generateCards(items, numberOfItems, 'Newest Listings');
+    var _html = generateCards(items, numberOfItems, 'Newest Listings', false);
     $('#newest-listings').html(_html);
 }
 
