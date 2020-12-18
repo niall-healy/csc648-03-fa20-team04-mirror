@@ -12,29 +12,32 @@ function loadMessages() {
     let isOdd = true;
 
     for (message in allMessages) {
-        messageElements = allMessages[message].message.split('\n');
-        messageHeader = messageElements[0];
-        messageListing = messageElements[1];
-        messageBody = messageElements[2];
+        let messageElements = allMessages[message].message.split('\n');
+        let messageHeader = messageElements[0];
+        let messageListing = messageElements[1];
+        let messageBody = messageElements[2];
+        let messageDate = new Date(allMessages[message].timestamp);
 
         _html +=
             '<li id="' +
             allMessages[message].id +
             '" class="' +
             (isOdd ? 'list-group-item-1' : 'list-group-item-2') +
-            ' p-2">';
+            ' p-2 d-flex justify-content-between">';
         _html +=
-            '<p><b>' +
-            '<p class="text-dark"><b>' +
+            '<div><div class="d-flex"><p class="text-dark"><b>' +
             messageHeader +
             '</b><br>' +
-            '<a href="/listing/?id=' +
-            allMessages[message].listing_id + '">' +
             messageListing +
-            '</a></p>' +
+            '</div><div class="text-secondary">Date: ' +
+            messageDate +
+            '</p><br></div>' +
             '<p class="text-dark">' +
             messageBody +
-            '</p>' +
+            '</p></div>' +
+            '<button onclick="location.href=\'/listing/?id=' +
+            allMessages[message].listing_id +
+            '\'" type="button" class="btn btn-primary">View Listing</button>'
             '</li>';
 
         isOdd = !isOdd;
