@@ -55,7 +55,19 @@
     list-style-type: none;
 }
 
-#messages > li > p {
+#messages > li > div > div > p {
+    margin: 0px;
+}
+
+#messages > li > div > p {
+    font-size: 18px;
+    max-width: 700px;
+}
+
+#messages > li > button {
+    height: 40px;
+    min-width: 200px;
+    margin-top: auto;
     font-size: 18px;
 }
 

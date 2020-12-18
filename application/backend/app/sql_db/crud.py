@@ -1,6 +1,5 @@
 import datetime
 
-
 from typing import List
 
 from sqlalchemy import desc, asc, or_
@@ -32,20 +31,24 @@ def create_user(db: Session, user: schemas.UserCreate):
 def get_listings_for_search(db: Session, searchQuery: str, category: str, sort: str):
     if len(searchQuery) == 0:
         if category == 'Any':
-            retVal = db.query(models.Listing)
+            retVal = db.query(models.Listing).filter(models.Listing.isApproved)
         else:
             # Note: use like() for case sensitivity, ilike() for case insensitivity
-            retVal = db.query(models.Listing).join(models.Listing.category).filter(models.Category.category == category)
+            retVal = db.query(models.Listing).join(models.Listing.category).filter(models.Category.category == category,
+                                                                                   models.Listing.isApproved)
     else:
         if category == 'Any':
             retVal = db.query(models.Listing).filter(or_(models.Listing.name.ilike('%' + searchQuery + '%'),
                                                          models.Listing.description.ilike('%' + searchQuery + '%'),
-                                                         models.Listing.course.ilike('%' + searchQuery + '%')))
+                                                         models.Listing.course.ilike('%' + searchQuery + '%')),
+                                                     models.Listing.isApproved)
         else:
             retVal = db.query(models.Listing).join(models.Listing.category).filter(
-                models.Category.category == category, or_(models.Listing.name.ilike('%' + searchQuery + '%'),
-                                                          models.Listing.description.ilike('%' + searchQuery + '%'),
-                                                          models.Listing.course.ilike('%' + searchQuery + '%')))
+                models.Category.category == category,
+                or_(models.Listing.name.ilike('%' + searchQuery + '%'),
+                    models.Listing.description.ilike('%' + searchQuery + '%'),
+                    models.Listing.course.ilike('%' + searchQuery + '%')),
+                models.Listing.isApproved)
 
     if sort == 'priceAscending':
         retVal = retVal.order_by(asc(models.Listing.price))
@@ -53,6 +56,10 @@ def get_listings_for_search(db: Session, searchQuery: str, category: str, sort: 
         retVal = retVal.order_by(desc(models.Listing.price))
 
     return retVal.all()
+
+
+def get_listings_by_user(db: Session, user: schemas.User):
+    return db.query(models.Listing).filter(models.Listing.seller_id == user.id).all()
 
 
 def get_listing_by_id(db: Session, listingId: int):
@@ -66,7 +73,7 @@ def get_item_list_by_ids(db: Session, itemList: List[int], maxReturn: int):
     retVal = []
 
     for item in itemList:
-        currentItem = db.query(models.Listing).filter(models.Listing.id == item).first()
+        currentItem = db.query(models.Listing).filter(models.Listing.id == item, models.Listing.isApproved).first()
         # Check if item is active and approved
         # if currentItem.isActive and currentItem.isApproved
         if currentItem:
@@ -79,7 +86,8 @@ def get_item_list_by_ids(db: Session, itemList: List[int], maxReturn: int):
 
 
 def get_newest_listings(db: Session, numItems: int):
-    retVal = db.query(models.Listing).order_by(desc(models.Listing.timestamp)).limit(numItems).all()
+    retVal = db.query(models.Listing).filter(models.Listing.isApproved).\
+        order_by(desc(models.Listing.timestamp)).limit(numItems).all()
 
     return retVal
 
@@ -122,4 +130,3 @@ def create_message(db: Session, message: str, listing_id: int):
 
 def get_message_by_seller_id(db: Session, user: schemas.User):
     return db.query(models.Message).filter(models.Message.seller_id == user.id).all()
-

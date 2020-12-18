@@ -15,6 +15,19 @@ function loadListing(listing) {
        $('#listing-course').append(listing.course);
     }
 
+    // disable contact button if post is not yet approved
+    const contactButton = document.getElementById("contact-button")
+    if(!listing.isApproved) {
+        contactButton.disabled = true;
+        contactButton.style.background-color = "#e58f8f";
+        contactButton.style.color = "#8a0000";
+    }
+    else if(listing.isApproved) {
+        contactButton.disabled = false;
+        contactButton.style.background-color = "#0275d8";
+        contactButton.style.color = "white";
+    }
+
     var carousel = document.getElementById('carousel-inner');
     var indicators = document.getElementById('carousel-indicators');
 
