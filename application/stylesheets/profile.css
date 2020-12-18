@@ -13,12 +13,40 @@
     text-decoration: none !important;
 }
 
+/* listings */
+#listings > li > img {
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
+.thumbnail {
+    display: block;
+    width: 150px;
+    height: 150px;
+    background-color: transparent;
+    border: 1px;
+    border-color: black;
+    border-style: solid;
+    object-fit: cover;
+}
+
+#listings > p {
+    margin-top: 5px;
+}
+
+#listings > li {
+    cursor: pointer;
+}
+
 /* messages */
-#messages > .list-group-item-1 {
+.list-group-item-1 {
     background-color: #cbd1d6;
 }
 
-#messages > .list-group-item-2 {
+.list-group-item-2 {
     background-color: #bfc5c9;
 }
 
@@ -48,4 +76,11 @@
 
 #nav-profile {
     font-size: 18px;
+}
+
+.no-overflow {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    display: block;
 }
