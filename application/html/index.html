@@ -35,6 +35,28 @@
     <!-- end navbar -->
 
     <!-- content -->
+    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modal-title">Contact Seller</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span id="modal-x-button" aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="from-text"></p>
+                    <p id="listing-text"></p>
+                    <textarea id="contact-text" name="text" placeholder="Please be respectful when messaging others."
+                        rows="15" style="width:100%"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="event.stopPropagation(); sendMessage();">Send message</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="container pl-0 pr-0">
         <div class="box-border site-box text-center mb-4">
             <h2>GatorTrader</h2>
