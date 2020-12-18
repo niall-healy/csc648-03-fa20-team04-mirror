@@ -22,11 +22,14 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-4L1HTVDYJ9"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+        window.dataLayer = window.dataLayer || [];
 
-      gtag('config', 'G-4L1HTVDYJ9');
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'G-4L1HTVDYJ9');
     </script>
 </head>
 
@@ -49,13 +52,9 @@
                             <label for="price-field">Price</label>
                             <input id="price-field" class="form-field" pattern="^[0-9]+$" oninput="this.setCustomValidity('')" oninvalid="this.setCustomValidity('Please only enter numeric characters.')" type="text" name="price" placeholder="Price" maxlength="7" required />
                             <label for="form-category">Category</label>
-                            <select id="form-category" class="selectpicker form-selector" data-width="40%" name="category" title="Category Type" required>
-                                <option value="Textbooks">Textbooks</option>
-                                <option value="Housing">Housing</option>
-                                <option value="Automotive">Automotive</option>
-                            </select>
-			    <label id="class-label" class="input-hidden" for="class-field">Subject / Course Number</label>
-			    <input id="class-field" class="form-field input-hidden" name="course" type="text" name="name" maxlength="31" placeholder="e.g. CSC 201">
+                            <select id="form-category" class="selectpicker form-selector" data-width="40%" name="category" title="Category Type" required></select>
+                            <label id="class-label" class="input-hidden" for="class-field">Subject / Course Number</label>
+                            <input id="class-field" class="form-field input-hidden" name="course" type="text" name="name" maxlength="31" placeholder="e.g. CSC 201">
                             <label for="description-field">Description</label>
                             <textarea id="description-field" class="form-field" rows="5" name="description" placeholder="Description" maxlength="144" required></textarea>
                             <label for="file-upload">Upload Images</label>

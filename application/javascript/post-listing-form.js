@@ -1,14 +1,36 @@
 /*
 This file contains the javascript that sends a listing to the backend.
 
-Author: Joesph Babel
+Author: Joseph Babel
 */
 
-// TO-DO
-// drag and drop images to browser for upload
-// prepare images to be sent to backend
+// Render categories into form
+function renderCategoriesIntoForm(allCategories) {
+    for (i = 1; i < allCategories.length; i++) {
+        $('#form-category').append('<option value="' + allCategories[i] + '">' + allCategories[i] + '</option>');
+    }
+    $('#form-category').selectpicker("refresh");
+}
 
-// Add event listener for submit listing button
+// Try to load categories from local storage
+function loadCategoriesIntoForm() {
+    let localStorageCategories = JSON.parse(localStorage.getItem('categories'));
+    if (localStorageCategories == null || localStorageCategories.length == 0) {
+        fetch('/categories/')
+            .then((data) => {
+                return data.json();
+            })
+            .then((dataJson) => {
+                renderCategoriesIntoForm(dataJson);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    } else {
+        renderCategoriesIntoForm(localStorageCategories);
+    }
+}
+
 window.onload = function () {
     let postListingButton = document.getElementById('submit-button');
 
@@ -17,23 +39,20 @@ window.onload = function () {
         submitListing();
     });
 
-    $('#form-category').change(function(){
-	let categoryDropdown = document.getElementById('form-category');
-        if(categoryDropdown.value == 'Textbooks'){
-	    $('#class-label').removeClass('input-hidden');
-	    $('#class-field').removeClass('input-hidden');
-	    //$('#class-field').css("display", "block");
-	    //$('#class-field').attr("type", "text");
-	    $('#class-field').prop("required", "true");
+    $('#form-category').change(function () {
+        let categoryDropdown = document.getElementById('form-category');
+        if (categoryDropdown.value == 'Textbooks') {
+            $('#class-label').removeClass('input-hidden');
+            $('#class-field').removeClass('input-hidden');
+            $('#class-field').prop("required", "true");
+        } else {
+            $('#class-label').addClass('input-hidden');
+            $('#class-field').addClass('input-hidden');
+            $('#class-field').removeAttr('required');
         }
-	else {
-	    $('#class-label').addClass('input-hidden');
-	    $('#class-field').addClass('input-hidden');
-	    //$('#class-field').css("display", "none");
-	    //$('#class-field').attr("type", "hidden");
-	    $('#class-field').removeAttr('required');
-	}
     })
+
+    loadCategoriesIntoForm();
 }
 
 // Send the post request with the listing info
