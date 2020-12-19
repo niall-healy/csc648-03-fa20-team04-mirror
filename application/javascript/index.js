@@ -17,29 +17,20 @@ function generateCards(items, numberOfItems, title, recent) {
         if (description.length > 20)
             description = description.substring(0, 20) + '...';
 
-        _html += `<div id="` + items[item].id + `" class="card mb-4 box-border mx-auto`;
-
-
-        if (recent)
-            _html += ` recent-view`;
-
-        _html += ` item-` + items[item].id + `"> \
-                <img class="card-img-top img-fluid" src="${items[item].photoPaths[0].thumbnailPath}"> \
+        _html += `<div id="` + items[item].id + `" class="card mb-4 box-border item-` + items[item].id + `"> \
+                <img class="card-img-top contain-image" src="${items[item].photoPaths[0].thumbnailPath}"> \
                 <div class="card-body d-flex flex-column"> \
                     <p class="card-title">${items[item].name}</p> \
-                    <p class="card-text">` + description + `</p>
-                    <p class="card-text">$` + items[item].price  + `</p>`;
+                    <p class="card-text mt-auto">` + description + `</p>
+                    <p class="card-text mt-auto mb-auto">$` + items[item].price  + `</p>`;
 
 	if(items[item].course) {
-	    _html += `<p id="card-course" class="card-text">Course: ${items[item].course}</p>`;
-	} else {
-	    _html += `<p class="card-text" style="opacity: 0">Empty space</p>`;
+	    _html += `<p id="card-course mt-auto mb-auto" class="card-text">Course: ${items[item].course}</p>`;
 	}
-
 
         _html += `<button type="button" data-toggle="modal" data-target="#modal" onclick="event.stopPropagation(); openContactModal('` + items[item].name + `', ` +  items[item].id + `);" \
 
-	          class="btn btn-primary btn-block no-overflow mt-1 sticky-bottom">Contact Seller</button> \
+	          class="btn btn-primary btn-block no-overflow mt-auto sticky-bottom contact-btn">Contact Seller</button> \
                         </div> \
                     </div>`;
 
@@ -53,6 +44,9 @@ function generateCards(items, numberOfItems, title, recent) {
         if (cardNumber % 4 == 0) {
             _html += `<div class="w-100 d-none d-lg-block d-xl-none"></div>`
         }
+        if (cardNumber % 5 == 0) {
+            _html +=  `<div class="w-100 d-none d-xl-block"></div>`
+        }
         if (cardNumber >= numberOfItems)
             break;
     }
@@ -60,6 +54,7 @@ function generateCards(items, numberOfItems, title, recent) {
 
     return _html;
 }
+
 
 function setOnClick(data) {
     ids = [];
@@ -82,18 +77,43 @@ function set(div){
     }
 }
 
+var cardsAligned = false;
+var cardQueryList = null;
+
 function loadRecent(items, numberOfItems) {
-    var _html = generateCards(items, numberOfItems, 'Recently Viewed', true);
+    let _html = generateCards(items, numberOfItems, 'Recently Viewed', true);
     $('#recently-viewed').html(_html);
 }
 
+function cardAlignment(e) {
+    if (!cardsAligned && e.matches) {
+        cardQueryList.forEach((card) => {
+            card.classList.add('mx-auto');
+            card.style.maxWidth = "250px";
+            card.style.height = "388px";
+        });
+        cardsAligned = true;
+    } else if (cardsAligned && !e.matches) {
+        cardQueryList.forEach((card) => {
+            card.classList.remove('mx-auto');
+            card.style.maxWidth = "198px";
+            card.style.height = "354px";
+        });
+        cardsAligned = false;
+    }
+}
+
 function loadNewest(items, numberOfItems) {
-    var _html = generateCards(items, numberOfItems, 'Newest Listings', false);
+    let _html = generateCards(items, numberOfItems, 'Newest Listings', false);
     $('#newest-listings').html(_html);
+    cardQueryList = Array.prototype.slice.apply(document.querySelectorAll(".card"));
+    let cardAlignMedia = window.matchMedia("(max-width: 767px)");
+    cardAlignMedia.addListener(cardAlignment);
+    cardAlignment(cardAlignMedia);
 }
 
 function noPostings() {
-    var _html = `<div class="container text-center"> \
+    let _html = `<div class="container text-center"> \
                     <h2>No Postings Found...</h2> \
                 </div>`;
     $('#newest-listings').html(_html);
@@ -156,7 +176,7 @@ function sendMessage() {
 
 $(document).ready(function () {
     var numRecent = 5;
-    var numNewest = 5;
+    var numNewest = 10;
 
     if (localStorage.hasOwnProperty('recentlyVisited')) {
         var recentlyVisited = JSON.parse(localStorage.getItem('recentlyVisited'));
@@ -191,7 +211,6 @@ $(document).ready(function () {
             return data.json();
         })
         .then((dataJson) => {
-            console.log(dataJson.length);
             if (dataJson.length > 0) {
                 loadNewest(dataJson, numNewest);
                 setOnClick(dataJson);

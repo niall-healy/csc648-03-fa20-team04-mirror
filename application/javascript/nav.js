@@ -53,7 +53,6 @@ $(document).ready(function() {
     searchPersistence();
 
     $(".category-item").on("click", function() {
-        //console.log("You clicked a different category");
         $("input[name=category]").val($(this).attr("data-value"));
         $("#dropdown-button").html($(this).text());
     });
@@ -78,7 +77,6 @@ function searchPersistence() {
     let category = search.get('category');
     let keywords = search.get('keywords');
 
-    console.log(category);
 
     if (category) {
         $("input[name=category]").val(category);
@@ -126,7 +124,6 @@ function getCategoriesFromServer() {
             return data.json();
         })
         .then((dataJson) => {
-            console.log(dataJson);
             storeAndRenderCategories(dataJson);
         })
         .catch((err) => {

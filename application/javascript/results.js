@@ -7,6 +7,7 @@ Author: Joseph Babel
 
 let allListings;
 let listingsCount = 0;
+let zeroFound = 0;
 let skip = 0;
 
 // Load the search results from the server into the html
@@ -66,7 +67,10 @@ function loadListings() {
     }
 
     // Update listings count
-    $('.num-results').html('<h5>Showing ' + allListings.length + ' results out of ' + listingsCount + ' total...</h5>');
+    if (!zeroFound)
+        $('.num-results').html('<h5>Showing ' + allListings.length + ' results out of ' + listingsCount + ' total...</h5>');
+    else
+        $('.num-results').html('<h5>Zero results found... You may be interested in these other items.<br>Showing ' + allListings.length + ' results out of ' + listingsCount + ' total...</h5>');
 }
 
 // Redirect to listing page in new tab
@@ -182,7 +186,8 @@ $(document).ready(function () {
         })
         .then((dataJson) => {
             allListings = dataJson['listings'];
-            listingsCount = dataJson['listings_count']
+            listingsCount = dataJson['listings_count'];
+            zeroFound = dataJson['zero_found'];
             loadListings();
             loadPageNumbers();
         })
@@ -215,6 +220,7 @@ $(document).ready(function () {
             .then((dataJson) => {
                 allListings = dataJson['listings'];
                 listingsCount = dataJson['listings_count'];
+                zeroFound = dataJson['zero_found'];
                 loadListings();
             })
             .catch((err) => {
@@ -228,7 +234,6 @@ $(document).ready(function () {
         nextPageButton = $('.pagination .next');
         currentPage = $('.pagination .active a');
         let buttonValue = $(this).html();
-        console.log(buttonValue)
         if (buttonValue == '&lt;' && !previousPageButton.hasClass('disabled')) {
             skip -= 15;
         } else if (buttonValue == '&gt;' && !nextPageButton.hasClass('disabled')) {
@@ -247,6 +252,7 @@ $(document).ready(function () {
             .then((dataJson) => {
                 allListings = dataJson['listings'];
                 listingsCount = dataJson['listings_count'];
+                zeroFound = dataJson['zero_found'];
                 loadListings();
                 loadPageNumbers();
             })

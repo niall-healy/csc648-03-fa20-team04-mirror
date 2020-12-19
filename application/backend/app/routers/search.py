@@ -24,9 +24,15 @@ router = APIRouter()
 @router.get("/search/", response_model=schemas.AllListings)
 async def read_listings(keywords: str, category: str, sort: str = 'id', skip: int = 0, limit: int = 15, db: Session = Depends(get_db)):
     results_list = crud.get_listings_for_search(db, keywords, category, sort)
+    zeroFound = 0
+    if len(results_list) == 0:
+        zeroFound = 1
+        results_list = crud.get_listings_for_search(db, "", category, sort)
+
     response_object = {
         "listings": results_list[skip: skip + limit],
         "listings_count": len(results_list),
+        "zero_found": zeroFound,
     }
     return response_object
 

@@ -62,6 +62,7 @@ class Listing(BaseModel):  # Reading to return from API
 class AllListings(BaseModel):
     listings: List[Listing] = []
     listings_count: int
+    zero_found: int
 
     class Config:
         orm_mode = True
