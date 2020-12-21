@@ -31,6 +31,7 @@ function generateCards(items, numberOfItems, title, recent) {
         _html += `<button type="button" data-toggle="modal" data-target="#modal" onclick="event.stopPropagation(); openContactModal('` + items[item].name + `', ` +  items[item].id + `);" \
 
 	          class="btn btn-primary btn-block no-overflow mt-auto sticky-bottom contact-btn">Contact Seller</button> \
+
                         </div> \
                     </div>`;
 
